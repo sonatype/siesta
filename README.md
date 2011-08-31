@@ -1,3 +1,3 @@
 # Description
 
-Sisu Siesta
+Sisu Siesta; JAX-RS Components
