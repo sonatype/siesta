@@ -171,6 +171,12 @@
                 </exclusions>
             </dependency>
 
+            <dependency>
+                <groupId>org.sonatype.sisu.litmus</groupId>
+                <artifactId>litmus-testsupport</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+
             <!-- INTERNAL -->
 
             <dependency>
