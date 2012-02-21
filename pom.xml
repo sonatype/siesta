@@ -63,6 +63,8 @@
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
         
         <jersey.version>1.8</jersey.version>
+        
+        <jackson.version>1.9.4</jackson.version>
     </properties>
 
     <dependencyManagement>
@@ -94,25 +96,25 @@
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-core-asl</artifactId>
-                <version>1.8.5</version>
+                <version>${jackson.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-mapper-asl</artifactId>
-                <version>1.8.5</version>
+                <version>${jackson.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-jaxrs</artifactId>
-                <version>1.8.5</version>
+                <version>${jackson.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-xc</artifactId>
-                <version>1.8.5</version>
+                <version>${jackson.version}</version>
             </dependency>
 
             <dependency>
@@ -375,6 +377,36 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+          <plugins>
+            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+            <plugin>
+              <groupId>org.eclipse.m2e</groupId>
+              <artifactId>lifecycle-mapping</artifactId>
+              <version>1.0.0</version>
+              <configuration>
+                <lifecycleMappingMetadata>
+                  <pluginExecutions>
+                    <pluginExecution>
+                      <pluginExecutionFilter>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>sisu-maven-plugin</artifactId>
+                        <versionRange>[1.1,)</versionRange>
+                        <goals>
+                          <goal>main-index</goal>
+                          <goal>test-index</goal>
+                        </goals>
+                      </pluginExecutionFilter>
+                      <action>
+                        <ignore></ignore>
+                      </action>
+                    </pluginExecution>
+                  </pluginExecutions>
+                </lifecycleMappingMetadata>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
     </build>
 
 </project>
