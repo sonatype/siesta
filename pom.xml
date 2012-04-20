@@ -24,7 +24,6 @@
 
     <groupId>org.sonatype.sisu.siesta</groupId>
     <artifactId>siesta</artifactId>
-    <name>Siesta</name>
     <packaging>pom</packaging>
     <version>1.1-SNAPSHOT</version>
 
@@ -61,9 +60,8 @@
 
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
         
-        <jersey.version>1.8</jersey.version>
-        
-        <jackson.version>1.9.4</jackson.version>
+        <jerseyVersion>1.12</jerseyVersion>
+        <jacksonVersion>1.9.4</jacksonVersion>
     </properties>
 
     <dependencyManagement>
@@ -75,9 +73,15 @@
             </dependency>
 
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>1.6.4</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>10.0</version>
+                <version>10.0.1</version>
             </dependency>
 
             <dependency>
@@ -95,25 +99,25 @@
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-core-asl</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jacksonVersion}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-mapper-asl</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jacksonVersion}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-jaxrs</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jacksonVersion}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.codehaus.jackson</groupId>
                 <artifactId>jackson-xc</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jacksonVersion}</version>
             </dependency>
 
             <dependency>
@@ -123,9 +127,39 @@
             </dependency>
 
             <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>${jerseyVersion}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-json</artifactId>
+                <version>${jerseyVersion}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.codehaus.jettison</groupId>
+                        <artifactId>jettison</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.jersey.contribs</groupId>
+                <artifactId>jersey-apache-client4</artifactId>
+                <version>${jerseyVersion}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
                 <groupId>com.sun.jersey.contribs</groupId>
                 <artifactId>jersey-guice</artifactId>
-                <version>${jersey.version}</version>
+                <version>${jerseyVersion}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>com.google.inject</groupId>
@@ -137,11 +171,11 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            
+
             <dependency>
                 <groupId>com.sun.jersey.contribs</groupId>
                 <artifactId>jersey-multipart</artifactId>
-                <version>${jersey.version}</version>
+                <version>${jerseyVersion}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.jvnet</groupId>
@@ -158,37 +192,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.sun.jersey</groupId>
-                <artifactId>jersey-json</artifactId>
-                <version>${jersey.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.codehaus.jettison</groupId>
-                        <artifactId>jettison</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
                 <groupId>org.sonatype.spice</groupId>
                 <artifactId>jersey-ahc-client</artifactId>
                 <version>1.0.2</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.restsimple</groupId>
-                <artifactId>restsimple-client</artifactId>
-                <version>0.4</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.inject</groupId>
-                        <artifactId>guice</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.codehaus.jettison</groupId>
-                        <artifactId>jettison</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <dependency>

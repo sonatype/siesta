@@ -23,7 +23,6 @@
     </parent>
 
     <artifactId>siesta-common</artifactId>
-    <name>Siesta Common</name>
 
     <dependencies>
         <dependency>

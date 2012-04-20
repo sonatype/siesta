@@ -23,7 +23,6 @@
     </parent>
 
     <artifactId>siesta-server</artifactId>
-    <name>Siesta Server</name>
 
     <dependencies>
         <dependency>
