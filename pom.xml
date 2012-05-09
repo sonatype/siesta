@@ -192,12 +192,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.sonatype.spice</groupId>
-                <artifactId>jersey-ahc-client</artifactId>
-                <version>1.0.2</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.sonatype.sisu.litmus</groupId>
                 <artifactId>litmus-testsupport</artifactId>
                 <version>1.1</version>
