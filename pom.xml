@@ -45,10 +45,10 @@
         <url>https://builds.sonatype.org/job/sisu-siesta</url>
     </ciManagement>
 
-    <!--<issueManagement>-->
-        <!--<system>Jira</system>-->
-        <!--<url>https://issues.sonatype.org/browse/???</url>-->
-    <!--</issueManagement>-->
+  <!--<issueManagement>-->
+  <!--<system>Jira</system>-->
+  <!--<url>https://issues.sonatype.org/browse/???</url>-->
+  <!--</issueManagement>-->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -56,10 +56,10 @@
 
         <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
-        <build.number />
+        <build.number/>
 
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-        
+
         <jerseyVersion>1.12</jerseyVersion>
         <jacksonVersion>1.9.4</jacksonVersion>
     </properties>
@@ -141,6 +141,10 @@
                         <groupId>org.codehaus.jettison</groupId>
                         <artifactId>jettison</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>javax.xml.bind</groupId>
+                        <artifactId>jaxb-api</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
 
@@ -183,8 +187,8 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            
-            <!-- pull in latest mimepull to fix stream closed exception once you reach end of stream -->
+
+      <!-- pull in latest mimepull to fix stream closed exception once you reach end of stream -->
             <dependency>
                 <groupId>org.jvnet.mimepull</groupId>
                 <artifactId>mimepull</artifactId>
@@ -197,7 +201,7 @@
                 <version>1.1</version>
             </dependency>
 
-            <!-- INTERNAL -->
+      <!-- INTERNAL -->
 
             <dependency>
                 <groupId>org.sonatype.sisu.siesta</groupId>
@@ -288,7 +292,7 @@
                 <version>1.0.1</version>
                 <executions>
                     <execution>
-                        <id>checks</id>
+                        <id>enforce-java</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>enforce</goal>
@@ -301,17 +305,109 @@
                                 <requireJavaVersion>
                                     <version>[1.6,)</version>
                                 </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>enforce-dependencies</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>commons-logging:*</exclude>
+                                    </excludes>
+                                    <message>commons-logging conflicts with slf4j. You probably added a dependency that is missing the
+                    exclusions.
+                  </message>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>commons-vfs:commons-vfs</exclude>
+                                    </excludes>
+                                    <message>commons-vfs 1.0 has a potential security vulnerability (osvdb-58760). Use
+                    org.apache.commons:commons-vfs2:2.0 or greater
+                  </message>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>xmlrpc:*</exclude>
+                                    </excludes>
+                                    <message>Apache commons xmlrpc with versions less than 3.1.3 expose a potential security vulnerability
+                    (osvdb-68314). Use org.apache.commons:xmlrpc-* 3.1.3 or greater
+                  </message>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>commons-beanutils:commons-beanutils</exclude>
+                                    </excludes>
+                                    <message>commons-beanutils includes commons-collections. use commons-beanutils-core instead</message>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>*:activation</exclude>
+                                        <exclude>*:stax-api</exclude>
+                                        <exclude>*:jaxb-api</exclude>
+                                        <exclude>*:xml-apis</exclude>
+                                    </excludes>
+                                    <message>xml apis got banned since they are already included on java 6</message>
+                                </bannedDependencies>
                                 <bannedDependencies>
                                     <searchTransitive>true</searchTransitive>
                                     <excludes>
-                                        <!-- Keep junit out, use junit-dep instead -->
                                         <exclude>junit:junit</exclude>
-                                        <!-- Keep all JCL out, use jcl-over-slf4j instead -->
-                                        <exclude>commons-logging:commons-logging</exclude>
-                                        <exclude>commons-logging:commons-logging-api</exclude>
                                     </excludes>
+                                    <message>junit:junit includes old versions of hamcrest; use junit:junit-dep instead.</message>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <searchTransitive>true</searchTransitive>
+                                    <excludes>
+                                        <exclude>org.mockito:mockito-all</exclude>
+                                    </excludes>
+                                    <message>mockito-all includes third party classes within it - use mockito-core instead</message>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <searchTransitive>true</searchTransitive>
+                                    <excludes>
+                                        <exclude>org.hamcrest:*</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <include>org.hamcrest:*:1.3.RC2</include>
+                                    </includes>
+                                    <message>Make sure you are using the hamcrest version defined in parent</message>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <searchTransitive>true</searchTransitive>
+                                    <excludes>
+                                        <exclude>org.hamcrest:hamcrest-all:*</exclude>
+                                    </excludes>
+                                    <message>Use more specific hamcrest dependencies like hamcrest-core, hamcrest-library</message>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <searchTransitive>true</searchTransitive>
+                                    <excludes>
+                                        <exclude>org.slf4j:*</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <include>org.slf4j:*:${slf4j.version}</include>
+                                    </includes>
+                                    <message>Make sure to use the slf4j version defined in nexus parent. See slf4j.version property
+                  </message>
+                                </bannedDependencies>
+                                <bannedDependencies>
+                                    <searchTransitive>true</searchTransitive>
+                                    <excludes>
+                                        <exclude>log4j:log4j:*:jar:test</exclude>
+                                    </excludes>
+                                    <includes>
+                                        <include>log4j:*</include>
+                                    </includes>
+                                    <message>Do not use log4j api directly in tests. Use slf4j api instead.</message>
                                 </bannedDependencies>
                             </rules>
+                            <fail>true</fail>
                         </configuration>
                     </execution>
                 </executions>
@@ -346,10 +442,10 @@
                 </executions>
             </plugin>
 
-            <!--
-            mvn license:format -N
-            If its a new year, update the year range in the header.txt file
-            -->
+      <!--
+      mvn license:format -N
+      If its a new year, update the year range in the header.txt file
+      -->
             <plugin>
                 <groupId>com.mycila.maven-license-plugin</groupId>
                 <artifactId>maven-license-plugin</artifactId>
@@ -405,7 +501,7 @@
             </activation>
             <build>
                 <plugins>
-                    <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+          <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                     <plugin>
                         <groupId>org.eclipse.m2e</groupId>
                         <artifactId>lifecycle-mapping</artifactId>
@@ -424,7 +520,7 @@
                                             </goals>
                                         </pluginExecutionFilter>
                                         <action>
-                                            <ignore />
+                                            <ignore/>
                                         </action>
                                     </pluginExecution>
                                 </pluginExecutions>
