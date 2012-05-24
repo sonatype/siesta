@@ -10,7 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.server.internal.jackson;
+package org.sonatype.sisu.siesta.jackson;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
@@ -21,7 +21,7 @@ import javax.inject.Singleton;
 /**
  * Siesta Jackson Guice module.
  *
- * @since 1.0
+ * @since 1.2
  */
 public class SiestaJacksonModule
     implements Module

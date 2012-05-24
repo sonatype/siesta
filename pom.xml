@@ -225,6 +225,12 @@
 
             <dependency>
                 <groupId>org.sonatype.sisu.siesta</groupId>
+                <artifactId>siesta-jackson</artifactId>
+                <version>1.2-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.sisu.siesta</groupId>
                 <artifactId>siesta-server</artifactId>
                 <version>1.2-SNAPSHOT</version>
             </dependency>
@@ -240,6 +246,7 @@
     <modules>
         <module>siesta-common</module>
         <module>siesta-xstream</module>
+        <module>siesta-jackson</module>
         <module>siesta-server</module>
         <module>siesta-client</module>
     </modules>
