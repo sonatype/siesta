@@ -49,7 +49,7 @@ public class ObjectMapperProvider
         sconfig.withAnnotationIntrospector(new JacksonAnnotationIntrospector());
 
         // Do not include null values
-        sconfig.setSerializationInclusion(NON_NULL);
+        sconfig.withSerializationInclusion(NON_NULL);
 
         // Write dates as ISO-8601
         mapper.configure(WRITE_DATES_AS_TIMESTAMPS, false);
