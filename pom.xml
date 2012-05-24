@@ -121,9 +121,21 @@
             </dependency>
 
             <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+                <version>1.4.1</version>
+            </dependency>
+
+            <dependency>
                 <groupId>javax.ws.rs</groupId>
                 <artifactId>jsr311-api</artifactId>
                 <version>1.1.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-core</artifactId>
+                <version>${jerseyVersion}</version>
             </dependency>
 
             <dependency>
@@ -207,6 +219,12 @@
 
             <dependency>
                 <groupId>org.sonatype.sisu.siesta</groupId>
+                <artifactId>siesta-xstream</artifactId>
+                <version>1.2-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.sonatype.sisu.siesta</groupId>
                 <artifactId>siesta-server</artifactId>
                 <version>1.2-SNAPSHOT</version>
             </dependency>
@@ -221,6 +239,7 @@
 
     <modules>
         <module>siesta-common</module>
+        <module>siesta-xstream</module>
         <module>siesta-server</module>
         <module>siesta-client</module>
     </modules>
