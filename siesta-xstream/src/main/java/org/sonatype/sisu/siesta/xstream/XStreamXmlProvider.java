@@ -35,7 +35,7 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Jersey XStream XML provider.
+ * <a href="http://xstream.codehaus.org/">XStream</a> XML provider.
  *
  * @since 1.2
  */
