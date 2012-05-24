@@ -24,6 +24,10 @@
 
     <artifactId>siesta-jackson</artifactId>
 
+    <properties>
+        <jacksonVersion>1.9.4</jacksonVersion>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.sonatype.sisu.siesta</groupId>
@@ -32,12 +36,26 @@
 
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>${jacksonVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jacksonVersion}</version>
         </dependency>
 
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-jaxrs</artifactId>
+            <version>${jacksonVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-xc</artifactId>
+            <version>${jacksonVersion}</version>
         </dependency>
     </dependencies>
 
