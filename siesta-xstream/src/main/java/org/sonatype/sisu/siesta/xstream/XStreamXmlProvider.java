@@ -81,11 +81,11 @@ public class XStreamXmlProvider
     }
 
     public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        return false;
+        return true;
     }
 
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-        return false;
+        return true;
     }
 
     public Object readFrom(final Class<Object> type,
