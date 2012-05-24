@@ -32,6 +32,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.nio.charset.Charset;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -49,8 +50,6 @@ public class XStreamXmlProvider
 {
     private static final Logger log = LoggerFactory.getLogger(XStreamXmlProvider.class);
 
-    private static final String DEFAULT_ENCODING = "UTF-8";
-
     private final XStream xstream;
 
     private final Set<Class<?>> processed = Sets.newHashSet();
@@ -65,14 +64,6 @@ public class XStreamXmlProvider
                 this.autodetectAnnotations(true);
             }
         });
-    }
-
-    protected String getCharsetAsString(final MediaType m) {
-        if (m == null) {
-            return DEFAULT_ENCODING;
-        }
-        String result = m.getParameters().get("charset");
-        return (result == null) ? DEFAULT_ENCODING : result;
     }
 
     protected XStream getXStream(final Class<?> type) {
@@ -103,9 +94,9 @@ public class XStreamXmlProvider
                            final InputStream entityStream)
         throws IOException, WebApplicationException
     {
-        String encoding = getCharsetAsString(mediaType);
+        Charset cs = getCharset(mediaType);
         XStream xs = getXStream(type);
-        return xs.fromXML(new InputStreamReader(entityStream, encoding));
+        return xs.fromXML(new InputStreamReader(entityStream, cs));
     }
 
     public void writeTo(final Object o,
@@ -117,8 +108,8 @@ public class XStreamXmlProvider
                         final OutputStream entityStream)
         throws IOException, WebApplicationException
     {
-        String encoding = getCharsetAsString(mediaType);
+        Charset cs = getCharset(mediaType);
         XStream xs = getXStream(type);
-        xs.marshal(o, new CompactWriter(new OutputStreamWriter(entityStream, encoding)));
+        xs.marshal(o, new CompactWriter(new OutputStreamWriter(entityStream, cs)));
     }
 }
