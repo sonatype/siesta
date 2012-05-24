@@ -36,6 +36,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Jersey XStream XML provider.
+ *
+ * @since 1.2
  */
 @Produces({MediaType.APPLICATION_XML, MediaType.TEXT_XML, MediaType.WILDCARD})
 @Consumes({MediaType.APPLICATION_XML, MediaType.TEXT_XML, MediaType.WILDCARD})
