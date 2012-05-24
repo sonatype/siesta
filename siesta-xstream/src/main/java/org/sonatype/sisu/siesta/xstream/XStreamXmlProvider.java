@@ -10,10 +10,10 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.xstream;
 
 import com.google.common.collect.Sets;
-import com.sun.jersey.core.provider.AbstractMessageReaderWriterProvider;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.CompactWriter;
 import org.slf4j.Logger;
@@ -24,6 +24,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.ext.MessageBodyReader;
+import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +38,7 @@ import java.nio.charset.Charset;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.sun.jersey.core.provider.AbstractMessageReaderWriterProvider.getCharset;
 
 /**
  * <a href="http://xstream.codehaus.org/">XStream</a> XML provider.
@@ -46,7 +49,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Consumes({MediaType.APPLICATION_XML, MediaType.TEXT_XML, MediaType.WILDCARD})
 @Provider
 public class XStreamXmlProvider
-    extends AbstractMessageReaderWriterProvider<Object>
+    implements MessageBodyReader<Object>, MessageBodyWriter<Object>
 {
     private static final Logger log = LoggerFactory.getLogger(XStreamXmlProvider.class);
 
@@ -59,7 +62,8 @@ public class XStreamXmlProvider
     }
 
     public XStreamXmlProvider() {
-        this(new XStream() {
+        this(new XStream()
+        {
             {
                 this.autodetectAnnotations(true);
             }
@@ -84,6 +88,10 @@ public class XStreamXmlProvider
 
     public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
         return true;
+    }
+
+    public long getSize(Object t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
+        return -1;
     }
 
     public Object readFrom(final Class<Object> type,
