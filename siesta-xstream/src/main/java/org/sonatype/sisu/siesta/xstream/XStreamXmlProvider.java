@@ -16,6 +16,8 @@ import com.google.common.collect.Sets;
 import com.sun.jersey.core.provider.AbstractMessageReaderWriterProvider;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.CompactWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -45,6 +47,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class XStreamXmlProvider
     extends AbstractMessageReaderWriterProvider<Object>
 {
+    private static final Logger log = LoggerFactory.getLogger(XStreamXmlProvider.class);
+
     private static final String DEFAULT_ENCODING = "UTF-8";
 
     private final XStream xstream;
@@ -75,6 +79,7 @@ public class XStreamXmlProvider
         // TODO: Sort this out, this might not be safe
         synchronized (processed) {
             if (!processed.contains(type)) {
+                log.trace("Processing annotations: {}", type);
                 xstream.processAnnotations(type);
                 processed.add(type);
             }
