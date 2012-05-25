@@ -71,7 +71,7 @@ public class XStreamXmlProvider
     }
 
     protected XStream getXStream(final Class<?> type) {
-        // TODO: Sort this out, this might not be safe
+        // TODO: Sort this out, this might not be safe, or necessary if autodetectAnnotations(true) ?
         synchronized (processed) {
             if (!processed.contains(type)) {
                 log.trace("Processing annotations: {}", type);
