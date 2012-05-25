@@ -14,6 +14,7 @@
 package org.sonatype.sisu.siesta.xstream;
 
 import com.google.common.collect.Sets;
+import com.sun.jersey.core.util.ReaderWriter;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.CompactWriter;
 import org.slf4j.Logger;
@@ -38,7 +39,6 @@ import java.nio.charset.Charset;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.sun.jersey.core.provider.AbstractMessageReaderWriterProvider.getCharset;
 
 /**
  * <a href="http://xstream.codehaus.org/">XStream</a> XML provider.
@@ -102,7 +102,7 @@ public class XStreamXmlProvider
                            final InputStream entityStream)
         throws IOException, WebApplicationException
     {
-        Charset cs = getCharset(mediaType);
+        Charset cs = ReaderWriter.getCharset(mediaType);
         XStream xs = getXStream(type);
         return xs.fromXML(new InputStreamReader(entityStream, cs));
     }
@@ -116,7 +116,7 @@ public class XStreamXmlProvider
                         final OutputStream entityStream)
         throws IOException, WebApplicationException
     {
-        Charset cs = getCharset(mediaType);
+        Charset cs = ReaderWriter.getCharset(mediaType);
         XStream xs = getXStream(type);
         xs.marshal(o, new CompactWriter(new OutputStreamWriter(entityStream, cs)));
     }
