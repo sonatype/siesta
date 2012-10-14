@@ -13,7 +13,7 @@
 
 package org.sonatype.sisu.siesta.server.internal;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.inject.Key;
 import org.sonatype.guice.bean.locators.BeanLocator;
 import org.sonatype.inject.BeanEntry;
@@ -43,6 +43,10 @@ public class ComponentDiscoveryApplication
     private static final String CPREFIX = "${org.sonatype.sisu.siesta.server.internal.ComponentDiscoveryApplication";
 
     private final BeanLocator container;
+
+    private final Set<Class<Resource>> resources = Sets.newHashSet();
+
+    private final Set<Class<?>> components = Sets.newHashSet();
 
     private boolean report;
 
@@ -74,14 +78,18 @@ public class ComponentDiscoveryApplication
                 Path path = type.getAnnotation(Path.class);
                 if (path != null) {
                     log.debug("Adding resource: {} -> {}", path.value(), type);
-                    classes.add(type);
+                    //noinspection unchecked
+                    resources.add((Class<Resource>) type);
                 }
             }
             else {
                 log.debug("Adding component: {}", type);
-                classes.add(type);
+                components.add(type);
             }
         }
+
+        classes.addAll(resources);
+        classes.addAll(components);
 
         log.debug("Found {} components", classes.size());
     }
@@ -92,10 +100,9 @@ public class ComponentDiscoveryApplication
     }
 
     private void displayResourceReport() {
-        List<Class<Resource>> types = getResourceClasses();
-        if (!types.isEmpty()) {
+        if (!resources.isEmpty()) {
             log.info("Resources:");
-            for (Class<Resource> type : types) {
+            for (Class<Resource> type : resources) {
                 // TODO: Perhaps show more details about the resource, sub-resources, methods, etc
                 Path path = type.getAnnotation(Path.class);
                 log.info("  {}", path.value());
@@ -103,34 +110,13 @@ public class ComponentDiscoveryApplication
         }
     }
 
-    private List<Class<Resource>> getResourceClasses() {
-        List<Class<Resource>> types = Lists.newArrayListWithExpectedSize(classes.size());
-        for (Class<?> type : classes) {
-            if (Resource.class.isAssignableFrom(type)) {
-                //noinspection unchecked
-                types.add((Class<Resource>) type);
-            }
-        }
-        return types;
-    }
-
     private void displayNonResourceReport() {
-        List<Class<?>> types = getNonResourceClasses();
-        if (!types.isEmpty()) {
+        if (!components.isEmpty()) {
             log.info("Components:");
-            for (Class<?> type : types) {
+            // TODO: Perhaps show various types of components (providers, mappers, etc)
+            for (Class<?> type : components) {
                 log.info("  {}", type.getSimpleName());
             }
         }
-    }
-
-    private List<Class<?>> getNonResourceClasses() {
-        List<Class<?>> types = Lists.newArrayListWithExpectedSize(classes.size());
-        for (Class<?> type : classes) {
-            if (!Resource.class.isAssignableFrom(type)) {
-                types.add(type);
-            }
-        }
-        return types;
     }
 }
