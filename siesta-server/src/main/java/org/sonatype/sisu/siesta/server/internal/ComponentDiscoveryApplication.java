@@ -10,19 +10,23 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.server.internal;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Key;
+import org.sonatype.guice.bean.locators.BeanLocator;
+import org.sonatype.inject.BeanEntry;
 import org.sonatype.sisu.siesta.common.Component;
 import org.sonatype.sisu.siesta.common.Resource;
 import org.sonatype.sisu.siesta.server.ApplicationSupport;
-import org.sonatype.guice.bean.locators.BeanLocator;
-import org.sonatype.inject.BeanEntry;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
 import java.lang.annotation.Annotation;
+import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -36,17 +40,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ComponentDiscoveryApplication
     extends ApplicationSupport
 {
+    private static final String CPREFIX = "${org.sonatype.sisu.siesta.server.internal.ComponentDiscoveryApplication";
+
     private final BeanLocator container;
 
+    private boolean report;
+
     @Inject
-    public ComponentDiscoveryApplication(final BeanLocator container) {
+    public ComponentDiscoveryApplication(final BeanLocator container, final @Named(CPREFIX + ".report:-true}") boolean report) {
         this.container = checkNotNull(container);
+        this.report = report;
+        log.debug("Report: {}", report);
     }
 
     @Override
     public Set<Class<?>> getClasses() {
         if (classes.isEmpty()) {
             findComponents();
+            if (report) {
+                displayReport();
+            }
         }
         return super.getClasses();
     }
@@ -71,5 +84,53 @@ public class ComponentDiscoveryApplication
         }
 
         log.debug("Found {} components", classes.size());
+    }
+
+    private void displayReport() {
+        displayResourceReport();
+        displayNonResourceReport();
+    }
+
+    private void displayResourceReport() {
+        List<Class<Resource>> types = getResourceClasses();
+        if (!types.isEmpty()) {
+            log.info("Resources:");
+            for (Class<Resource> type : types) {
+                // TODO: Perhaps show more details about the resource, sub-resources, methods, etc
+                Path path = type.getAnnotation(Path.class);
+                log.info("  {}", path.value());
+            }
+        }
+    }
+
+    private List<Class<Resource>> getResourceClasses() {
+        List<Class<Resource>> types = Lists.newArrayListWithExpectedSize(classes.size());
+        for (Class<?> type : classes) {
+            if (Resource.class.isAssignableFrom(type)) {
+                //noinspection unchecked
+                types.add((Class<Resource>) type);
+            }
+        }
+        return types;
+    }
+
+    private void displayNonResourceReport() {
+        List<Class<?>> types = getNonResourceClasses();
+        if (!types.isEmpty()) {
+            log.info("Components:");
+            for (Class<?> type : types) {
+                log.info("  {}", type.getSimpleName());
+            }
+        }
+    }
+
+    private List<Class<?>> getNonResourceClasses() {
+        List<Class<?>> types = Lists.newArrayListWithExpectedSize(classes.size());
+        for (Class<?> type : classes) {
+            if (!Resource.class.isAssignableFrom(type)) {
+                types.add(type);
+            }
+        }
+        return types;
     }
 }
