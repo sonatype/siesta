@@ -75,7 +75,7 @@ public class SiestaServlet
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("Processing: {} {} ({})", new Object[] {request.getMethod(), uri, request.getRequestURL()});
+            log.debug("Processing: {} {} ({})", request.getMethod(), uri, request.getRequestURL());
         }
 
         MDC.put(getClass().getName(), uri);
