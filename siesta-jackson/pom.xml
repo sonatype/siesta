@@ -25,7 +25,7 @@
     <artifactId>siesta-jackson</artifactId>
 
     <properties>
-        <jacksonVersion>1.9.4</jacksonVersion>
+        <jacksonVersion>1.9.10</jacksonVersion>
     </properties>
 
     <dependencies>
