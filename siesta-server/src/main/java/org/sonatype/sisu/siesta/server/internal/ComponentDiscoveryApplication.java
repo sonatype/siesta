@@ -91,6 +91,8 @@ public class ComponentDiscoveryApplication
         classes.addAll(resources);
         classes.addAll(components);
 
+        // TODO: Support singleton component discovery
+
         log.debug("Found {} components", classes.size());
     }
 
