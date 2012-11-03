@@ -13,8 +13,11 @@
 
 package org.sonatype.sisu.siesta.server.internal;
 
+import com.google.inject.Key;
+import org.sonatype.guice.bean.locators.BeanLocator;
+import org.sonatype.inject.BeanEntry;
+import org.sonatype.inject.Mediator;
 import org.sonatype.sisu.siesta.server.ApplicationContainer;
-import org.sonatype.sisu.siesta.server.ApplicationLocator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -27,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Application;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -44,13 +48,13 @@ public class SiestaServlet
 
     private final ApplicationContainer container;
 
-    private final ApplicationLocator locator;
+    private final BeanLocator beanLocator;
 
     @Inject
-    public SiestaServlet(final ApplicationContainer container, final ApplicationLocator locator) {
+    public SiestaServlet(final ApplicationContainer container, final BeanLocator beanLocator) {
         this.container = checkNotNull(container);
         log.debug("Container: {}", container);
-        this.locator = checkNotNull(locator);
+        this.beanLocator = beanLocator;
     }
 
     @Override
@@ -64,16 +68,30 @@ public class SiestaServlet
         try {
             super.init(config);
             container.init(config);
-            for (Application application : locator.locate()) {
-                container.add(application);
-            }
+            beanLocator.watch(Key.get(Application.class), new ApplicationMediator(), container);
         }
         finally {
             Thread.currentThread().setContextClassLoader(cl);
         }
     }
 
-    // TODO: Check if we need to handle TCL on service() too
+    private class ApplicationMediator
+        implements Mediator<Annotation,Application,ApplicationContainer>
+    {
+        public void add(final BeanEntry<Annotation, Application> entry, final ApplicationContainer container) throws Exception {
+            log.debug("Adding application: {}", entry);
+            try {
+                container.add(entry.getValue());
+            }
+            catch (Exception e) {
+                log.error("Failed to add application", e);
+            }
+        }
+
+        public void remove(final BeanEntry<Annotation, Application> entry, final ApplicationContainer container) throws Exception {
+            // unsupported
+        }
+    }
 
     @Override
     public void service(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {

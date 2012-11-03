@@ -72,6 +72,8 @@ public class ComponentDiscoveryApplication
         log.debug("Finding components");
 
         for (BeanEntry<Annotation, Component> entry : container.locate(Key.get(Component.class))) {
+            log.trace("Found: {}", entry);
+
             Class<?> type = entry.getImplementationClass();
             if (Resource.class.isAssignableFrom(type)) {
                 // only add resources which are annotated with a path
@@ -100,6 +102,8 @@ public class ComponentDiscoveryApplication
         displayResourceReport();
         displayNonResourceReport();
     }
+
+    // TODO: Allow report logging level to be customized
 
     private void displayResourceReport() {
         if (resources.isEmpty()) {
