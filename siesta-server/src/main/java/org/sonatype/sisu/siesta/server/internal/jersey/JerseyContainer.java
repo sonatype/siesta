@@ -97,12 +97,15 @@ public class JerseyContainer
 
     public void addListener(final ContainerListener listener) {
         checkNotNull(listener);
+        log.trace("Adding listener: {}", listener);
         listeners.add(listener);
     }
 
     public void add(final Application application) {
         checkNotNull(application);
         checkState(resourceConfig != null);
+        log.trace("Adding application: {}", application);
+        assert resourceConfig != null; // keep IDEA happy
         resourceConfig.add(application);
         for (ContainerListener listener : listeners) {
             listener.onReload();
