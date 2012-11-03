@@ -102,7 +102,10 @@ public class ComponentDiscoveryApplication
     }
 
     private void displayResourceReport() {
-        if (!resources.isEmpty()) {
+        if (resources.isEmpty()) {
+            log.info("No resources found");
+        }
+        else {
             log.info("Resources:");
             for (Class<Resource> type : resources) {
                 // TODO: Perhaps show more details about the resource, sub-resources, methods, etc
@@ -113,7 +116,10 @@ public class ComponentDiscoveryApplication
     }
 
     private void displayNonResourceReport() {
-        if (!components.isEmpty()) {
+        if (components.isEmpty()) {
+            log.info("No components found");
+        }
+        else {
             log.info("Components:");
             // TODO: Perhaps show various types of components (providers, mappers, etc)
             for (Class<?> type : components) {

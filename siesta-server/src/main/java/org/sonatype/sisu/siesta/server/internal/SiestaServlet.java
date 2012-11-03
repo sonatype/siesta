@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.server.internal;
 
 import org.sonatype.sisu.siesta.server.ApplicationContainer;
@@ -56,12 +57,23 @@ public class SiestaServlet
     public void init(final ServletConfig config) throws ServletException {
         checkNotNull(config);
         log.debug("Initializing");
-        super.init(config);
-        container.init(config);
-        for (Application application : locator.locate()) {
-            container.add(application);
+
+        final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
+
+        try {
+            super.init(config);
+            container.init(config);
+            for (Application application : locator.locate()) {
+                container.add(application);
+            }
+        }
+        finally {
+            Thread.currentThread().setContextClassLoader(cl);
         }
     }
+
+    // TODO: Check if we need to handle TCL on service() too
 
     @Override
     public void service(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
