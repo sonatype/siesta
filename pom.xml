@@ -150,6 +150,10 @@
                 <version>${jerseyVersion}</version>
                 <exclusions>
                     <exclusion>
+                        <groupId>javax.inject</groupId>
+                        <artifactId>javax.inject</artifactId>
+                    </exclusion>
+                    <exclusion>
                         <groupId>com.google.inject</groupId>
                         <artifactId>guice</artifactId>
                     </exclusion>
