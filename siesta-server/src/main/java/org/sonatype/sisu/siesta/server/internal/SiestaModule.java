@@ -14,7 +14,6 @@ package org.sonatype.sisu.siesta.server.internal;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
-import org.sonatype.sisu.siesta.server.ApplicationLocator;
 
 import javax.inject.Singleton;
 
@@ -27,7 +26,6 @@ public class SiestaModule
     implements Module
 {
     public void configure(final Binder binder) {
-        binder.bind(ApplicationLocator.class).to(ApplicationLocatorImpl.class).in(Singleton.class);
         binder.bind(SiestaServlet.class).in(Singleton.class);
     }
 }
