@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.sonatype.forge</groupId>
         <artifactId>forge-parent</artifactId>
-        <version>11</version>
+        <version>21</version>
     </parent>
 
     <groupId>org.sonatype.sisu.siesta</groupId>
@@ -28,18 +28,6 @@
     <version>1.3-SNAPSHOT</version>
 
     <url>https://github.com/sonatype/sisu-siesta</url>
-
-    <organization>
-        <name>Sonatype, Inc.</name>
-        <url>http://www.sonatype.com/</url>
-    </organization>
-
-    <licenses>
-        <license>
-            <name>ASLv2</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
 
     <scm>
         <connection>scm:git:git://github.com/sonatype/sisu-siesta.git</connection>
@@ -52,20 +40,15 @@
         <url>https://builds.sonatype.org/job/sisu-siesta</url>
     </ciManagement>
 
-    <!--<issueManagement>-->
-        <!--<system>Jira</system>-->
-        <!--<url>https://issues.sonatype.org/browse/???</url>-->
-    <!--</issueManagement>-->
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/sonatype/sisu-siesta/issues</url>
+    </issueManagement>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
         <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
         <build.number />
-
-        <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
         
         <jerseyVersion>1.15</jerseyVersion>
     </properties>
@@ -270,28 +253,10 @@
             </testResource>
         </testResources>
 
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.2.1</version>
-                    <configuration>
-                        <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <useReleaseProfile>false</useReleaseProfile>
-                        <goals>deploy</goals>
-                        <releaseProfiles>release</releaseProfiles>
-                        <tagNameFormat>@{artifactId}-@{version}</tagNameFormat>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.0.1</version>
                 <executions>
                     <execution>
                         <id>checks</id>
@@ -350,53 +315,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!--
-            mvn license:format -N
-            If its a new year, update the year range in the header.txt file
-            -->
-            <plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
-                <version>1.9.0</version>
-                <configuration>
-                    <aggregate>true</aggregate>
-                    <strictCheck>true</strictCheck>
-                    <header>${project.basedir}/header.txt</header>
-                    <useDefaultExcludes>false</useDefaultExcludes>
-                    <includes>
-                        <include>**/pom.xml</include>
-                        <include>**/*.xml</include>
-                        <include>**/*.xsd</include>
-                        <include>**/*.xjb</include>
-                        <include>**/*.properties</include>
-                        <include>**/*.ini</include>
-                        <include>**/*.java</include>
-                        <include>**/*.groovy</include>
-                        <include>**/*.scala</include>
-                        <include>**/*.aj</include>
-                        <include>**/*.js</include>
-                        <include>**/*.css</include>
-                        <include>**/*.help</include>
-                        <include>**/*.proto</include>
-                        <include>**/*.sm</include>
-                        <include>**/*.bat</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/target/**</exclude>
-                        <exclude>**/.*/**</exclude>
-                    </excludes>
-                    <mapping>
-                        <scala>SLASHSTAR_STYLE</scala>
-                        <java>SLASHSTAR_STYLE</java>
-                        <xjb>XML_STYLE</xjb>
-                        <proto>DOUBLESLASH_STYLE</proto>
-                        <sm>DOUBLESLASH_STYLE</sm>
-                        <help>SCRIPT_STYLE</help>
-                        <ini>SCRIPT_STYLE</ini>
-                    </mapping>
-                </configuration>
             </plugin>
         </plugins>
     </build>
