@@ -23,7 +23,7 @@ import org.sonatype.sisu.siesta.common.BadRequestException;
 /**
  * Converts {@link BadRequestException} to a JAX-RS {@link Response} with {@link Response.Status#NOT_FOUND}.
  *
- * @since 1.0
+ * @since 1.3.1
  */
 @Named
 @Singleton

@@ -13,7 +13,7 @@
 package org.sonatype.sisu.siesta.common;
 
 /**
- * Thrown when an object is not found.
+ * Thrown when an a client issues a bad request against a resource.
  *
  * @since 1.3.1
  */
