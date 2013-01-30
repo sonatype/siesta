@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 import org.sonatype.sisu.siesta.common.BadRequestException;
 
 /**
- * Converts {@link BadRequestException} to a JAX-RS {@link Response} with {@link Response.Status#NOT_FOUND}.
+ * Converts {@link BadRequestException} to a JAX-RS {@link Response} with {@link Response.Status#BAD_REQUEST}.
  *
  * @since 1.3.1
  */
