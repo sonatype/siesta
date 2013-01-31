@@ -21,12 +21,11 @@ import org.sonatype.sisu.siesta.common.Component;
 import org.sonatype.sisu.siesta.common.Resource;
 import org.sonatype.sisu.siesta.server.ApplicationSupport;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
 import java.lang.annotation.Annotation;
-import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -40,29 +39,42 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ComponentDiscoveryApplication
     extends ApplicationSupport
 {
-    private static final String CPREFIX = "${org.sonatype.sisu.siesta.server.internal.ComponentDiscoveryApplication";
-
     private final BeanLocator container;
 
     private final Set<Class<Resource>> resources = Sets.newHashSet();
 
     private final Set<Class<?>> components = Sets.newHashSet();
 
-    private boolean report;
+    private final ComponentDiscoveryReporter reporter;
 
     @Inject
-    public ComponentDiscoveryApplication(final BeanLocator container, final @Named(CPREFIX + ".report:-true}") boolean report) {
+    public ComponentDiscoveryApplication(final BeanLocator container,
+                                         final @Nullable ComponentDiscoveryReporter reporter)
+    {
         this.container = checkNotNull(container);
-        this.report = report;
-        log.debug("Report: {}", report);
+        this.reporter = reporter;
+
+        if (reporter != null) {
+            log.debug("Reporter: {}", reporter);
+        }
+    }
+
+    public Set<Class<Resource>> getResources() {
+        return resources;
+    }
+
+    public Set<Class<?>> getComponents() {
+        return components;
     }
 
     @Override
     public Set<Class<?>> getClasses() {
         if (classes.isEmpty()) {
             findComponents();
-            if (report) {
-                displayReport();
+
+            // If a reporter is configured, then ask it to report on what we discovered
+            if (reporter != null) {
+                reporter.report(this);
             }
         }
         return super.getClasses();
@@ -96,39 +108,5 @@ public class ComponentDiscoveryApplication
         // TODO: Support singleton component discovery
 
         log.debug("Found {} components", classes.size());
-    }
-
-    private void displayReport() {
-        displayResourceReport();
-        displayNonResourceReport();
-    }
-
-    // TODO: Allow report logging level to be customized
-
-    private void displayResourceReport() {
-        if (resources.isEmpty()) {
-            log.info("No resources found");
-        }
-        else {
-            log.info("Resources:");
-            for (Class<Resource> type : resources) {
-                // TODO: Perhaps show more details about the resource, sub-resources, methods, etc
-                Path path = type.getAnnotation(Path.class);
-                log.info("  {}", path.value());
-            }
-        }
-    }
-
-    private void displayNonResourceReport() {
-        if (components.isEmpty()) {
-            log.info("No components found");
-        }
-        else {
-            log.info("Components:");
-            // TODO: Perhaps show various types of components (providers, mappers, etc)
-            for (Class<?> type : components) {
-                log.info("  {}", type.getSimpleName());
-            }
-        }
     }
 }
