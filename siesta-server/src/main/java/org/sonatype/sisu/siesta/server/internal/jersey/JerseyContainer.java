@@ -90,6 +90,7 @@ public class JerseyContainer
             public ResourceConfig getDefaultResourceConfig(final Map<String, Object> props) throws ServletException {
                 checkNotNull(props);
                 props.put(ResourceConfig.PROPERTY_CONTAINER_NOTIFIER, JerseyContainer.this);
+                props.put(ResourceConfig.FEATURE_XMLROOTELEMENT_PROCESSING, Boolean.TRUE.toString());
                 return super.getDefaultResourceConfig(props);
             }
         });
