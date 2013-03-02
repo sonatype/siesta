@@ -17,22 +17,29 @@ package org.sonatype.sisu.siesta.common;
  *
  * @since 1.0
  */
+@HttpStatusCode( 409 )
 public class InvalidObjectException
     extends RuntimeException
 {
-    public InvalidObjectException() {
+
+    public InvalidObjectException()
+    {
         super();
     }
 
-    public InvalidObjectException(final String message) {
-        super(message);
+    public InvalidObjectException( final String message )
+    {
+        super( message );
     }
 
-    public InvalidObjectException(final String message, final Throwable cause) {
-        super(message, cause);
+    public InvalidObjectException( final String message, final Throwable cause )
+    {
+        super( message, cause );
     }
 
-    public InvalidObjectException(final Throwable cause) {
-        super(cause);
+    public InvalidObjectException( final Throwable cause )
+    {
+        super( cause );
     }
+
 }
