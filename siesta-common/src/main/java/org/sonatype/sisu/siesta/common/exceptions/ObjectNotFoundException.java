@@ -10,34 +10,38 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common;
+package org.sonatype.sisu.siesta.common.exceptions;
+
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+
+import org.sonatype.sisu.siesta.common.HttpStatusCode;
 
 /**
- * Thrown when an object is invalid.
+ * Thrown when an object is not found.
  *
  * @since 1.0
  */
-@HttpStatusCode( 409 )
-public class InvalidObjectException
+@HttpStatusCode( 404 )
+public class ObjectNotFoundException
     extends RuntimeException
 {
 
-    public InvalidObjectException()
+    public ObjectNotFoundException()
     {
         super();
     }
 
-    public InvalidObjectException( final String message )
+    public ObjectNotFoundException( final String message )
     {
         super( message );
     }
 
-    public InvalidObjectException( final String message, final Throwable cause )
+    public ObjectNotFoundException( final String message, final Throwable cause )
     {
         super( message, cause );
     }
 
-    public InvalidObjectException( final Throwable cause )
+    public ObjectNotFoundException( final Throwable cause )
     {
         super( cause );
     }
