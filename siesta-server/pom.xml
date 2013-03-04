@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta</artifactId>
-        <version>1.3.2-SNAPSHOT</version>
+        <version>1.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>siesta-server</artifactId>
