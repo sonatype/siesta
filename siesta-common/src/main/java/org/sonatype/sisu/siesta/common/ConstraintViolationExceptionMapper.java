@@ -28,7 +28,10 @@ import javax.ws.rs.core.Response;
 import org.sonatype.sisu.siesta.common.model.ValidationError;
 
 /**
+ * Maps {@link ConstraintViolationException} to 400 (or 500 in case of a violation on a methods return value) with a
+ * list of {@link ValidationError} as body.
  *
+ * @since 1.4
  */
 @Named
 @Singleton

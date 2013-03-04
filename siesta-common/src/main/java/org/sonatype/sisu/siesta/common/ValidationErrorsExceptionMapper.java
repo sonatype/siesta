@@ -22,6 +22,8 @@ import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorsException;
 import org.sonatype.sisu.siesta.common.model.ValidationError;
 
 /**
+ * Maps {@link ValidationErrorsException} to 400 with a list of {@link ValidationError} as body.
+ *
  * @since 1.4
  */
 @Named
