@@ -12,7 +12,6 @@ import javax.validation.Path;
 import javax.validation.metadata.ElementDescriptor;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
 
 import org.sonatype.sisu.siesta.common.model.ValidationError;
 
@@ -23,7 +22,6 @@ import org.sonatype.sisu.siesta.common.model.ValidationError;
 @Singleton
 public class ConstraintViolationExceptionMapper
     extends ExceptionMapperSupport<ConstraintViolationException>
-    implements ExceptionMapper<ConstraintViolationException>
 {
 
     @Override
