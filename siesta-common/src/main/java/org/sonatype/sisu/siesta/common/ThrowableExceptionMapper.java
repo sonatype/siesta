@@ -31,7 +31,6 @@ import com.google.common.base.Preconditions;
 @Singleton
 public class ThrowableExceptionMapper
     extends ExceptionMapperSupport<Throwable>
-    implements ExceptionMapper<Throwable>
 {
 
     private ErrorResponseGenerator errorResponseGenerator;
