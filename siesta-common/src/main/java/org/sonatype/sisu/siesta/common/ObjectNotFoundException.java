@@ -12,27 +12,36 @@
  */
 package org.sonatype.sisu.siesta.common;
 
+import static javax.ws.rs.core.Response.Status.NOT_FOUND;
+
 /**
  * Thrown when an object is not found.
  *
  * @since 1.0
  */
+@HttpStatusCode( 404 )
 public class ObjectNotFoundException
     extends RuntimeException
 {
-    public ObjectNotFoundException() {
+
+    public ObjectNotFoundException()
+    {
         super();
     }
 
-    public ObjectNotFoundException(final String message) {
-        super(message);
+    public ObjectNotFoundException( final String message )
+    {
+        super( message );
     }
 
-    public ObjectNotFoundException(final String message, final Throwable cause) {
-        super(message, cause);
+    public ObjectNotFoundException( final String message, final Throwable cause )
+    {
+        super( message, cause );
     }
 
-    public ObjectNotFoundException(final Throwable cause) {
-        super(cause);
+    public ObjectNotFoundException( final Throwable cause )
+    {
+        super( cause );
     }
+
 }
