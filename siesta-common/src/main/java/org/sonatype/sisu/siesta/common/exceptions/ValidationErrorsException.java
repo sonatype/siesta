@@ -25,42 +25,42 @@ import com.google.common.collect.Lists;
  *
  * @since 1.4
  */
-public class ValidationException
+public class ValidationErrorsException
     extends RuntimeException
 {
 
     private final List<ValidationError> errors = Lists.newArrayList();
 
-    public ValidationException()
+    public ValidationErrorsException()
     {
         super();
     }
 
-    public ValidationException( final String message )
+    public ValidationErrorsException( final String message )
     {
         super( message );
         errors.add( new ValidationError( message ) );
     }
 
-    public ValidationException( final String path, final String message )
+    public ValidationErrorsException( final String path, final String message )
     {
         super( message );
         errors.add( new ValidationError( path, message ) );
     }
 
-    public ValidationException withError( final String message )
+    public ValidationErrorsException withError( final String message )
     {
         errors.add( new ValidationError( message ) );
         return this;
     }
 
-    public ValidationException withError( final String path, final String message )
+    public ValidationErrorsException withError( final String path, final String message )
     {
         errors.add( new ValidationError( path, message ) );
         return this;
     }
 
-    public ValidationException withErrors( final ValidationError... validationErrors )
+    public ValidationErrorsException withErrors( final ValidationError... validationErrors )
     {
         errors.addAll( Arrays.asList( checkNotNull( validationErrors ) ) );
         return this;

@@ -7,7 +7,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
-import org.sonatype.sisu.siesta.common.exceptions.ValidationException;
+import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorsException;
 import org.sonatype.sisu.siesta.common.model.ValidationError;
 
 /**
@@ -15,13 +15,13 @@ import org.sonatype.sisu.siesta.common.model.ValidationError;
  */
 @Named
 @Singleton
-public class ValidationExceptionMapper
-    extends ExceptionMapperSupport<ValidationException>
-    implements ExceptionMapper<ValidationException>
+public class ValidationErrorsExceptionMapper
+    extends ExceptionMapperSupport<ValidationErrorsException>
+    implements ExceptionMapper<ValidationErrorsException>
 {
 
     @Override
-    protected Response convert( final ValidationException exception )
+    protected Response convert( final ValidationErrorsException exception )
     {
         return Response.status( Response.Status.BAD_REQUEST )
             .entity( new GenericEntity<List<ValidationError>>( exception.getErrors() )
