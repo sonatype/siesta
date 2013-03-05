@@ -12,63 +12,68 @@
  */
 package org.sonatype.sisu.siesta.server.testsuite;
 
+import static com.sun.jersey.api.client.ClientResponse.Status;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
 import static javax.ws.rs.core.Response.Status.Family;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_VALIDATION_ERRORS_V1_JSON_TYPE;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_VALIDATION_ERRORS_V1_XML_TYPE;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.ws.rs.core.MediaType;
 
 import org.junit.Test;
 import org.sonatype.nexus.plugins.siesta.test.model.UserXO;
+import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
 import org.sonatype.sisu.siesta.server.testsuite.support.SiestaTestSupport;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
 
 /**
- * Tests related to happy paths for a resource.
- *
  * @since 1.4
  */
-public class UserTest
+public class ValidationErrorsTest
     extends SiestaTestSupport
 {
 
     @Test
-    public void put_happyPath_XML()
+    public void put_multiple_manual_validations_XML()
         throws Exception
     {
-        put_happyPath( APPLICATION_XML_TYPE );
+        put_multiple_manual_validations( APPLICATION_XML_TYPE, VND_NEXUS_VALIDATION_ERRORS_V1_XML_TYPE );
     }
 
     @Test
-    public void put_happyPath_JSON()
+    public void put_multiple_manual_validations_JSON()
         throws Exception
     {
-        put_happyPath( APPLICATION_JSON_TYPE );
+        put_multiple_manual_validations( APPLICATION_JSON_TYPE, VND_NEXUS_VALIDATION_ERRORS_V1_JSON_TYPE );
     }
 
-    public void put_happyPath( final MediaType mediaType )
+    public void put_multiple_manual_validations( final MediaType... mediaTypes )
         throws Exception
     {
-        final UserXO sent = new UserXO().withName( UUID.randomUUID().toString() ).withCreated( new Date() );
+        final UserXO sent = new UserXO();
 
-        final ClientResponse response = client().resource( url( "user" ) )
-            .type( mediaType )
-            .accept( mediaType )
+        final ClientResponse response = client().resource( url( "validationErrors/manual/multiple" ) )
+            .type( mediaTypes[0] )
+            .accept( mediaTypes )
             .put( ClientResponse.class, sent );
 
-        assertThat( response.getClientResponseStatus().getFamily(), equalTo( Family.SUCCESSFUL ) );
+        assertThat( response.getClientResponseStatus(), is( equalTo( Status.BAD_REQUEST ) ) );
+        assertThat( response.getType(), is( equalTo( mediaTypes[1] ) ) );
 
-        final UserXO received = response.getEntity( UserXO.class );
-
-        assertThat( received, is( notNullValue() ) );
-        assertThat( received.getName(), is( equalTo( sent.getName() ) ) );
-        assertThat( received.getCreated(), is( equalTo( sent.getCreated() ) ) );
+        final List<ValidationErrorXO> errors = response.getEntity( new GenericType<List<ValidationErrorXO>>()
+        {
+        } );
+        assertThat( errors, hasSize( 2 ) );
     }
 
 }

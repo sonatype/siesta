@@ -34,7 +34,7 @@ import com.sun.jersey.api.client.ClientResponse;
  *
  * @since 1.4
  */
-public class ThrowsTest
+public class ErrorsTest
     extends SiestaTestSupport
 {
 
@@ -77,7 +77,7 @@ public class ThrowsTest
     public void throwException( final String exceptionType, final Status expectedStatus, final MediaType... mediaTypes )
         throws Exception
     {
-        final ClientResponse response = client().resource( url( "throw/" + exceptionType ) )
+        final ClientResponse response = client().resource( url( "errors/" + exceptionType ) )
             .type( mediaTypes[0] )
             .accept( mediaTypes )
             .get( ClientResponse.class );

@@ -21,8 +21,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonatype.sisu.siesta.common.Resource;
 import org.sonatype.sisu.siesta.common.exceptions.BadRequestException;
 import org.sonatype.sisu.siesta.common.exceptions.ObjectNotFoundException;
@@ -32,12 +30,10 @@ import org.sonatype.sisu.siesta.common.exceptions.ObjectNotFoundException;
  */
 @Named
 @Singleton
-@Path( "/throw" )
-public class ThrowsResource
+@Path( "/errors" )
+public class ErrorsResource
     implements Resource
 {
-
-    private final Logger log = LoggerFactory.getLogger( getClass() );
 
     @GET
     @Path( "/ObjectNotFoundException" )

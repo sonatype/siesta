@@ -26,26 +26,43 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.nexus.plugins.siesta.test.model.UserXO;
 import org.sonatype.sisu.siesta.common.Resource;
+import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorsException;
 
 /**
  * @since 1.4
  */
 @Named
 @Singleton
-@Path( "/user" )
-public class UserResource
+@Path( "/validationErrors" )
+public class ValidationErrorsResource
     implements Resource
 {
 
     private final Logger log = LoggerFactory.getLogger( getClass() );
 
     @PUT
+    @Path( "/manual/multiple" )
     @Consumes( { APPLICATION_XML, APPLICATION_JSON } )
     @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public UserXO put( final UserXO user )
+    public UserXO putWithMultipleManualValidations( final UserXO user )
     {
         log.info( "PUT name='{}' description='{}' created='{}'",
                   user.getName(), user.getDescription(), user.getCreated() );
+
+        final ValidationErrorsException validationErrors = new ValidationErrorsException();
+        if ( user.getName() == null )
+        {
+            validationErrors.withError( "name", "Name cannot be null" );
+        }
+        if ( user.getDescription() == null )
+        {
+            validationErrors.withError( "description", "Description cannot be null" );
+        }
+
+        if ( validationErrors.hasErrors() )
+        {
+            throw validationErrors;
+        }
 
         return user;
     }
