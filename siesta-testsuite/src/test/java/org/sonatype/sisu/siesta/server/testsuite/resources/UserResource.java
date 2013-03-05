@@ -24,8 +24,8 @@ import javax.ws.rs.Produces;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonatype.nexus.plugins.siesta.test.model.UserXO;
 import org.sonatype.sisu.siesta.common.Resource;
+import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 
 /**
  * @since 1.4

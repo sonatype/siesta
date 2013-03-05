@@ -19,8 +19,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_ERROR_V1_JSON_TYPE;
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_ERROR_V1_XML_TYPE;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_ERROR_V1_JSON_TYPE;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_ERROR_V1_XML_TYPE;
 
 import javax.ws.rs.core.MediaType;
 
@@ -43,7 +43,7 @@ public class ErrorsTest
         throws Exception
     {
         throwException(
-            "ObjectNotFoundException", Status.NOT_FOUND, APPLICATION_XML_TYPE, VND_NEXUS_ERROR_V1_XML_TYPE
+            "ObjectNotFoundException", Status.NOT_FOUND, APPLICATION_XML_TYPE, VND_ERROR_V1_XML_TYPE
         );
     }
 
@@ -52,7 +52,7 @@ public class ErrorsTest
         throws Exception
     {
         throwException(
-            "ObjectNotFoundException", Status.NOT_FOUND, APPLICATION_JSON_TYPE, VND_NEXUS_ERROR_V1_JSON_TYPE
+            "ObjectNotFoundException", Status.NOT_FOUND, APPLICATION_JSON_TYPE, VND_ERROR_V1_JSON_TYPE
         );
     }
 
@@ -61,7 +61,7 @@ public class ErrorsTest
         throws Exception
     {
         throwException(
-            "BadRequestException", Status.BAD_REQUEST, APPLICATION_XML_TYPE, VND_NEXUS_ERROR_V1_XML_TYPE
+            "BadRequestException", Status.BAD_REQUEST, APPLICATION_XML_TYPE, VND_ERROR_V1_XML_TYPE
         );
     }
 
@@ -70,7 +70,7 @@ public class ErrorsTest
         throws Exception
     {
         throwException(
-            "BadRequestException", Status.BAD_REQUEST, APPLICATION_JSON_TYPE, VND_NEXUS_ERROR_V1_JSON_TYPE
+            "BadRequestException", Status.BAD_REQUEST, APPLICATION_JSON_TYPE, VND_ERROR_V1_JSON_TYPE
         );
     }
 

@@ -15,24 +15,20 @@ package org.sonatype.sisu.siesta.server.testsuite;
 import static com.sun.jersey.api.client.ClientResponse.Status;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
-import static javax.ws.rs.core.Response.Status.Family;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_VALIDATION_ERRORS_V1_JSON_TYPE;
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_VALIDATION_ERRORS_V1_XML_TYPE;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_VALIDATION_ERRORS_V1_JSON_TYPE;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_VALIDATION_ERRORS_V1_XML_TYPE;
 
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import javax.ws.rs.core.MediaType;
 
 import org.junit.Test;
-import org.sonatype.nexus.plugins.siesta.test.model.UserXO;
 import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
 import org.sonatype.sisu.siesta.server.testsuite.support.SiestaTestSupport;
+import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 
@@ -47,14 +43,14 @@ public class ValidationErrorsTest
     public void put_multiple_manual_validations_XML()
         throws Exception
     {
-        put_multiple_manual_validations( APPLICATION_XML_TYPE, VND_NEXUS_VALIDATION_ERRORS_V1_XML_TYPE );
+        put_multiple_manual_validations( APPLICATION_XML_TYPE, VND_VALIDATION_ERRORS_V1_XML_TYPE );
     }
 
     @Test
     public void put_multiple_manual_validations_JSON()
         throws Exception
     {
-        put_multiple_manual_validations( APPLICATION_JSON_TYPE, VND_NEXUS_VALIDATION_ERRORS_V1_JSON_TYPE );
+        put_multiple_manual_validations( APPLICATION_JSON_TYPE, VND_VALIDATION_ERRORS_V1_JSON_TYPE );
     }
 
     public void put_multiple_manual_validations( final MediaType... mediaTypes )
@@ -80,14 +76,14 @@ public class ValidationErrorsTest
     public void put_single_manual_validation_XML()
         throws Exception
     {
-        put_single_manual_validation( APPLICATION_XML_TYPE, VND_NEXUS_VALIDATION_ERRORS_V1_XML_TYPE );
+        put_single_manual_validation( APPLICATION_XML_TYPE, VND_VALIDATION_ERRORS_V1_XML_TYPE );
     }
 
     @Test
     public void put_single_manual_validation_JSON()
         throws Exception
     {
-        put_single_manual_validation( APPLICATION_JSON_TYPE, VND_NEXUS_VALIDATION_ERRORS_V1_JSON_TYPE );
+        put_single_manual_validation( APPLICATION_JSON_TYPE, VND_VALIDATION_ERRORS_V1_JSON_TYPE );
     }
 
     public void put_single_manual_validation( final MediaType... mediaTypes )

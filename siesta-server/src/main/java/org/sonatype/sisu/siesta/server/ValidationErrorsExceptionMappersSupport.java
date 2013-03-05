@@ -12,8 +12,8 @@
  */
 package org.sonatype.sisu.siesta.server;
 
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_VALIDATION_ERRORS_V1_JSON_TYPE;
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_VALIDATION_ERRORS_V1_XML_TYPE;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_VALIDATION_ERRORS_V1_JSON_TYPE;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_VALIDATION_ERRORS_V1_XML_TYPE;
 
 import java.util.List;
 import javax.ws.rs.core.GenericEntity;
@@ -36,7 +36,7 @@ public abstract class ValidationErrorsExceptionMappersSupport<E extends Throwabl
     public ValidationErrorsExceptionMappersSupport()
     {
         variants_v1 = Variant.mediaTypes(
-            VND_NEXUS_VALIDATION_ERRORS_V1_JSON_TYPE, VND_NEXUS_VALIDATION_ERRORS_V1_XML_TYPE
+            VND_VALIDATION_ERRORS_V1_JSON_TYPE, VND_VALIDATION_ERRORS_V1_XML_TYPE
         ).add().build();
     }
 

@@ -25,8 +25,8 @@ import java.util.UUID;
 import javax.ws.rs.core.MediaType;
 
 import org.junit.Test;
-import org.sonatype.nexus.plugins.siesta.test.model.UserXO;
 import org.sonatype.sisu.siesta.server.testsuite.support.SiestaTestSupport;
+import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 import com.sun.jersey.api.client.ClientResponse;
 
 /**

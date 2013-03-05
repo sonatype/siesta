@@ -35,7 +35,7 @@
 
     <bindings schemaLocation="model.xsd" node="/xsd:schema">
         <schemaBindings>
-            <package name="org.sonatype.nexus.plugins.siesta.test.model"/>
+            <package name="org.sonatype.sisu.siesta.testsuite.model"/>
             <nameXmlTransform>
                 <elementName suffix="XO"/>
                 <typeName suffix="XO"/>
