@@ -10,44 +10,45 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.server.testsuite.resources;
+package org.sonatype.sisu.siesta.testsuite.resources;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonatype.sisu.siesta.common.Resource;
-import org.sonatype.sisu.siesta.testsuite.model.UserXO;
+import org.sonatype.sisu.siesta.common.exceptions.BadRequestException;
+import org.sonatype.sisu.siesta.common.exceptions.ObjectNotFoundException;
 
 /**
  * @since 1.4
  */
 @Named
 @Singleton
-@Path( "/user" )
-public class UserResource
+@Path( "/errors" )
+public class ErrorsResource
     implements Resource
 {
 
-    private final Logger log = LoggerFactory.getLogger( getClass() );
-
-    @PUT
-    @Consumes( { APPLICATION_XML, APPLICATION_JSON } )
+    @GET
+    @Path( "/ObjectNotFoundException" )
     @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public UserXO put( final UserXO user )
+    public Object throwObjectNotFoundException()
     {
-        log.info( "PUT name='{}' description='{}' created='{}'",
-                  user.getName(), user.getDescription(), user.getCreated() );
+        throw new ObjectNotFoundException( "ObjectNotFoundException" );
+    }
 
-        return user;
+    @GET
+    @Path( "/BadRequestException" )
+    @Produces( { APPLICATION_XML, APPLICATION_JSON } )
+    public Object throwBadRequestException()
+    {
+        throw new BadRequestException( "BadRequestException" );
     }
 
 }

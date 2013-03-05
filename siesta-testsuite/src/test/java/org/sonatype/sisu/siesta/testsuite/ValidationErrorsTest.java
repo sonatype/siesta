@@ -10,7 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.server.testsuite;
+package org.sonatype.sisu.siesta.testsuite;
 
 import static com.sun.jersey.api.client.ClientResponse.Status;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
@@ -27,8 +27,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.junit.Test;
 import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
-import org.sonatype.sisu.siesta.server.testsuite.support.SiestaTestSupport;
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
+import org.sonatype.sisu.siesta.testsuite.support.SiestaTestSupport;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 
