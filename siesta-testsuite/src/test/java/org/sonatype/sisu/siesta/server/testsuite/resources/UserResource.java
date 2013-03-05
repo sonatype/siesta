@@ -33,8 +33,8 @@ import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorsException;
  */
 @Named
 @Singleton
-@Path( "/test" )
-public class TestResource
+@Path( "/user" )
+public class UserResource
     implements Resource
 {
 

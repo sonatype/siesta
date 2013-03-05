@@ -35,7 +35,7 @@ import com.sun.jersey.api.client.GenericType;
 /**
  * @since 1.4
  */
-public class SiestaTest
+public class UserTest
     extends SiestaTestSupport
 {
 
@@ -58,7 +58,7 @@ public class SiestaTest
     {
         final UserXO sent = new UserXO().withName( UUID.randomUUID().toString() ).withCreated( new Date() );
 
-        final ClientResponse response = client().resource( url( "test" ) )
+        final ClientResponse response = client().resource( url( "user" ) )
             .type( mediaType )
             .accept( mediaType )
             .put( ClientResponse.class, sent );
@@ -91,7 +91,7 @@ public class SiestaTest
     {
         final UserXO sent = new UserXO();
 
-        final ClientResponse response = client().resource( url( "test/validation/manual/multiple" ) )
+        final ClientResponse response = client().resource( url( "user/validation/manual/multiple" ) )
             .type( mediaType )
             .accept( mediaType )
             .put( ClientResponse.class, sent );
