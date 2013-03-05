@@ -31,25 +31,24 @@ public abstract class ErrorExceptionMapperSupport<E extends Throwable>
     extends ExceptionMapperSupport<E>
 {
 
-    private final List<Variant> variants;
+    private final List<Variant> variants_v1;
 
     public ErrorExceptionMapperSupport()
     {
-        variants = Variant.mediaTypes(
+        variants_v1 = Variant.mediaTypes(
             VND_NEXUS_ERROR_V1_JSON_TYPE, VND_NEXUS_ERROR_V1_XML_TYPE
         ).add().build();
     }
 
     protected Response convert( final E exception, final String id )
     {
-        final Variant variant = getRequest().selectVariant( variants );
-
         final Response.ResponseBuilder builder = Response.status( getStatusCode( exception ) );
 
-        if ( variant != null )
+        final Variant variant_v1 = getRequest().selectVariant( variants_v1 );
+        if ( variant_v1 != null )
         {
             builder
-                .type( variant.getMediaType() )
+                .type( variant_v1.getMediaType() )
                 .entity( new ErrorXO().withId( id ).withMessage( getMessage( exception ) ) );
         }
 
