@@ -76,4 +76,37 @@ public class ValidationErrorsTest
         assertThat( errors, hasSize( 2 ) );
     }
 
+    @Test
+    public void put_single_manual_validation_XML()
+        throws Exception
+    {
+        put_single_manual_validation( APPLICATION_XML_TYPE, VND_NEXUS_VALIDATION_ERRORS_V1_XML_TYPE );
+    }
+
+    @Test
+    public void put_single_manual_validation_JSON()
+        throws Exception
+    {
+        put_single_manual_validation( APPLICATION_JSON_TYPE, VND_NEXUS_VALIDATION_ERRORS_V1_JSON_TYPE );
+    }
+
+    public void put_single_manual_validation( final MediaType... mediaTypes )
+        throws Exception
+    {
+        final UserXO sent = new UserXO();
+
+        final ClientResponse response = client().resource( url( "validationErrors/manual/single" ) )
+            .type( mediaTypes[0] )
+            .accept( mediaTypes )
+            .put( ClientResponse.class, sent );
+
+        assertThat( response.getClientResponseStatus(), is( equalTo( Status.BAD_REQUEST ) ) );
+        assertThat( response.getType(), is( equalTo( mediaTypes[1] ) ) );
+
+        final List<ValidationErrorXO> errors = response.getEntity( new GenericType<List<ValidationErrorXO>>()
+        {
+        } );
+        assertThat( errors, hasSize( 1 ) );
+    }
+
 }

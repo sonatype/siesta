@@ -67,4 +67,25 @@ public class ValidationErrorsResource
         return user;
     }
 
+    @PUT
+    @Path( "/manual/single" )
+    @Consumes( { APPLICATION_XML, APPLICATION_JSON } )
+    @Produces( { APPLICATION_XML, APPLICATION_JSON } )
+    public UserXO putWithSingleManualValidation( final UserXO user )
+    {
+        log.info( "PUT name='{}' description='{}' created='{}'",
+                  user.getName(), user.getDescription(), user.getCreated() );
+
+        if ( user.getName() == null )
+        {
+            throw new ValidationErrorsException( "name", "Name cannot be null" );
+        }
+        if ( user.getDescription() == null )
+        {
+            throw new ValidationErrorsException( "description", "Description cannot be null" );
+        }
+
+        return user;
+    }
+
 }
