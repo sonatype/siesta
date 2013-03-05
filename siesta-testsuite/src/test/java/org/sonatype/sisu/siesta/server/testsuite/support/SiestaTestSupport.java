@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import org.eclipse.jetty.testing.ServletTester;
 import org.junit.After;
 import org.junit.Before;
+import org.sonatype.inject.BeanScanning;
 import org.sonatype.sisu.litmus.testsupport.inject.InjectedTestSupport;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceFilter;
@@ -43,6 +44,12 @@ public class SiestaTestSupport
     private String url;
 
     private Client client;
+
+    @Override
+    public BeanScanning scanning()
+    {
+        return BeanScanning.ON;
+    }
 
     @Before
     public void startJetty()

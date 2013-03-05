@@ -15,12 +15,10 @@ package org.sonatype.sisu.siesta.server.internal.mappers;
 import java.util.List;
 import javax.inject.Named;
 import javax.inject.Singleton;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.Response;
 
 import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
 import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorsException;
-import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
+import org.sonatype.sisu.siesta.server.ValidationErrorsExceptionMappersSupport;
 
 /**
  * Maps {@link ValidationErrorsException} to 400 with a list of {@link ValidationErrorXO} as body.
@@ -30,23 +28,13 @@ import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 @Named
 @Singleton
 public class ValidationErrorsExceptionMapper
-    extends ExceptionMapperSupport<ValidationErrorsException>
+    extends ValidationErrorsExceptionMappersSupport<ValidationErrorsException>
 {
 
     @Override
-    protected Response convert( final ValidationErrorsException exception, final String id )
+    protected List<ValidationErrorXO> getValidationErrors( final ValidationErrorsException exception )
     {
-        return Response.status( Response.Status.BAD_REQUEST )
-            .entity( new GenericEntity<List<ValidationErrorXO>>( exception.getErrors() )
-            {
-                @Override
-                public String toString()
-                {
-                    return getEntity().toString();
-                }
-            }
-            )
-            .build();
+        return exception.getValidationErrors();
     }
 
 }

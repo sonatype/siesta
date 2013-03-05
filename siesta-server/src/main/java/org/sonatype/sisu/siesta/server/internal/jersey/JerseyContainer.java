@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 import org.sonatype.sisu.siesta.server.ApplicationContainer;
 import com.sun.jersey.api.core.DefaultResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.core.spi.component.ioc.IoCComponentProviderFactory;
 import com.sun.jersey.spi.container.ContainerListener;
 import com.sun.jersey.spi.container.ContainerNotifier;
@@ -55,6 +56,8 @@ public class JerseyContainer
 
     private ResourceConfig resourceConfig;
 
+    private WebApplication webApplication;
+
     @Inject
     public JerseyContainer(final IoCComponentProviderFactory componentProviderFactory) throws Exception {
         this.componentProviderFactory = checkNotNull(componentProviderFactory);
@@ -68,6 +71,11 @@ public class JerseyContainer
         return config;
     }
 
+    public WebApplication getWebApplication()
+    {
+        return webApplication;
+    }
+
     /**
      * Dummy root resource to configure Jersey with so that it can initialize, it needs at least one root resource or it will puke.
      */
@@ -79,7 +87,8 @@ public class JerseyContainer
 
     protected void initiate(final ResourceConfig config, final WebApplication webApp) {
         this.resourceConfig = checkNotNull(config);
-        webApp.initiate(config, componentProviderFactory);
+        this.webApplication = webApp;
+        webApp.initiate( config, componentProviderFactory );
     }
 
     @Override
@@ -91,6 +100,7 @@ public class JerseyContainer
                 checkNotNull(props);
                 props.put(ResourceConfig.PROPERTY_CONTAINER_NOTIFIER, JerseyContainer.this);
                 props.put(ResourceConfig.FEATURE_XMLROOTELEMENT_PROCESSING, Boolean.TRUE.toString());
+                props.put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE.toString());
                 return super.getDefaultResourceConfig(props);
             }
         });

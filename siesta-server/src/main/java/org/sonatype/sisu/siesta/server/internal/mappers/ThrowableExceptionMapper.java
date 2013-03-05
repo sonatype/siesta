@@ -16,7 +16,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
-import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
+import org.sonatype.sisu.siesta.server.ErrorExceptionMapperSupport;
 
 /**
  * Maps {@link Throwable} to 500 with a {@link ErrorXO} body.
@@ -26,7 +26,7 @@ import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 @Named
 @Singleton
 public class ThrowableExceptionMapper
-    extends ExceptionMapperSupport<Throwable>
+    extends ErrorExceptionMapperSupport<Throwable>
 {
 
 }

@@ -64,6 +64,8 @@ public class TestModule
             }
         } );
 
+        install( new JerseyServletModule() );
+
         install( new ServletModule()
         {
             @Override

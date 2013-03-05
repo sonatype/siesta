@@ -15,13 +15,15 @@ package org.sonatype.sisu.siesta.server;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.UUID;
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.sisu.siesta.common.Component;
-import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
 
 /**
  * Support for {@link ExceptionMapper} implementations.
@@ -33,6 +35,9 @@ public abstract class ExceptionMapperSupport<E extends Throwable>
 {
 
     protected final Logger log = LoggerFactory.getLogger( getClass() );
+
+    @Inject
+    private Provider<Request> requestProvider;
 
     public Response toResponse( final E exception )
     {
@@ -49,27 +54,21 @@ public abstract class ExceptionMapperSupport<E extends Throwable>
         }
 
         final String uuid = UUID.randomUUID().toString();
-        Response response = convert( exception, uuid );
-        log.warn( "Response (UUID {}): [{}] {}", uuid, response.getStatus(), response.getEntity() );
+        final Response response = convert( exception, uuid );
+
+        final Object entity = response.getEntity();
+        log.warn(
+            "Response (UUID {}): [{}] {}", uuid, response.getStatus(), entity == null ? "(no entity/body)" : entity
+        );
 
         return response;
     }
 
-    protected Response convert( final E exception, final String id )
-    {
-        return Response.status( getStatusCode( exception ) )
-            .entity( new ErrorXO().withId( id ).withMessage( getMessage( exception ) ) )
-            .build();
-    }
+    protected abstract Response convert( final E exception, final String id );
 
-    protected String getMessage( final E exception )
+    protected Request getRequest()
     {
-        return exception.getMessage();
-    }
-
-    protected int getStatusCode( final E exception )
-    {
-        return Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
+        return requestProvider.get();
     }
 
 }

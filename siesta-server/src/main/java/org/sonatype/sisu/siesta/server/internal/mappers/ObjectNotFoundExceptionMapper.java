@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 
 import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
 import org.sonatype.sisu.siesta.common.exceptions.ObjectNotFoundException;
-import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
+import org.sonatype.sisu.siesta.server.ErrorExceptionMapperSupport;
 
 /**
  * Maps {@link ObjectNotFoundException} to 404 with a {@link ErrorXO} body.
@@ -28,7 +28,7 @@ import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 @Named
 @Singleton
 public class ObjectNotFoundExceptionMapper
-    extends ExceptionMapperSupport<ObjectNotFoundException>
+    extends ErrorExceptionMapperSupport<ObjectNotFoundException>
 {
 
     @Override

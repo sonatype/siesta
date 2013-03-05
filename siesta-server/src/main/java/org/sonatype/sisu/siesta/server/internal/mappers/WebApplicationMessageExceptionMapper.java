@@ -18,7 +18,7 @@ import javax.ws.rs.WebApplicationException;
 
 import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
 import org.sonatype.sisu.siesta.common.exceptions.WebApplicationMessageException;
-import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
+import org.sonatype.sisu.siesta.server.ErrorExceptionMapperSupport;
 
 /**
  * Maps {@link WebApplicationMessageException} to {@link WebApplicationException#getResponse()} status with a
@@ -29,7 +29,7 @@ import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 @Named
 @Singleton
 public class WebApplicationMessageExceptionMapper
-    extends ExceptionMapperSupport<WebApplicationMessageException>
+    extends ErrorExceptionMapperSupport<WebApplicationMessageException>
 {
 
     @Override

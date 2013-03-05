@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 
 import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
 import org.sonatype.sisu.siesta.common.exceptions.InvalidObjectException;
-import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
+import org.sonatype.sisu.siesta.server.ErrorExceptionMapperSupport;
 
 /**
  * Maps {@link InvalidObjectException} to 409 with a {@link ErrorXO} body.
@@ -28,7 +28,7 @@ import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 @Named
 @Singleton
 public class InvalidObjectExceptionMapper
-    extends ExceptionMapperSupport<InvalidObjectException>
+    extends ErrorExceptionMapperSupport<InvalidObjectException>
 {
 
     @Override

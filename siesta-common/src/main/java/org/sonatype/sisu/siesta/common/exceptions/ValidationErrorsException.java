@@ -65,7 +65,7 @@ public class ValidationErrorsException
         return this;
     }
 
-    public List<ValidationErrorXO> getErrors()
+    public List<ValidationErrorXO> getValidationErrors()
     {
         return errors;
     }

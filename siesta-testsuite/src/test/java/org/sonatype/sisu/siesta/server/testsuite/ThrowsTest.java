@@ -13,10 +13,14 @@
 package org.sonatype.sisu.siesta.server.testsuite;
 
 import static com.sun.jersey.api.client.ClientResponse.Status;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_ERROR_V1_JSON_TYPE;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_NEXUS_ERROR_V1_XML_TYPE;
 
 import javax.ws.rs.core.MediaType;
 
@@ -36,39 +40,48 @@ public class ThrowsTest
     public void throwObjectNotFoundException_XML()
         throws Exception
     {
-        throwException( MediaType.APPLICATION_XML_TYPE, "ObjectNotFoundException", Status.NOT_FOUND );
+        throwException(
+            "ObjectNotFoundException", Status.NOT_FOUND, APPLICATION_XML_TYPE, VND_NEXUS_ERROR_V1_XML_TYPE
+        );
     }
 
     @Test
     public void throwObjectNotFoundException_JSON()
         throws Exception
     {
-        throwException( MediaType.APPLICATION_JSON_TYPE, "ObjectNotFoundException", Status.NOT_FOUND );
+        throwException(
+            "ObjectNotFoundException", Status.NOT_FOUND, APPLICATION_JSON_TYPE, VND_NEXUS_ERROR_V1_JSON_TYPE
+        );
     }
 
     @Test
     public void throwBadRequestException_XML()
         throws Exception
     {
-        throwException( MediaType.APPLICATION_XML_TYPE, "BadRequestException", Status.BAD_REQUEST );
+        throwException(
+            "BadRequestException", Status.BAD_REQUEST, APPLICATION_XML_TYPE, VND_NEXUS_ERROR_V1_XML_TYPE
+        );
     }
 
     @Test
     public void throwBadRequestException_JSON()
         throws Exception
     {
-        throwException( MediaType.APPLICATION_JSON_TYPE, "BadRequestException", Status.BAD_REQUEST );
+        throwException(
+            "BadRequestException", Status.BAD_REQUEST, APPLICATION_JSON_TYPE, VND_NEXUS_ERROR_V1_JSON_TYPE
+        );
     }
 
-    public void throwException( final MediaType mediaType, final String exceptionType, final Status expectedStatus )
+    public void throwException( final String exceptionType, final Status expectedStatus, final MediaType... mediaTypes )
         throws Exception
     {
         final ClientResponse response = client().resource( url( "throw/" + exceptionType ) )
-            .type( mediaType )
-            .accept( mediaType )
+            .type( mediaTypes[0] )
+            .accept( mediaTypes )
             .get( ClientResponse.class );
 
-        assertThat( response.getClientResponseStatus(), equalTo( expectedStatus ) );
+        assertThat( response.getClientResponseStatus(), is( equalTo( expectedStatus ) ) );
+        assertThat( response.getType(), is( equalTo( mediaTypes[1] ) ) );
 
         final ErrorXO error = response.getEntity( ErrorXO.class );
         assertThat( error, is( notNullValue() ) );
