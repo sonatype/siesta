@@ -70,4 +70,9 @@ public class ValidationErrorsException
         return errors;
     }
 
+    public boolean hasErrors()
+    {
+        return !errors.isEmpty();
+    }
+
 }
