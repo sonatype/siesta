@@ -30,6 +30,8 @@ import org.sonatype.sisu.siesta.server.testsuite.support.SiestaTestSupport;
 import com.sun.jersey.api.client.ClientResponse;
 
 /**
+ * Tests related to media type/body returned in case of divers server errors.
+ *
  * @since 1.4
  */
 public class ThrowsTest

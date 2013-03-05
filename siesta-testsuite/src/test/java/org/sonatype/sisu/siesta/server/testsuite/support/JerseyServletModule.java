@@ -60,7 +60,7 @@ import com.sun.jersey.spi.container.WebApplication;
  * <li>{@link ResourceContext}</li>
  * </ul>
  *
- * @author Paul.Sandoz@Sun.Com
+ * @since 1.4
  */
 public class JerseyServletModule
     extends AbstractModule

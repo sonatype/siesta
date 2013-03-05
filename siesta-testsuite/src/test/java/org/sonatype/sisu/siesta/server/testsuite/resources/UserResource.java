@@ -29,7 +29,7 @@ import org.sonatype.sisu.siesta.common.Resource;
 import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorsException;
 
 /**
- * @since 2.4
+ * @since 1.4
  */
 @Named
 @Singleton

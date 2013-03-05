@@ -30,6 +30,8 @@ import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
 
 /**
+ * Support class for Siesta UTs.
+ *
  * @since 1.4
  */
 public class SiestaTestSupport

@@ -27,9 +27,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.servlet.ServletModule;
 
 /**
- * Siesta Guice module.
- *
- * @since 1.0
+ * @since 1.4
  */
 @Named
 @Singleton
