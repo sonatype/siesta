@@ -12,14 +12,11 @@
  */
 package org.sonatype.sisu.siesta.common.exceptions;
 
-import org.sonatype.sisu.siesta.common.HttpStatusCode;
-
 /**
  * Thrown when an a client issues a bad request against a resource.
  *
  * @since 1.3.1
  */
-@HttpStatusCode( 400 )
 public class BadRequestException
     extends RuntimeException
 {

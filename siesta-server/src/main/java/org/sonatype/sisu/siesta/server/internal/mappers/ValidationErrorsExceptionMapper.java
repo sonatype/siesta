@@ -10,7 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common;
+package org.sonatype.sisu.siesta.server.internal.mappers;
 
 import java.util.List;
 import javax.inject.Named;
@@ -18,11 +18,12 @@ import javax.inject.Singleton;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 
+import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
 import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorsException;
-import org.sonatype.sisu.siesta.common.model.ValidationError;
+import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 
 /**
- * Maps {@link ValidationErrorsException} to 400 with a list of {@link ValidationError} as body.
+ * Maps {@link ValidationErrorsException} to 400 with a list of {@link ValidationErrorXO} as body.
  *
  * @since 1.4
  */
@@ -33,10 +34,10 @@ public class ValidationErrorsExceptionMapper
 {
 
     @Override
-    protected Response convert( final ValidationErrorsException exception )
+    protected Response convert( final ValidationErrorsException exception, final String id )
     {
         return Response.status( Response.Status.BAD_REQUEST )
-            .entity( new GenericEntity<List<ValidationError>>( exception.getErrors() )
+            .entity( new GenericEntity<List<ValidationErrorXO>>( exception.getErrors() )
             {
                 @Override
                 public String toString()

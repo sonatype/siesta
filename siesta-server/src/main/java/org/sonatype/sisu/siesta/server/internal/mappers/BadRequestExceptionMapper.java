@@ -10,27 +10,31 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common;
+package org.sonatype.sisu.siesta.server.internal.mappers;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import javax.ws.rs.core.Response;
 
+import org.sonatype.sisu.siesta.common.exceptions.BadRequestException;
+import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
+import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
+
 /**
- * Indicates the HTTP status code that should be used to report the annotated exception. Any exception that misses this
- * annotation will be treated as an internal server error and reported as HTTP 500.
+ * Maps {@link BadRequestException} to 400 with a {@link ErrorXO} body.
+ *
+ * @since 1.4
  */
-@Documented
-@Retention( RetentionPolicy.RUNTIME )
-@Target( ElementType.TYPE )
-@Inherited
-public @interface HttpStatusCode
+@Named
+@Singleton
+public class BadRequestExceptionMapper
+    extends ExceptionMapperSupport<BadRequestException>
 {
 
-    int value();
+    @Override
+    protected int getStatusCode( final BadRequestException exception )
+    {
+        return Response.Status.BAD_REQUEST.getStatusCode();
+    }
 
 }

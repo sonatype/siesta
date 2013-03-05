@@ -10,7 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common;
+package org.sonatype.sisu.siesta.server.internal.mappers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,11 +25,12 @@ import javax.validation.metadata.ElementDescriptor;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 
-import org.sonatype.sisu.siesta.common.model.ValidationError;
+import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
+import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 
 /**
  * Maps {@link ConstraintViolationException} to 400 (or 500 in case of a violation on a methods return value) with a
- * list of {@link ValidationError} as body.
+ * list of {@link ValidationErrorXO} as body.
  *
  * @since 1.4
  */
@@ -40,10 +41,10 @@ public class ConstraintViolationExceptionMapper
 {
 
     @Override
-    protected Response convert( final ConstraintViolationException exception )
+    protected Response convert( final ConstraintViolationException exception, final String uuid )
     {
-        return Response.status( getStatus( exception ) )
-            .entity( new GenericEntity<List<ValidationError>>( getEntity( exception.getConstraintViolations() ) )
+        return Response.status( getResponseStatus( exception ) )
+            .entity( new GenericEntity<List<ValidationErrorXO>>( getEntity( exception.getConstraintViolations() ) )
             {
                 @Override
                 public String toString()
@@ -55,19 +56,19 @@ public class ConstraintViolationExceptionMapper
             .build();
     }
 
-    private List<ValidationError> getEntity( final Set<ConstraintViolation<?>> violations )
+    private List<ValidationErrorXO> getEntity( final Set<ConstraintViolation<?>> violations )
     {
-        final List<ValidationError> errors = new ArrayList<ValidationError>();
+        final List<ValidationErrorXO> errors = new ArrayList<ValidationErrorXO>();
 
         for ( final ConstraintViolation violation : violations )
         {
-            errors.add( new ValidationError( getPath( violation ), violation.getMessage() ) );
+            errors.add( new ValidationErrorXO( getPath( violation ), violation.getMessage() ) );
         }
 
         return errors;
     }
 
-    private Response.Status getStatus( final ConstraintViolationException exception )
+    private Response.Status getResponseStatus( final ConstraintViolationException exception )
     {
         return getResponseStatus( exception.getConstraintViolations() );
     }

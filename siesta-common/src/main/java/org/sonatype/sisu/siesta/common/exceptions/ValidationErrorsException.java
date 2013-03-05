@@ -17,7 +17,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import java.util.Arrays;
 import java.util.List;
 
-import org.sonatype.sisu.siesta.common.model.ValidationError;
 import com.google.common.collect.Lists;
 
 /**
@@ -29,7 +28,7 @@ public class ValidationErrorsException
     extends RuntimeException
 {
 
-    private final List<ValidationError> errors = Lists.newArrayList();
+    private final List<ValidationErrorXO> errors = Lists.newArrayList();
 
     public ValidationErrorsException()
     {
@@ -39,34 +38,34 @@ public class ValidationErrorsException
     public ValidationErrorsException( final String message )
     {
         super( message );
-        errors.add( new ValidationError( message ) );
+        errors.add( new ValidationErrorXO( message ) );
     }
 
     public ValidationErrorsException( final String path, final String message )
     {
         super( message );
-        errors.add( new ValidationError( path, message ) );
+        errors.add( new ValidationErrorXO( path, message ) );
     }
 
     public ValidationErrorsException withError( final String message )
     {
-        errors.add( new ValidationError( message ) );
+        errors.add( new ValidationErrorXO( message ) );
         return this;
     }
 
     public ValidationErrorsException withError( final String path, final String message )
     {
-        errors.add( new ValidationError( path, message ) );
+        errors.add( new ValidationErrorXO( path, message ) );
         return this;
     }
 
-    public ValidationErrorsException withErrors( final ValidationError... validationErrors )
+    public ValidationErrorsException withErrors( final ValidationErrorXO... validationErrors )
     {
         errors.addAll( Arrays.asList( checkNotNull( validationErrors ) ) );
         return this;
     }
 
-    public List<ValidationError> getErrors()
+    public List<ValidationErrorXO> getErrors()
     {
         return errors;
     }

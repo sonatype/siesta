@@ -10,40 +10,31 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common;
+package org.sonatype.sisu.siesta.server.internal.mappers;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
+import javax.ws.rs.core.Response;
+
+import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
+import org.sonatype.sisu.siesta.common.exceptions.ObjectNotFoundException;
+import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 
 /**
+ * Maps {@link ObjectNotFoundException} to 404 with a {@link ErrorXO} body.
+ *
  * @since 1.4
  */
-public class ErrorResponse
+@Named
+@Singleton
+public class ObjectNotFoundExceptionMapper
+    extends ExceptionMapperSupport<ObjectNotFoundException>
 {
 
-    public static final String CONTENT_TYPE = "text/plain;charset=UTF-8";
-
-    private final int statusCode;
-
-    private final String messageBody;
-
-    public int getStatusCode()
-    {
-        return statusCode;
-    }
-
-    public String getMessageBody()
-    {
-        return messageBody;
-    }
-
-    ErrorResponse( int statusCode, String messageBody )
-    {
-        this.statusCode = statusCode;
-        this.messageBody = messageBody;
-    }
-
     @Override
-    public String toString()
+    protected int getStatusCode( final ObjectNotFoundException exception )
     {
-        return statusCode + " " + messageBody;
+        return Response.Status.NOT_FOUND.getStatusCode();
     }
 
 }

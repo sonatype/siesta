@@ -10,35 +10,23 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common.exceptions;
+package org.sonatype.sisu.siesta.server.internal.mappers;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
+import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 
 /**
- * Thrown when an object is not found.
+ * Maps {@link Throwable} to 500 with a {@link ErrorXO} body.
  *
- * @since 1.0
+ * @since 1.4
  */
-public class ObjectNotFoundException
-    extends RuntimeException
+@Named
+@Singleton
+public class ThrowableExceptionMapper
+    extends ExceptionMapperSupport<Throwable>
 {
-
-    public ObjectNotFoundException()
-    {
-        super();
-    }
-
-    public ObjectNotFoundException( final String message )
-    {
-        super( message );
-    }
-
-    public ObjectNotFoundException( final String message, final Throwable cause )
-    {
-        super( message, cause );
-    }
-
-    public ObjectNotFoundException( final Throwable cause )
-    {
-        super( cause );
-    }
 
 }

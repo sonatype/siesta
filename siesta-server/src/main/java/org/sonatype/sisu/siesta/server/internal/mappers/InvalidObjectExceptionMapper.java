@@ -10,35 +10,31 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common.exceptions;
+package org.sonatype.sisu.siesta.server.internal.mappers;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
+import javax.ws.rs.core.Response;
+
+import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
+import org.sonatype.sisu.siesta.common.exceptions.InvalidObjectException;
+import org.sonatype.sisu.siesta.server.ExceptionMapperSupport;
 
 /**
- * Thrown when an object is not found.
+ * Maps {@link InvalidObjectException} to 409 with a {@link ErrorXO} body.
  *
- * @since 1.0
+ * @since 1.4
  */
-public class ObjectNotFoundException
-    extends RuntimeException
+@Named
+@Singleton
+public class InvalidObjectExceptionMapper
+    extends ExceptionMapperSupport<InvalidObjectException>
 {
 
-    public ObjectNotFoundException()
+    @Override
+    protected int getStatusCode( final InvalidObjectException exception )
     {
-        super();
-    }
-
-    public ObjectNotFoundException( final String message )
-    {
-        super( message );
-    }
-
-    public ObjectNotFoundException( final String message, final Throwable cause )
-    {
-        super( message, cause );
-    }
-
-    public ObjectNotFoundException( final Throwable cause )
-    {
-        super( cause );
+        return Response.Status.BAD_REQUEST.getStatusCode();
     }
 
 }

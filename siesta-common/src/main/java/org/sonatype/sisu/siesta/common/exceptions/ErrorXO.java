@@ -10,7 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common.model;
+package org.sonatype.sisu.siesta.common.exceptions;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -19,43 +19,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * @since 1.4
  */
-@XmlRootElement(name = "validationError")
-public class ValidationError
+@XmlRootElement( name = "error" )
+public class ErrorXO
 {
 
-    private String id;
+    private String uuid;
 
     private String message;
 
-    public ValidationError()
+    public ErrorXO()
     {
-        id = "*";
     }
 
-    public ValidationError( final String message )
+    public ErrorXO( final String uuid, final String message )
     {
-        this( "*", message );
+        this.uuid = checkNotNull( uuid );
+        this.message = message;
     }
 
-    public ValidationError( final String id, final String message )
+    public String getUuid()
     {
-        this.id = checkNotNull( id );
-        this.message = checkNotNull( message );
+        return uuid;
     }
 
-    public String getId()
+    public void setUuid( final String uuid )
     {
-        return id;
+        this.uuid = uuid;
     }
 
-    public void setId( final String id )
+    public ErrorXO withId( final String id )
     {
-        this.id = id;
-    }
-
-    public ValidationError withId( final String id )
-    {
-        this.id = id;
+        this.uuid = id;
         return this;
     }
 
@@ -69,7 +63,7 @@ public class ValidationError
         this.message = message;
     }
 
-    public ValidationError withMessage( final String message )
+    public ErrorXO withMessage( final String message )
     {
         this.message = message;
         return this;
@@ -78,7 +72,7 @@ public class ValidationError
     @Override
     public String toString()
     {
-        return id + " -> " + message;
+        return message + " (UUID " + uuid + ")";
     }
 
 }

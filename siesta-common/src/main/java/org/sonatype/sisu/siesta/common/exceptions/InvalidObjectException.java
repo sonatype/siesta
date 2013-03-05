@@ -12,14 +12,11 @@
  */
 package org.sonatype.sisu.siesta.common.exceptions;
 
-import org.sonatype.sisu.siesta.common.HttpStatusCode;
-
 /**
  * Thrown when an object is invalid.
  *
  * @since 1.0
  */
-@HttpStatusCode( 409 )
 public class InvalidObjectException
     extends RuntimeException
 {
