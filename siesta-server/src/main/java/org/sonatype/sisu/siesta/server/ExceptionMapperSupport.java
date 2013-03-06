@@ -24,6 +24,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.sisu.siesta.common.Component;
+import org.sonatype.sisu.siesta.common.error.ErrorXO;
 
 /**
  * Support for {@link ExceptionMapper} implementations.
@@ -44,21 +45,30 @@ public abstract class ExceptionMapperSupport<E extends Throwable>
         //noinspection ThrowableResultOfMethodCallIgnored
         checkNotNull( exception );
 
+        final String uuid = UUID.randomUUID().toString();
         if ( log.isTraceEnabled() )
         {
-            log.trace( "Mapping exception: " + exception, exception );
+            log.trace( "(UUID {}) Mapping exception: " + exception, uuid, exception );
         }
         else
         {
-            log.debug( "Mapping exception: " + exception );
+            log.debug( "(UUID {}) Mapping exception: " + exception, uuid );
         }
 
-        final String uuid = UUID.randomUUID().toString();
-        final Response response = convert( exception, uuid );
+        Response response;
+        try
+        {
+            response = convert( exception, uuid );
+        }
+        catch ( Exception e )
+        {
+            log.warn( "(UUID {}) Failed to map exception", uuid, e );
+            response = Response.serverError().entity( new ErrorXO().withId( uuid ) ).build();
+        }
 
         final Object entity = response.getEntity();
         log.warn(
-            "Response (UUID {}): [{}] {}", uuid, response.getStatus(), entity == null ? "(no entity/body)" : entity
+            "(UUID {}) Response: [{}] {}", uuid, response.getStatus(), entity == null ? "(no entity/body)" : entity
         );
 
         return response;
