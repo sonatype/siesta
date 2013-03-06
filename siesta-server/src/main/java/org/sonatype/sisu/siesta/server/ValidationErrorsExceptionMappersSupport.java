@@ -45,21 +45,25 @@ public abstract class ValidationErrorsExceptionMappersSupport<E extends Throwabl
     {
         final Response.ResponseBuilder builder = Response.status( getStatusCode( exception ) );
 
-        final Variant variant_v1 = getRequest().selectVariant( variants_v1 );
-        if ( variant_v1 != null )
+        final List<ValidationErrorXO> validationErrors = getValidationErrors( exception );
+        if ( validationErrors != null && !validationErrors.isEmpty() )
         {
-            builder
-                .type( variant_v1.getMediaType() )
-                .entity(
-                    new GenericEntity<List<ValidationErrorXO>>( getValidationErrors( exception ) )
-                    {
-                        @Override
-                        public String toString()
+            final Variant variant_v1 = getRequest().selectVariant( variants_v1 );
+            if ( variant_v1 != null )
+            {
+                builder
+                    .type( variant_v1.getMediaType() )
+                    .entity(
+                        new GenericEntity<List<ValidationErrorXO>>( validationErrors )
                         {
-                            return getEntity().toString();
+                            @Override
+                            public String toString()
+                            {
+                                return getEntity().toString();
+                            }
                         }
-                    }
-                );
+                    );
+            }
         }
 
         return builder.build();
