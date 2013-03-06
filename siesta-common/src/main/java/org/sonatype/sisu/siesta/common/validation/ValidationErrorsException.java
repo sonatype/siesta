@@ -65,6 +65,12 @@ public class ValidationErrorsException
         return this;
     }
 
+    public ValidationErrorsException withErrors( final List<ValidationErrorXO> validationErrors )
+    {
+        errors.addAll( checkNotNull( validationErrors ) );
+        return this;
+    }
+
     public List<ValidationErrorXO> getValidationErrors()
     {
         return errors;
