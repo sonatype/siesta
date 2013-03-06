@@ -179,9 +179,15 @@
             </dependency>
 
             <dependency>
+                <groupId>org.sonatype.sisu.inject</groupId>
+                <artifactId>guice-servlet</artifactId>
+                <version>3.1.2</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.sonatype.sisu.litmus</groupId>
                 <artifactId>litmus-testsupport</artifactId>
-                <version>1.5</version>
+                <version>1.6</version>
             </dependency>
 
             <!-- INTERNAL -->
@@ -224,6 +230,7 @@
         <module>siesta-jackson</module>
         <module>siesta-server</module>
         <module>siesta-client</module>
+        <module>siesta-testsuite</module>
     </modules>
 
     <build>
