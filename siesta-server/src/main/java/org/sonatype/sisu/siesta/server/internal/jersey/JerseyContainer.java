@@ -71,6 +71,10 @@ public class JerseyContainer
         return config;
     }
 
+    /**
+     * @return Jersey {@link WebApplication} after this container is initialized
+     * @since 1.4
+     */
     public WebApplication getWebApplication()
     {
         return webApplication;

@@ -48,42 +48,63 @@ public class SiestaJerseyModule
         binder.bind(IoCComponentProviderFactory.class).to(SisuComponentProviderFactory.class).in(Singleton.class);
     }
 
+    /**
+     * @since 1.4
+     */
     @Provides
     public WebApplication webApp( ApplicationContainer applicationContainer )
     {
         return ( (JerseyContainer) applicationContainer ).getWebApplication();
     }
 
+    /**
+     * @since 1.4
+     */
     @Provides
     public Providers providers( WebApplication webApplication )
     {
         return webApplication.getProviders();
     }
 
+    /**
+     * @since 1.4
+     */
     @Provides
     public FeaturesAndProperties featuresAndProperties( WebApplication webApplication )
     {
         return webApplication.getFeaturesAndProperties();
     }
 
+    /**
+     * @since 1.4
+     */
     @Provides
     public MessageBodyWorkers messageBodyWorkers( WebApplication webApplication )
     {
         return webApplication.getMessageBodyWorkers();
     }
 
+    /**
+     * @since 1.4
+     */
     @Provides
     public ExceptionMapperContext exceptionMapperContext( WebApplication webApplication )
     {
         return webApplication.getExceptionMapperContext();
     }
 
+    /**
+     * @since 1.4
+     */
     @Provides
     public ResourceContext resourceContext( WebApplication webApplication )
     {
         return webApplication.getResourceContext();
     }
 
+    /**
+     * @since 1.4
+     */
     @RequestScoped
     @Provides
     public HttpContext httpContext( WebApplication webApplication )
@@ -91,6 +112,9 @@ public class SiestaJerseyModule
         return webApplication.getThreadLocalHttpContext();
     }
 
+    /**
+     * @since 1.4
+     */
     @RequestScoped
     @Provides
     public UriInfo uriInfo( WebApplication wa )
@@ -98,6 +122,9 @@ public class SiestaJerseyModule
         return wa.getThreadLocalHttpContext().getUriInfo();
     }
 
+    /**
+     * @since 1.4
+     */
     @RequestScoped
     @Provides
     public ExtendedUriInfo extendedUriInfo( WebApplication wa )
@@ -105,6 +132,9 @@ public class SiestaJerseyModule
         return wa.getThreadLocalHttpContext().getUriInfo();
     }
 
+    /**
+     * @since 1.4
+     */
     @RequestScoped
     @Provides
     public HttpRequestContext requestContext( WebApplication wa )
@@ -112,6 +142,9 @@ public class SiestaJerseyModule
         return wa.getThreadLocalHttpContext().getRequest();
     }
 
+    /**
+     * @since 1.4
+     */
     @RequestScoped
     @Provides
     public HttpHeaders httpHeaders( WebApplication wa )
@@ -119,6 +152,9 @@ public class SiestaJerseyModule
         return wa.getThreadLocalHttpContext().getRequest();
     }
 
+    /**
+     * @since 1.4
+     */
     @RequestScoped
     @Provides
     public Request request( WebApplication wa )
@@ -126,6 +162,9 @@ public class SiestaJerseyModule
         return wa.getThreadLocalHttpContext().getRequest();
     }
 
+    /**
+     * @since 1.4
+     */
     @RequestScoped
     @Provides
     public SecurityContext securityContext( WebApplication wa )
@@ -133,6 +172,9 @@ public class SiestaJerseyModule
         return wa.getThreadLocalHttpContext().getRequest();
     }
 
+    /**
+     * @since 1.4
+     */
     @RequestScoped
     @Provides
     public HttpResponseContext responseContext( WebApplication wa )
