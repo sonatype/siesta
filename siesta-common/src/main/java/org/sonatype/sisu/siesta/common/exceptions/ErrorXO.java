@@ -12,8 +12,6 @@
  */
 package org.sonatype.sisu.siesta.common.exceptions;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -23,33 +21,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ErrorXO
 {
 
-    private String uuid;
+    private String id;
 
     private String message;
 
     public ErrorXO()
     {
+        super();
     }
 
-    public ErrorXO( final String uuid, final String message )
+    public ErrorXO( final String id, final String message )
     {
-        this.uuid = checkNotNull( uuid );
+        this.id = id;
         this.message = message;
     }
 
-    public String getUuid()
+    public String getId()
     {
-        return uuid;
+        return id;
     }
 
-    public void setUuid( final String uuid )
+    public void setId( final String id )
     {
-        this.uuid = uuid;
+        this.id = id;
     }
 
     public ErrorXO withId( final String id )
     {
-        this.uuid = id;
+        this.id = id;
         return this;
     }
 
@@ -70,9 +69,10 @@ public class ErrorXO
     }
 
     @Override
-    public String toString()
-    {
-        return message + " (UUID " + uuid + ")";
+    public String toString() {
+        return getClass().getSimpleName() + "{" +
+            "id='" + id + '\'' +
+            ", message='" + message + '\'' +
+            '}';
     }
-
 }

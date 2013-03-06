@@ -87,7 +87,7 @@ public class ErrorsTest
 
         final ErrorXO error = response.getEntity( ErrorXO.class );
         assertThat( error, is( notNullValue() ) );
-        assertThat( error.getUuid(), is( notNullValue() ) );
+        assertThat( error.getId(), is( notNullValue() ) );
         assertThat( error.getMessage(), is( exceptionType ) );
     }
 

@@ -22,28 +22,20 @@ import javax.ws.rs.core.MediaType;
 public interface SiestaMediaType
 {
 
-    public static final String VND_ERROR_V1_XML =
-        "application/vnd.siesta-error-v1+xml";
+    String VND_ERROR_V1_XML = "application/vnd.siesta-error-v1+xml";
 
-    public static final MediaType VND_ERROR_V1_XML_TYPE =
-        new MediaType( "application", "vnd.siesta-error-v1+xml" );
+    MediaType VND_ERROR_V1_XML_TYPE = new MediaType( "application", "vnd.siesta-error-v1+xml" );
 
-    public static final String VND_ERROR_V1_JSON =
-        "application/vnd.siesta-error-v1+json";
+    String VND_ERROR_V1_JSON = "application/vnd.siesta-error-v1+json";
 
-    public static final MediaType VND_ERROR_V1_JSON_TYPE =
-        new MediaType( "application", "vnd.siesta-error-v1+json" );
+    MediaType VND_ERROR_V1_JSON_TYPE = new MediaType( "application", "vnd.siesta-error-v1+json" );
 
-    public static final String VND_VALIDATION_ERRORS_V1_XML =
-        "application/vnd.siesta-validation-errors-v1+xml";
+    String VND_VALIDATION_ERRORS_V1_XML = "application/vnd.siesta-validation-errors-v1+xml";
 
-    public static final MediaType VND_VALIDATION_ERRORS_V1_XML_TYPE =
-        new MediaType( "application", "vnd.siesta-validation-errors-v1+xml" );
+    MediaType VND_VALIDATION_ERRORS_V1_XML_TYPE = new MediaType( "application", "vnd.siesta-validation-errors-v1+xml" );
 
-    public static final String VND_VALIDATION_ERRORS_V1_JSON =
-        "application/vnd.siesta-validation-errors-v1+json";
+    String VND_VALIDATION_ERRORS_V1_JSON = "application/vnd.siesta-validation-errors-v1+json";
 
-    public static final MediaType VND_VALIDATION_ERRORS_V1_JSON_TYPE =
-        new MediaType( "application", "vnd.siesta-validation-errors-v1+json" );
+    MediaType VND_VALIDATION_ERRORS_V1_JSON_TYPE = new MediaType( "application", "vnd.siesta-validation-errors-v1+json" );
 
 }

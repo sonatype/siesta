@@ -12,8 +12,6 @@
  */
 package org.sonatype.sisu.siesta.common.exceptions;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,8 +37,8 @@ public class ValidationErrorXO
 
     public ValidationErrorXO( final String id, final String message )
     {
-        this.id = checkNotNull( id );
-        this.message = checkNotNull( message );
+        this.id = id;
+        this.message = message;
     }
 
     public String getId()
@@ -76,9 +74,11 @@ public class ValidationErrorXO
     }
 
     @Override
-    public String toString()
-    {
-        return id + " -> " + message;
+    public String toString() {
+        return getClass().getSimpleName() + "{" +
+            "id='" + id + '\'' +
+            ", message='" + message + '\'' +
+            '}';
     }
 
 }
