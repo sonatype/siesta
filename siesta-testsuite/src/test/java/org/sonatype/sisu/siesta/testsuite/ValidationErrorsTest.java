@@ -26,7 +26,7 @@ import java.util.List;
 import javax.ws.rs.core.MediaType;
 
 import org.junit.Test;
-import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
+import org.sonatype.sisu.siesta.common.validation.ValidationErrorXO;
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 import org.sonatype.sisu.siesta.testsuite.support.SiestaTestSupport;
 import com.sun.jersey.api.client.ClientResponse;

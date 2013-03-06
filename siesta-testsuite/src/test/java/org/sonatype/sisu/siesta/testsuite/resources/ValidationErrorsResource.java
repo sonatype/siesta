@@ -25,7 +25,7 @@ import javax.ws.rs.Produces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sonatype.sisu.siesta.common.Resource;
-import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorsException;
+import org.sonatype.sisu.siesta.common.validation.ValidationErrorsException;
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 
 /**

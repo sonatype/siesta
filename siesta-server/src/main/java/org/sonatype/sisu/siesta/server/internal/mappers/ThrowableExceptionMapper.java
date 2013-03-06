@@ -15,7 +15,7 @@ package org.sonatype.sisu.siesta.server.internal.mappers;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
+import org.sonatype.sisu.siesta.common.error.ErrorXO;
 import org.sonatype.sisu.siesta.server.ErrorExceptionMapperSupport;
 
 /**

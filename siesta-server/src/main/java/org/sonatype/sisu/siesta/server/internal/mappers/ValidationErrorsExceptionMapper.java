@@ -16,8 +16,8 @@ import java.util.List;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
-import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorsException;
+import org.sonatype.sisu.siesta.common.validation.ValidationErrorXO;
+import org.sonatype.sisu.siesta.common.validation.ValidationErrorsException;
 import org.sonatype.sisu.siesta.server.ValidationErrorsExceptionMappersSupport;
 
 /**

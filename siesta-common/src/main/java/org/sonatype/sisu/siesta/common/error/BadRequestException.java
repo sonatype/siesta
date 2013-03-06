@@ -10,33 +10,33 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common.exceptions;
+package org.sonatype.sisu.siesta.common.error;
 
 /**
- * Thrown when an object is not found.
+ * Thrown when an a client issues a bad request against a resource.
  *
- * @since 1.0
+ * @since 1.3.1
  */
-public class ObjectNotFoundException
+public class BadRequestException
     extends RuntimeException
 {
 
-    public ObjectNotFoundException()
+    public BadRequestException()
     {
         super();
     }
 
-    public ObjectNotFoundException( final String message )
+    public BadRequestException( final String message )
     {
         super( message );
     }
 
-    public ObjectNotFoundException( final String message, final Throwable cause )
+    public BadRequestException( final String message, final Throwable cause )
     {
         super( message, cause );
     }
 
-    public ObjectNotFoundException( final Throwable cause )
+    public BadRequestException( final Throwable cause )
     {
         super( cause );
     }

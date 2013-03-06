@@ -24,7 +24,7 @@ import javax.validation.Path;
 import javax.validation.metadata.ElementDescriptor;
 import javax.ws.rs.core.Response;
 
-import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
+import org.sonatype.sisu.siesta.common.validation.ValidationErrorXO;
 import org.sonatype.sisu.siesta.server.ValidationErrorsExceptionMappersSupport;
 
 /**

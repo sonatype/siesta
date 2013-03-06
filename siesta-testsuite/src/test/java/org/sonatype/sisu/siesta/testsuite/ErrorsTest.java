@@ -25,7 +25,7 @@ import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_ERROR_V1_XML_T
 import javax.ws.rs.core.MediaType;
 
 import org.junit.Test;
-import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
+import org.sonatype.sisu.siesta.common.error.ErrorXO;
 import org.sonatype.sisu.siesta.testsuite.support.SiestaTestSupport;
 import com.sun.jersey.api.client.ClientResponse;
 

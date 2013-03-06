@@ -10,27 +10,32 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common.exceptions;
+package org.sonatype.sisu.siesta.common.validation;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @since 1.4
  */
-@XmlRootElement( name = "error" )
-public class ErrorXO
+@XmlRootElement(name = "validationError")
+public class ValidationErrorXO
 {
 
     private String id;
 
     private String message;
 
-    public ErrorXO()
+    public ValidationErrorXO()
     {
-        super();
+        id = "*";
     }
 
-    public ErrorXO( final String id, final String message )
+    public ValidationErrorXO( final String message )
+    {
+        this( "*", message );
+    }
+
+    public ValidationErrorXO( final String id, final String message )
     {
         this.id = id;
         this.message = message;
@@ -46,7 +51,7 @@ public class ErrorXO
         this.id = id;
     }
 
-    public ErrorXO withId( final String id )
+    public ValidationErrorXO withId( final String id )
     {
         this.id = id;
         return this;
@@ -62,7 +67,7 @@ public class ErrorXO
         this.message = message;
     }
 
-    public ErrorXO withMessage( final String message )
+    public ValidationErrorXO withMessage( final String message )
     {
         this.message = message;
         return this;
@@ -75,4 +80,5 @@ public class ErrorXO
             ", message='" + message + '\'' +
             '}';
     }
+
 }

@@ -22,8 +22,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import org.sonatype.sisu.siesta.common.Resource;
-import org.sonatype.sisu.siesta.common.exceptions.BadRequestException;
-import org.sonatype.sisu.siesta.common.exceptions.ObjectNotFoundException;
+import org.sonatype.sisu.siesta.common.error.BadRequestException;
+import org.sonatype.sisu.siesta.common.error.ObjectNotFoundException;
 
 /**
  * @since 1.4

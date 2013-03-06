@@ -16,8 +16,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.core.Response;
 
-import org.sonatype.sisu.siesta.common.exceptions.BadRequestException;
-import org.sonatype.sisu.siesta.common.exceptions.ErrorXO;
+import org.sonatype.sisu.siesta.common.error.BadRequestException;
+import org.sonatype.sisu.siesta.common.error.ErrorXO;
 import org.sonatype.sisu.siesta.server.ErrorExceptionMapperSupport;
 
 /**

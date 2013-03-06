@@ -10,24 +10,35 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common.exceptions;
-
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
+package org.sonatype.sisu.siesta.common.error;
 
 /**
- * {@link WebApplicationException} with {@link Status} and a text message.
+ * Thrown when an object is not found.
  *
  * @since 1.0
  */
-public class WebApplicationMessageException
-    extends WebApplicationException
+public class ObjectNotFoundException
+    extends RuntimeException
 {
-    public WebApplicationMessageException(final Status status, final String message) {
-        super(Response.status(checkNotNull(status)).entity(checkNotNull(message)).type(TEXT_PLAIN).build());
+
+    public ObjectNotFoundException()
+    {
+        super();
     }
+
+    public ObjectNotFoundException( final String message )
+    {
+        super( message );
+    }
+
+    public ObjectNotFoundException( final String message, final Throwable cause )
+    {
+        super( message, cause );
+    }
+
+    public ObjectNotFoundException( final Throwable cause )
+    {
+        super( cause );
+    }
+
 }

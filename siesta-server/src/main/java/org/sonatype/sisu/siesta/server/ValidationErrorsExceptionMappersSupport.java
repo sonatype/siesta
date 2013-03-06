@@ -20,7 +20,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 
-import org.sonatype.sisu.siesta.common.exceptions.ValidationErrorXO;
+import org.sonatype.sisu.siesta.common.validation.ValidationErrorXO;
 
 /**
  * Support calls for exception mappers returning 400 with {@link ValidationErrorXO}s in body.
