@@ -15,58 +15,106 @@ package org.sonatype.sisu.siesta.common.validation;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
+ * A failing validation.
+ *
  * @since 1.4
  */
-@XmlRootElement(name = "validationError")
+@XmlRootElement( name = "validationError" )
 public class ValidationErrorXO
 {
 
+    /**
+     * Denotes that validation does not applies to a specific value.
+     */
+    public static final String GENERIC = "*";
+
+    /**
+     * Validation id. Identifies the value value that is failing validation. A value of "*" denotes that validation does
+     * not applies to a specific value.
+     * E.g. "name".
+     */
     private String id;
 
+    /**
+     * Description of failing validation.
+     * E.g. "Name cannot be null".
+     */
     private String message;
 
     public ValidationErrorXO()
     {
-        id = "*";
+        id = GENERIC;
     }
 
+    /**
+     * Creates a validation error that does not applies to a specific value.
+     *
+     * @param message validation description
+     */
     public ValidationErrorXO( final String message )
     {
-        this( "*", message );
+        this( GENERIC, message );
     }
 
+    /**
+     * Creates a validation error for a specific value.
+     *
+     * @param id      identifier of value failing validation.
+     * @param message validation description
+     */
     public ValidationErrorXO( final String id, final String message )
     {
-        this.id = id;
+        this.id = id == null ? GENERIC : id;
         this.message = message;
     }
 
+    /**
+     * @return identifier of value failing validation (never null).  A value of "*" denotes that validation does
+     *         not applies to a specific value.
+     */
     public String getId()
     {
         return id;
     }
 
+    /**
+     * @param id of value failing validation
+     */
     public void setId( final String id )
     {
-        this.id = id;
+        this.id = id == null ? GENERIC : id;
     }
 
+    /**
+     * @param id of value failing validation
+     * @return itself, for fluent api usage
+     */
     public ValidationErrorXO withId( final String id )
     {
-        this.id = id;
+        setId( id );
         return this;
     }
 
+    /**
+     * @return validation description
+     */
     public String getMessage()
     {
         return message;
     }
 
+    /**
+     * @param message validation description
+     */
     public void setMessage( final String message )
     {
         this.message = message;
     }
 
+    /**
+     * @param message validation description
+     * @return itself, for fluent api usage
+     */
     public ValidationErrorXO withMessage( final String message )
     {
         this.message = message;
@@ -74,7 +122,8 @@ public class ValidationErrorXO
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return getClass().getSimpleName() + "{" +
             "id='" + id + '\'' +
             ", message='" + message + '\'' +
