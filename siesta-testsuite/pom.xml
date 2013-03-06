@@ -51,12 +51,6 @@
       <version>7.6.9.v20130131</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.sonatype.sisu.inject</groupId>
-      <artifactId>guice-servlet</artifactId>
-      <version>3.1.2</version>
-      <scope>test</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.sonatype.sisu.jacksbee</groupId>
