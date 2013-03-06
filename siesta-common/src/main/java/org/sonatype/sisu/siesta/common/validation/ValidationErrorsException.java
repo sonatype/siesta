@@ -39,9 +39,9 @@ public class ValidationErrorsException
         errors.add( new ValidationErrorXO( message ) );
     }
 
-    public ValidationErrorsException( final String path, final String message )
+    public ValidationErrorsException( final String id, final String message )
     {
-        errors.add( new ValidationErrorXO( path, message ) );
+        errors.add( new ValidationErrorXO( id, message ) );
     }
 
     public ValidationErrorsException withError( final String message )
@@ -50,9 +50,9 @@ public class ValidationErrorsException
         return this;
     }
 
-    public ValidationErrorsException withError( final String path, final String message )
+    public ValidationErrorsException withError( final String id, final String message )
     {
-        errors.add( new ValidationErrorXO( path, message ) );
+        errors.add( new ValidationErrorXO( id, message ) );
         return this;
     }
 
