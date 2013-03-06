@@ -32,18 +32,15 @@ public class ValidationErrorsException
 
     public ValidationErrorsException()
     {
-        super();
     }
 
     public ValidationErrorsException( final String message )
     {
-        super( message );
         errors.add( new ValidationErrorXO( message ) );
     }
 
     public ValidationErrorsException( final String path, final String message )
     {
-        super( message );
         errors.add( new ValidationErrorXO( path, message ) );
     }
 
@@ -81,4 +78,18 @@ public class ValidationErrorsException
         return !errors.isEmpty();
     }
 
+    @Override
+    public String getMessage()
+    {
+        final StringBuilder sb = new StringBuilder();
+        for ( final ValidationErrorXO error : errors )
+        {
+            if ( sb.length() > 0 )
+            {
+                sb.append( ", " );
+            }
+            sb.append( error.getMessage() );
+        }
+        return sb.length() == 0 ? "(No validation errors)" : sb.toString();
+    }
 }
