@@ -70,7 +70,7 @@ public class ValidationErrorsException
         return errors;
     }
 
-    public boolean hasErrors()
+    public boolean hasValidationErrors()
     {
         return !errors.isEmpty();
     }

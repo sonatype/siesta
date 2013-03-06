@@ -59,7 +59,7 @@ public class ValidationErrorsResource
             validationErrors.withError( "description", "Description cannot be null" );
         }
 
-        if ( validationErrors.hasErrors() )
+        if ( validationErrors.hasValidationErrors() )
         {
             throw validationErrors;
         }
