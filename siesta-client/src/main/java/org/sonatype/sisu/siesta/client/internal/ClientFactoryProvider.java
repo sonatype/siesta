@@ -13,15 +13,9 @@
 package org.sonatype.sisu.siesta.client.internal;
 
 import java.lang.reflect.Proxy;
-import java.net.URI;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
 
 import org.sonatype.sisu.siesta.client.ClientFactory;
-import com.google.inject.Injector;
 import com.google.inject.Provider;
-import com.google.inject.spi.Toolable;
 import com.sun.jersey.api.client.Client;
 
 /**
@@ -51,7 +45,7 @@ public class ClientFactoryProvider<S>
                 return (S) Proxy.newProxyInstance(
                     serviceInterface.getClassLoader(),
                     interfaces,
-                    new ClientImpl( serviceInterface, client, baseUrl ) );
+                    new ClientInvocationHandler( serviceInterface, client, baseUrl ) );
             }
         };
     }

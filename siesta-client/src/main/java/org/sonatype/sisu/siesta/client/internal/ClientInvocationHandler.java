@@ -36,7 +36,7 @@ import com.sun.jersey.api.client.WebResource;
  *
  * @since 1.4
  */
-public class ClientImpl
+public class ClientInvocationHandler
     implements InvocationHandler
 {
 
@@ -46,7 +46,7 @@ public class ClientImpl
 
     private final String baseUrl;
 
-    public ClientImpl( final Class<?> serviceInterface, final Client client, final String baseUrl )
+    public ClientInvocationHandler( final Class<?> serviceInterface, final Client client, final String baseUrl )
     {
         this.serviceInterface = serviceInterface;
         this.client = client;
