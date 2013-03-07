@@ -1,14 +1,8 @@
 package org.sonatype.sisu.siesta.client.internal;
 
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_ERROR_V1_JSON_TYPE;
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_ERROR_V1_XML_TYPE;
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_VALIDATION_ERRORS_V1_JSON_TYPE;
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_VALIDATION_ERRORS_V1_XML_TYPE;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
@@ -17,14 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
-import org.sonatype.sisu.siesta.common.SiestaMediaType;
-import org.sonatype.sisu.siesta.common.error.ErrorXO;
-import org.sonatype.sisu.siesta.common.validation.ValidationErrorXO;
-import org.sonatype.sisu.siesta.common.validation.ValidationErrorsException;
 import com.google.common.base.Throwables;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 
@@ -80,7 +69,7 @@ public class ClientImpl
             builder.type( type );
         }
 
-        ClientResponse response = null;
+        ClientResponse response;
         if ( payload == null )
         {
             response = builder.method( httpMethod, ClientResponse.class );
@@ -103,56 +92,7 @@ public class ClientImpl
             }
         }
 
-        handleErrorIfPresent( response );
-        handleValidationErrorIfPresent( response );
-
         throw new UniformInterfaceException( response );
-    }
-
-    private void handleValidationErrorIfPresent( final ClientResponse response )
-    {
-        if ( VND_VALIDATION_ERRORS_V1_JSON_TYPE.equals( response.getType() )
-            || VND_VALIDATION_ERRORS_V1_XML_TYPE.equals( response.getType() ) )
-        {
-            List<ValidationErrorXO> validationErrors = null;
-            try
-            {
-                validationErrors = response.getEntity(
-                    new GenericType<List<ValidationErrorXO>>()
-                    {
-                    }
-                );
-            }
-            catch ( Exception e )
-            {
-                // ignore
-            }
-            if ( validationErrors != null )
-            {
-                throw new ValidationErrorsException().withErrors( validationErrors );
-            }
-        }
-    }
-
-    private void handleErrorIfPresent( final ClientResponse response )
-    {
-        if ( VND_ERROR_V1_JSON_TYPE.equals( response.getType() )
-            || VND_ERROR_V1_XML_TYPE.equals( response.getType() ) )
-        {
-            ErrorXO error = null;
-            try
-            {
-                error = response.getEntity( ErrorXO.class );
-            }
-            catch ( Exception e )
-            {
-                // ignore
-            }
-            if ( error != null )
-            {
-                throw new UniformInterfaceException( error.getMessage() + " (" + error.getId() + ")", response );
-            }
-        }
     }
 
     private Object getPayload( final Method method, final Object[] args )
@@ -188,15 +128,7 @@ public class ClientImpl
         final Consumes consumes = method.getAnnotation( Consumes.class );
         if ( consumes != null )
         {
-            final String[] values = consumes.value();
-            final String[] accepts = new String[values.length + 2];
-
-            System.arraycopy( values, 0, accepts, 0, values.length );
-
-            accepts[values.length] = SiestaMediaType.VND_ERROR_V1_JSON;
-            accepts[values.length + 1] = SiestaMediaType.VND_VALIDATION_ERRORS_V1_JSON;
-
-            return accepts;
+            return consumes.value();
         }
         return new String[]{ "*/*" };
     }

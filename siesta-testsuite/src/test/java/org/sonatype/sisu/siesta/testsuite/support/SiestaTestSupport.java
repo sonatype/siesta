@@ -22,6 +22,10 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.sonatype.inject.BeanScanning;
 import org.sonatype.sisu.litmus.testsupport.inject.InjectedTestSupport;
+import org.sonatype.sisu.siesta.client.filters.ErrorsV1JsonFilter;
+import org.sonatype.sisu.siesta.client.filters.ErrorsV1XmlFilter;
+import org.sonatype.sisu.siesta.client.filters.ValidationErrorsV1JsonFilter;
+import org.sonatype.sisu.siesta.client.filters.ValidationErrorsV1XmlFilter;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceFilter;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -82,6 +86,10 @@ public class SiestaTestSupport
         client = Client.create( clientConfig );
 
         client.addFilter( new LoggingFilter() );
+        client.addFilter( new ErrorsV1JsonFilter() );
+        client.addFilter( new ErrorsV1XmlFilter() );
+        client.addFilter( new ValidationErrorsV1JsonFilter() );
+        client.addFilter( new ValidationErrorsV1XmlFilter() );
     }
 
     @After
