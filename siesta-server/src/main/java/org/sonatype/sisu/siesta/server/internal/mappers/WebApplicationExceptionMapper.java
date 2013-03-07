@@ -12,9 +12,13 @@
  */
 package org.sonatype.sisu.siesta.server.internal.mappers;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.sonatype.sisu.siesta.common.error.ErrorXO;
 import org.sonatype.sisu.siesta.server.ErrorExceptionMapperSupport;
@@ -31,10 +35,22 @@ public class WebApplicationExceptionMapper
     extends ErrorExceptionMapperSupport<WebApplicationException>
 {
 
+    @Inject
+    private Provider<UriInfo> uriInfo;
+
     @Override
     protected int getStatusCode( final WebApplicationException exception )
     {
         return exception.getResponse().getStatus();
     }
 
+    @Override
+    protected String getMessage( final WebApplicationException exception )
+    {
+        if ( Response.Status.NOT_FOUND.getStatusCode() == exception.getResponse().getStatus() )
+        {
+            return "No resource available at '" + uriInfo.get().getPath() + "'";
+        }
+        return super.getMessage( exception );
+    }
 }
