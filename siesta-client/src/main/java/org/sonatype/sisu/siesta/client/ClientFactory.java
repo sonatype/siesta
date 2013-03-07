@@ -17,7 +17,7 @@ import com.sun.jersey.api.client.Client;
 /**
  * TODO
  *
- * @since 1.0
+ * @since 1.4
  */
 public interface ClientFactory<T>
 {

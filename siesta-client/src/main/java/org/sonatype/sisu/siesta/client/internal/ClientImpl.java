@@ -32,7 +32,7 @@ import com.sun.jersey.api.client.WebResource;
 /**
  * TODO
  *
- * @since 1.0
+ * @since 1.4
  */
 public class ClientImpl
     implements InvocationHandler

@@ -19,7 +19,7 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 /**
  * TODO
  *
- * @since 1.0
+ * @since 1.4
  */
 public abstract class ErrorsV1FilterSupport
     extends ErrorResponseFilterSupport

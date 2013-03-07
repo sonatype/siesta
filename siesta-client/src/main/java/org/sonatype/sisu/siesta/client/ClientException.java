@@ -13,9 +13,9 @@
 package org.sonatype.sisu.siesta.client;
 
 /**
- * Thrown when an object is invalid.
+ * TODO
  *
- * @since 1.0
+ * @since 1.4
  */
 public class ClientException
     extends RuntimeException

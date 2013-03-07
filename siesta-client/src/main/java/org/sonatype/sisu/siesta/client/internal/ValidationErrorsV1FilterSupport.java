@@ -22,7 +22,7 @@ import com.sun.jersey.api.client.GenericType;
 /**
  * TODO
  *
- * @since 1.0
+ * @since 1.4
  */
 public abstract class ValidationErrorsV1FilterSupport
     extends ErrorResponseFilterSupport

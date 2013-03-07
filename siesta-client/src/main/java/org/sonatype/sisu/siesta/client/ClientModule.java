@@ -19,6 +19,11 @@ import com.google.inject.Module;
 import com.google.inject.Provider;
 import com.google.inject.util.Types;
 
+/**
+ * TODO
+ *
+ * @since 1.4
+ */
 public class ClientModule
 {
 

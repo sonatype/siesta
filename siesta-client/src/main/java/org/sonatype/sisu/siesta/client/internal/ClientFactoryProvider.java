@@ -24,15 +24,16 @@ import com.google.inject.Provider;
 import com.google.inject.spi.Toolable;
 import com.sun.jersey.api.client.Client;
 
-@Named
-@Singleton
+/**
+ * TODO
+ *
+ * @since 1.4
+ */
 public class ClientFactoryProvider<S>
     implements Provider<ClientFactory<S>>
 {
 
     private final Class<S> serviceInterface;
-
-    private Injector injector;
 
     public ClientFactoryProvider( final Class<S> serviceInterface )
     {
@@ -42,9 +43,6 @@ public class ClientFactoryProvider<S>
     //@Override
     public ClientFactory<S> get()
     {
-//    final DefaultRestClientFactory<S> restClientFactory = new DefaultRestClientFactory<S>(serviceInterface, bindings);
-//    injector.injectMembers(restClientFactory);
-//    return restClientFactory;
         return new ClientFactory<S>()
         {
             public S create( final Client client, final String baseUrl )
@@ -56,13 +54,6 @@ public class ClientFactoryProvider<S>
                     new ClientImpl( serviceInterface, client, baseUrl ) );
             }
         };
-    }
-
-    @Inject
-    @Toolable
-    void initialize( final Injector injector )
-    {
-        this.injector = injector;
     }
 
 }
