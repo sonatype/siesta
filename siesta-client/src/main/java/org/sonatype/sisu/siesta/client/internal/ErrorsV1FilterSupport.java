@@ -34,7 +34,7 @@ public abstract class ErrorsV1FilterSupport
         }
         catch ( Exception e )
         {
-            // ignore
+            log.trace( "Could not unmarshall error", e );
         }
         if ( error != null )
         {

@@ -41,7 +41,7 @@ public abstract class ValidationErrorsV1FilterSupport
         }
         catch ( Exception e )
         {
-            // ignore
+            log.trace( "Could not unmarshall validation errors", e );
         }
         if ( validationErrors != null )
         {

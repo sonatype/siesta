@@ -18,6 +18,8 @@ import java.util.List;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
@@ -31,6 +33,8 @@ import com.sun.jersey.api.client.filter.ClientFilter;
 public abstract class ErrorResponseFilterSupport
     extends ClientFilter
 {
+
+    protected Logger log = LoggerFactory.getLogger( getClass() );
 
     @Override
     public ClientResponse handle( final ClientRequest request )
