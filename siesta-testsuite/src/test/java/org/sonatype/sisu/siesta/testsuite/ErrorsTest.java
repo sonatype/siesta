@@ -74,6 +74,23 @@ public class ErrorsTest
         );
     }
 
+    @Test
+    public void inexistentUri()
+        throws Exception
+    {
+        final ClientResponse response = client().resource( url( "some/unknown/path" ) )
+            .accept( APPLICATION_JSON_TYPE, VND_ERROR_V1_JSON_TYPE )
+            .get( ClientResponse.class );
+
+        assertThat( response.getClientResponseStatus(), is( equalTo( Status.NOT_FOUND ) ) );
+        assertThat( response.getType(), is( equalTo( VND_ERROR_V1_JSON_TYPE ) ) );
+
+        final ErrorXO error = response.getEntity( ErrorXO.class );
+        assertThat( error, is( notNullValue() ) );
+        assertThat( error.getId(), is( notNullValue() ) );
+        assertThat( error.getMessage(), is( "No resource available at 'some/unknown/path'" ) );
+    }
+
     public void throwException( final String exceptionType, final Status expectedStatus, final MediaType... mediaTypes )
         throws Exception
     {
