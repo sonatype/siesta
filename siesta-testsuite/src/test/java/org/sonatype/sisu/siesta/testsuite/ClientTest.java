@@ -57,10 +57,24 @@ public class ClientTest
     }
 
     @Test
+    public void getXML()
+        throws Exception
+    {
+        users.getXml();
+    }
+
+    @Test
     public void getByIdJson()
         throws Exception
     {
         users.getJson( "foo" );
+    }
+
+    @Test
+    public void getByIdXml()
+        throws Exception
+    {
+        users.getXml( "foo" );
     }
 
     @Test
@@ -71,6 +85,16 @@ public class ClientTest
         thrown.expectMessage( "User with id 'test' not found" );
 
         users.getJson( "test" );
+    }
+
+    @Test
+    public void getByIdInexistentXml()
+        throws Exception
+    {
+        thrown.expect( UniformInterfaceException.class );
+        thrown.expectMessage( "User with id 'test' not found" );
+
+        users.getXml( "test" );
     }
 
     @Test
@@ -101,6 +125,42 @@ public class ClientTest
     {
         final UserXO sent = new UserXO().withName( UUID.randomUUID().toString() ).withCreated( new Date() );
         final UserXO received = users.putJsonJson( sent );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received.getName(), is( equalTo( sent.getName() ) ) );
+        assertThat( received.getCreated(), is( equalTo( sent.getCreated() ) ) );
+    }
+
+    @Test
+    public void putXmlXml()
+        throws Exception
+    {
+        final UserXO sent = new UserXO().withName( UUID.randomUUID().toString() ).withCreated( new Date() );
+        final UserXO received = users.putXmlXml( sent );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received.getName(), is( equalTo( sent.getName() ) ) );
+        assertThat( received.getCreated(), is( equalTo( sent.getCreated() ) ) );
+    }
+
+    @Test
+    public void putXmlJson()
+        throws Exception
+    {
+        final UserXO sent = new UserXO().withName( UUID.randomUUID().toString() ).withCreated( new Date() );
+        final UserXO received = users.putXmlJson( sent );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received.getName(), is( equalTo( sent.getName() ) ) );
+        assertThat( received.getCreated(), is( equalTo( sent.getCreated() ) ) );
+    }
+
+    @Test
+    public void putJsonXml()
+        throws Exception
+    {
+        final UserXO sent = new UserXO().withName( UUID.randomUUID().toString() ).withCreated( new Date() );
+        final UserXO received = users.putJsonXml( sent );
 
         assertThat( received, is( notNullValue() ) );
         assertThat( received.getName(), is( equalTo( sent.getName() ) ) );

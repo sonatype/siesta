@@ -13,6 +13,7 @@
 package org.sonatype.sisu.siesta.testsuite.clients;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -29,26 +30,50 @@ import org.sonatype.sisu.siesta.testsuite.model.UserXO;
  *
  * @since 1.0
  */
-@Path( "/user" )
+@Path("/user")
 public interface Users
 {
 
     @GET
-    @Path( "/inexistent/path" )
+    @Path("/inexistent/path")
     void inexistent();
 
     @GET
-    @Consumes( { APPLICATION_JSON } )
+    @Consumes({ APPLICATION_JSON })
     List<UserXO> getJson();
 
     @GET
+    @Consumes( { APPLICATION_XML } )
+    List<UserXO> getXml();
+
+    @GET
+    @Path("/{id}")
+    @Consumes({ APPLICATION_JSON })
+    UserXO getJson( @PathParam("id") String id );
+
+    @GET
     @Path( "/{id}" )
+    @Consumes( { APPLICATION_XML } )
+    UserXO getXml( @PathParam( "id" ) String id );
+
+    @PUT
+    @Produces({ APPLICATION_JSON })
+    @Consumes({ APPLICATION_JSON })
+    UserXO putJsonJson( final UserXO user );
+
+    @PUT
+    @Produces( { APPLICATION_XML } )
+    @Consumes( { APPLICATION_XML } )
+    UserXO putXmlXml( final UserXO user );
+
+    @PUT
+    @Produces( { APPLICATION_XML } )
     @Consumes( { APPLICATION_JSON } )
-    UserXO getJson( @PathParam( "id" ) String id );
+    UserXO putXmlJson( final UserXO user );
 
     @PUT
     @Produces( { APPLICATION_JSON } )
-    @Consumes( { APPLICATION_JSON } )
-    UserXO putJsonJson( final UserXO user );
+    @Consumes( { APPLICATION_XML } )
+    UserXO putJsonXml( final UserXO user );
 
 }
