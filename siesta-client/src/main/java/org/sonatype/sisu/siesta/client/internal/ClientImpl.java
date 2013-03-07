@@ -26,6 +26,7 @@ import javax.ws.rs.core.Response;
 import com.google.common.base.Throwables;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 
@@ -96,7 +97,7 @@ public class ClientImpl
             final Class<?> returnType = method.getReturnType();
             if ( !Void.class.equals( returnType ) )
             {
-                return response.getEntity( returnType );
+                return response.getEntity( new GenericType( method.getGenericReturnType() ) );
             }
             else
             {
