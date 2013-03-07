@@ -76,4 +76,7 @@ public interface Users
     @Consumes( { APPLICATION_XML } )
     UserXO putJsonXml( final UserXO user );
 
+    @PUT
+    UserXO put( final UserXO user );
+
 }

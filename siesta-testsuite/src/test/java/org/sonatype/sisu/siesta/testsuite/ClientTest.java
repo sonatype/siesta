@@ -167,4 +167,16 @@ public class ClientTest
         assertThat( received.getCreated(), is( equalTo( sent.getCreated() ) ) );
     }
 
+    @Test
+    public void put()
+        throws Exception
+    {
+        final UserXO sent = new UserXO().withName( UUID.randomUUID().toString() ).withCreated( new Date() );
+        final UserXO received = users.put( sent );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received.getName(), is( equalTo( sent.getName() ) ) );
+        assertThat( received.getCreated(), is( equalTo( sent.getCreated() ) ) );
+    }
+
 }
