@@ -144,7 +144,7 @@ public class ClientImpl
         {
             return consumes.value();
         }
-        return new String[]{ "*/*" };
+        return new String[]{ MediaType.APPLICATION_JSON };
     }
 
     private String getType( final Method method )
