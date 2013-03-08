@@ -19,7 +19,6 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import java.util.Date;
 import java.util.UUID;
-import javax.inject.Inject;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -28,14 +27,14 @@ import org.junit.Test;
 import org.sonatype.sisu.siesta.client.ClientBuilder;
 import org.sonatype.sisu.siesta.testsuite.clients.Users;
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
-import org.sonatype.sisu.siesta.testsuite.support.SiestaTestSupport;
+import org.sonatype.sisu.siesta.testsuite.support.SiestaClientTestSupport;
 import com.sun.jersey.api.client.UniformInterfaceException;
 
 /**
  * @since 1.4
  */
 public class ClientTest
-    extends SiestaTestSupport
+    extends SiestaClientTestSupport
 {
 
     private Users users;
@@ -43,7 +42,7 @@ public class ClientTest
     @Before
     public void createClient()
     {
-        users = ClientBuilder.using(client()).toAccess(url()).build(Users.class);
+        users = ClientBuilder.using( client() ).toAccess( url() ).build( Users.class );
     }
 
     @Test
