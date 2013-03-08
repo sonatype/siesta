@@ -40,6 +40,9 @@ public abstract class ExceptionMapperSupport<E extends Throwable>
     @Inject
     private Provider<Request> requestProvider;
 
+    // NOTE: Do not expose this as UUID directly to consumers, its just a unique identifier.
+    // NOTE: May actually be cheaper to make a single UUID and then append an atomic counter instead of making a new UUID each time.
+
     private String generateId() {
         return UUID.randomUUID().toString();
     }
