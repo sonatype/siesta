@@ -16,6 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.sonatype.sisu.siesta.client.ClientBuilder.Target.Factory;
 
 import java.util.Date;
 import java.util.UUID;
@@ -25,6 +26,7 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.sisu.siesta.client.ClientBuilder;
+import org.sonatype.sisu.siesta.testsuite.clients.Errors;
 import org.sonatype.sisu.siesta.testsuite.clients.Users;
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 import org.sonatype.sisu.siesta.testsuite.support.SiestaClientTestSupport;
@@ -39,10 +41,15 @@ public class ClientTest
 
     private Users users;
 
+    private Errors errors;
+
     @Before
     public void createClient()
     {
-        users = ClientBuilder.using( client() ).toAccess( url() ).build( Users.class );
+        final Factory factory = ClientBuilder.using( client() ).toAccess( url() );
+
+        users = factory.build( Users.class );
+        errors = factory.build( Errors.class );
     }
 
     @Test
@@ -98,19 +105,7 @@ public class ClientTest
         throws Exception
     {
         thrown.expect( UniformInterfaceException.class );
-        thrown.expect( new TypeSafeMatcher<UniformInterfaceException>()
-        {
-            @Override
-            protected boolean matchesSafely( final UniformInterfaceException e )
-            {
-                return e.getResponse().getStatus() == 404;
-            }
-
-            public void describeTo( final Description description )
-            {
-                description.appendText( "HTTP Status 404" );
-            }
-        } );
+        thrown.expect( new HttpStatusMatcher( 404 ) );
 
         users.inexistent();
     }
@@ -173,6 +168,51 @@ public class ClientTest
         assertThat( received, is( notNullValue() ) );
         assertThat( received.getName(), is( equalTo( sent.getName() ) ) );
         assertThat( received.getCreated(), is( equalTo( sent.getCreated() ) ) );
+    }
+
+    @Test
+    public void throwObjectNotFoundException()
+        throws Exception
+    {
+        thrown.expect( UniformInterfaceException.class );
+        thrown.expect( new HttpStatusMatcher( 404 ) );
+        thrown.expectMessage( "ObjectNotFoundException" );
+
+        errors.throwObjectNotFoundException();
+    }
+
+    @Test
+    public void throwBadRequestException()
+        throws Exception
+    {
+        thrown.expect( UniformInterfaceException.class );
+        thrown.expect( new HttpStatusMatcher( 400 ) );
+        thrown.expectMessage( "BadRequestException" );
+
+        errors.throwBadRequestException();
+    }
+
+    private static class HttpStatusMatcher
+        extends TypeSafeMatcher<UniformInterfaceException>
+    {
+
+        private final int expectedStatus;
+
+        HttpStatusMatcher( final int expectedStatus )
+        {
+            this.expectedStatus = expectedStatus;
+        }
+
+        @Override
+        protected boolean matchesSafely( final UniformInterfaceException e )
+        {
+            return e.getResponse().getStatus() == expectedStatus;
+        }
+
+        public void describeTo( final Description description )
+        {
+            description.appendText( "HTTP Status " + expectedStatus );
+        }
     }
 
 }
