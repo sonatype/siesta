@@ -25,7 +25,7 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
-import org.sonatype.sisu.siesta.client.ClientFactory;
+import org.sonatype.sisu.siesta.client.ClientBuilder;
 import org.sonatype.sisu.siesta.testsuite.clients.Users;
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 import org.sonatype.sisu.siesta.testsuite.support.SiestaTestSupport;
@@ -38,15 +38,12 @@ public class ClientTest
     extends SiestaTestSupport
 {
 
-    @Inject
-    private ClientFactory<Users> usersClientFactory;
-
     private Users users;
 
     @Before
     public void createClient()
     {
-        users = usersClientFactory.create( client(), url() );
+        users = ClientBuilder.using(client()).toAccess(url()).build(Users.class);
     }
 
     @Test
