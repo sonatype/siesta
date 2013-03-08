@@ -12,6 +12,8 @@
  */
 package org.sonatype.sisu.siesta.client;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.lang.reflect.Proxy;
 
 import org.sonatype.sisu.siesta.client.internal.ClientInvocationHandler;
@@ -37,7 +39,7 @@ public class ClientBuilder
 
         public Target( final Client client )
         {
-            this.client = client;
+            this.client = checkNotNull( client );
         }
 
         public Factory toAccess( final String url )
@@ -54,14 +56,14 @@ public class ClientBuilder
 
             public Factory( final Client client, final String url )
             {
-                this.client = client;
-                this.url = url;
+                this.client = checkNotNull( client );
+                this.url = checkNotNull( url );
             }
 
             public <T> T build( final Class<T> clientType )
             {
                 return (T) Proxy.newProxyInstance(
-                    clientType.getClassLoader(),
+                    checkNotNull( clientType ).getClassLoader(),
                     new Class[]{ clientType },
                     new ClientInvocationHandler( clientType, client, url ) );
             }
