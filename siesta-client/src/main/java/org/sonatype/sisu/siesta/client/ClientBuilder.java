@@ -42,16 +42,19 @@ public class ClientBuilder
 
         public Factory toAccess( final String url )
         {
-            return new Factory( url );
+            return new Factory( client, url );
         }
 
-        public class Factory
+        public static class Factory
         {
+
+            private final Client client;
 
             private final String url;
 
-            public Factory( final String url )
+            public Factory( final Client client, final String url )
             {
+                this.client = client;
                 this.url = url;
             }
 
