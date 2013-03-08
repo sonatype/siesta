@@ -40,35 +40,42 @@ public abstract class ExceptionMapperSupport<E extends Throwable>
     @Inject
     private Provider<Request> requestProvider;
 
+    // NOTE: Do not expose this as UUID directly to consumers, its just a unique identifier.
+    // NOTE: May actually be cheaper to make a single UUID and then append an atomic counter instead of making a new UUID each time.
+
+    private String generateId() {
+        return UUID.randomUUID().toString();
+    }
+
     public Response toResponse( final E exception )
     {
         //noinspection ThrowableResultOfMethodCallIgnored
         checkNotNull( exception );
 
-        final String uuid = UUID.randomUUID().toString();
+        final String id = generateId();
         if ( log.isTraceEnabled() )
         {
-            log.trace( "(UUID {}) Mapping exception: " + exception, uuid, exception );
+            log.trace( "(ID {}) Mapping exception: " + exception, id, exception );
         }
         else
         {
-            log.debug( "(UUID {}) Mapping exception: " + exception, uuid );
+            log.debug( "(ID {}) Mapping exception: " + exception, id );
         }
 
         Response response;
         try
         {
-            response = convert( exception, uuid );
+            response = convert( exception, id );
         }
         catch ( Exception e )
         {
-            log.warn( "(UUID {}) Failed to map exception", uuid, e );
-            response = Response.serverError().entity( new ErrorXO().withId( uuid ) ).build();
+            log.warn( "(ID {}) Failed to map exception", id, e );
+            response = Response.serverError().entity( new ErrorXO().withId( id ) ).build();
         }
 
         final Object entity = response.getEntity();
         log.warn(
-            "(UUID {}) Response: [{}] {}", uuid, response.getStatus(), entity == null ? "(no entity/body)" : entity
+            "(ID {}) Response: [{}] {}", id, response.getStatus(), entity == null ? "(no entity/body)" : entity
         );
 
         return response;
