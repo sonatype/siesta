@@ -65,6 +65,7 @@ public class ComponentDiscoveryReporterImpl
             log.info("Resources:");
 
             // TODO: Perhaps show more details about the resource, sub-resources, methods, etc
+            // TODO: Sort the resources by path before rendering so we can get all related paths grouped together
 
             for (Class<Resource> type : resources) {
                 String path = pathOf(type);
@@ -81,6 +82,7 @@ public class ComponentDiscoveryReporterImpl
             log.info("Components:");
 
             // TODO: Perhaps show various types of components (providers, mappers, etc)
+            // TODO: Sort the components by full classname before rendering so we can get all related grouped together
 
             for (Class<?> type : components) {
                 log.info("  {}", type.getSimpleName());
