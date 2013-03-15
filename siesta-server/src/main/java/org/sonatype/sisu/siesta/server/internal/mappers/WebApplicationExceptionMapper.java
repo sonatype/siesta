@@ -51,6 +51,17 @@ public class WebApplicationExceptionMapper
         {
             return "No resource available at '" + uriInfo.get().getPath() + "'";
         }
-        return super.getMessage( exception );
+
+        final String message = super.getMessage( exception );
+        if ( message == null )
+        {
+            final Response.Status status = Response.Status.fromStatusCode( exception.getResponse().getStatus() );
+            if ( status != null )
+            {
+                return status.getStatusCode() + " " + status.getReasonPhrase();
+            }
+        }
+
+        return message;
     }
 }
