@@ -91,6 +91,23 @@ public class ErrorsTest
         assertThat( error.getMessage(), is( "No resource available at 'some/unknown/path'" ) );
     }
 
+    @Test
+    public void methodNotAllowed405()
+        throws Exception
+    {
+        final ClientResponse response = client().resource( url( "errors" ) )
+            .accept( APPLICATION_JSON_TYPE, VND_ERROR_V1_JSON_TYPE )
+            .delete( ClientResponse.class );
+
+        assertThat( response.getClientResponseStatus(), is( equalTo( Status.METHOD_NOT_ALLOWED ) ) );
+        assertThat( response.getType(), is( equalTo( VND_ERROR_V1_JSON_TYPE ) ) );
+
+        final ErrorXO error = response.getEntity( ErrorXO.class );
+        assertThat( error, is( notNullValue() ) );
+        assertThat( error.getId(), is( notNullValue() ) );
+        assertThat( error.getMessage(), is( "DELETE method not allowed on resource 'errors'" ) );
+    }
+
     public void throwException( final String exceptionType, final Status expectedStatus, final MediaType... mediaTypes )
         throws Exception
     {
