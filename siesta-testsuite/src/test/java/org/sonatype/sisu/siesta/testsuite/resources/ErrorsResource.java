@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 import org.sonatype.sisu.siesta.common.Resource;
 import org.sonatype.sisu.siesta.common.error.BadRequestException;
@@ -49,6 +50,17 @@ public class ErrorsResource
     public Object throwBadRequestException()
     {
         throw new BadRequestException( "BadRequestException" );
+    }
+
+    /**
+     * @since 1.4.2
+     */
+    @GET
+    @Path( "/406" )
+    @Produces( { APPLICATION_XML, APPLICATION_JSON } )
+    public Object throw406()
+    {
+        throw new WebApplicationException( 406 );
     }
 
 }

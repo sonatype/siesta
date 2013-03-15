@@ -108,6 +108,23 @@ public class ErrorsTest
         assertThat( error.getMessage(), is( "DELETE method not allowed on resource 'errors'" ) );
     }
 
+    @Test
+    public void messageWhenNullInWebApplicationException()
+        throws Exception
+    {
+        final ClientResponse response = client().resource( url( "errors/406" ) )
+            .accept( APPLICATION_JSON_TYPE, VND_ERROR_V1_JSON_TYPE )
+            .get( ClientResponse.class );
+
+        assertThat( response.getClientResponseStatus(), is( equalTo( Status.NOT_ACCEPTABLE ) ) );
+        assertThat( response.getType(), is( equalTo( VND_ERROR_V1_JSON_TYPE ) ) );
+
+        final ErrorXO error = response.getEntity( ErrorXO.class );
+        assertThat( error, is( notNullValue() ) );
+        assertThat( error.getId(), is( notNullValue() ) );
+        assertThat( error.getMessage(), is( "406 Not Acceptable" ) );
+    }
+
     public void throwException( final String exceptionType, final Status expectedStatus, final MediaType... mediaTypes )
         throws Exception
     {
