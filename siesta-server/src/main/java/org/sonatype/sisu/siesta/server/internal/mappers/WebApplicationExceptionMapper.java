@@ -17,7 +17,6 @@ import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -39,9 +38,6 @@ public class WebApplicationExceptionMapper
     @Inject
     private Provider<UriInfo> uriInfo;
 
-    @Inject
-    private Provider<Request> request;
-
     @Override
     protected int getStatusCode( final WebApplicationException exception )
     {
@@ -58,8 +54,8 @@ public class WebApplicationExceptionMapper
 
         if ( 405 == exception.getResponse().getStatus() )
         {
-            return request.get().getMethod() + " method not allowed on resource '" + uriInfo.get().getPath() + "'";
-        }        
+            return getRequest().getMethod() + " method not allowed on resource '" + uriInfo.get().getPath() + "'";
+        }
 
         final String message = super.getMessage( exception );
         if ( message == null )
