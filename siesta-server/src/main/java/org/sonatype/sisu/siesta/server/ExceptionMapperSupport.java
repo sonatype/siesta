@@ -13,6 +13,7 @@
 package org.sonatype.sisu.siesta.server;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 import java.util.UUID;
 import javax.inject.Inject;
@@ -37,13 +38,13 @@ public abstract class ExceptionMapperSupport<E extends Throwable>
 
     protected final Logger log = LoggerFactory.getLogger( getClass() );
 
-    @Inject
     private Provider<Request> requestProvider;
 
     // NOTE: Do not expose this as UUID directly to consumers, its just a unique identifier.
     // NOTE: May actually be cheaper to make a single UUID and then append an atomic counter instead of making a new UUID each time.
 
-    private String generateId() {
+    private String generateId()
+    {
         return UUID.randomUUID().toString();
     }
 
@@ -83,8 +84,15 @@ public abstract class ExceptionMapperSupport<E extends Throwable>
 
     protected abstract Response convert( final E exception, final String id );
 
+    @Inject
+    public void installRequestProvider( final Provider<Request> requestProvider )
+    {
+        this.requestProvider = checkNotNull( requestProvider );
+    }
+
     protected Request getRequest()
     {
+        checkState( requestProvider != null, "Request provider not installed" );
         return requestProvider.get();
     }
 

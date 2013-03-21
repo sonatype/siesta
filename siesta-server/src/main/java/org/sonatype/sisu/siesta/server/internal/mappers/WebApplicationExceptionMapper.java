@@ -12,6 +12,9 @@
  */
 package org.sonatype.sisu.siesta.server.internal.mappers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -35,8 +38,7 @@ public class WebApplicationExceptionMapper
     extends ErrorExceptionMapperSupport<WebApplicationException>
 {
 
-    @Inject
-    private Provider<UriInfo> uriInfo;
+    private Provider<UriInfo> uriInfoProvider;
 
     @Override
     protected int getStatusCode( final WebApplicationException exception )
@@ -49,8 +51,37 @@ public class WebApplicationExceptionMapper
     {
         if ( Response.Status.NOT_FOUND.getStatusCode() == exception.getResponse().getStatus() )
         {
-            return "No resource available at '" + uriInfo.get().getPath() + "'";
+            return "No resource available at '" + getUriInfo().getPath() + "'";
         }
-        return super.getMessage( exception );
+
+        if ( 405 == exception.getResponse().getStatus() )
+        {
+            return getRequest().getMethod() + " method not allowed on resource '" + getUriInfo().getPath() + "'";
+        }
+
+        final String message = super.getMessage( exception );
+        if ( message == null )
+        {
+            final Response.Status status = Response.Status.fromStatusCode( exception.getResponse().getStatus() );
+            if ( status != null )
+            {
+                return status.getStatusCode() + " " + status.getReasonPhrase();
+            }
+        }
+
+        return message;
     }
+
+    @Inject
+    public void installUriInfoProvider( final Provider<UriInfo> uriInfoProvider )
+    {
+        this.uriInfoProvider = checkNotNull( uriInfoProvider );
+    }
+
+    protected UriInfo getUriInfo()
+    {
+        checkState( uriInfoProvider != null, "UriInfo provider not installed" );
+        return uriInfoProvider.get();
+    }
+
 }
