@@ -13,24 +13,33 @@
 package org.sonatype.sisu.siesta.testsuite;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.sonatype.sisu.siesta.client.ClientBuilder.Target.Factory;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonatype.sisu.siesta.client.ClientBuilder;
+import org.sonatype.sisu.siesta.testsuite.clients.Echo;
 import org.sonatype.sisu.siesta.testsuite.clients.Errors;
 import org.sonatype.sisu.siesta.testsuite.clients.Users;
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 import org.sonatype.sisu.siesta.testsuite.support.SiestaClientTestSupport;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.sun.jersey.api.client.UniformInterfaceException;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
  * @since 1.4
@@ -43,6 +52,8 @@ public class ClientTest
 
     private Errors errors;
 
+    private Echo echo;
+
     @Before
     public void createClient()
     {
@@ -50,6 +61,7 @@ public class ClientTest
 
         users = factory.build( Users.class );
         errors = factory.build( Errors.class );
+        echo = factory.build( Echo.class );
     }
 
     @Test
@@ -190,6 +202,103 @@ public class ClientTest
         thrown.expectMessage( "BadRequestException" );
 
         errors.throwBadRequestException();
+    }
+
+    @Test
+    public void queryParamString()
+        throws Exception
+    {
+        final List<String> received = echo.get( "bar" );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received, contains( "foo=bar" ) );
+    }
+
+    @Test
+    public void queryParamInt()
+        throws Exception
+    {
+        final List<String> received = echo.get( 142 );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received, contains( "bar=142" ) );
+    }
+
+    @Test
+    public void queryParamStringAndInt()
+        throws Exception
+    {
+        final List<String> received = echo.get( "v1", 142 );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received, containsInAnyOrder( "foo=v1", "bar=142" ) );
+    }
+
+    @Test
+    public void queryParamStringArray()
+        throws Exception
+    {
+        final List<String> received = echo.get( new String[]{ "v1", "v2" } );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received, containsInAnyOrder( "foo=v1", "foo=v2" ) );
+    }
+
+    @Test
+    public void queryParamObjectArray()
+        throws Exception
+    {
+        final List<String> received = echo.get( new Object[]{ "v1", 142 } );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received, containsInAnyOrder( "foo=v1", "foo=142" ) );
+    }
+
+    @Test
+    public void queryParamStringList()
+        throws Exception
+    {
+        final List<String> values = Lists.newArrayList( "v1", "v2" );
+        final List<String> received = echo.get( values );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received, containsInAnyOrder( "foo=v1", "foo=v2" ) );
+    }
+
+    @Test
+    public void queryParamObjectSet()
+        throws Exception
+    {
+        final Set<Object> values = Sets.<Object>newHashSet( "v1", 142 );
+        final List<String> received = echo.get( values );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received, containsInAnyOrder( "foo=v1", "foo=142" ) );
+    }
+
+    @Test
+    public void queryParamIterator()
+        throws Exception
+    {
+        final List<String> values = Lists.newArrayList( "v1", "v2" );
+        final List<String> received = echo.get( values.iterator() );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received, containsInAnyOrder( "foo=v1", "foo=v2" ) );
+    }
+
+    @Test
+    public void queryParamMultiValuedMap()
+        throws Exception
+    {
+        final MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
+        queryParams.putSingle( "foo", "v1" );
+        queryParams.putSingle( "bar", "142" );
+
+        final List<String> received = echo.get( queryParams );
+
+        assertThat( received, is( notNullValue() ) );
+        assertThat( received, containsInAnyOrder( "foo=v1", "bar=142" ) );
     }
 
     private static class HttpStatusMatcher

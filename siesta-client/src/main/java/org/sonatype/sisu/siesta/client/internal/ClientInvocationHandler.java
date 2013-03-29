@@ -15,6 +15,9 @@ package org.sonatype.sisu.siesta.client.internal;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
@@ -22,6 +25,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import com.google.common.base.Throwables;
@@ -30,6 +34,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
  * TODO
@@ -71,12 +76,20 @@ public class ClientInvocationHandler
         throws Throwable
     {
         final String url = getUrl( method, args );
+        final MultivaluedMap<String, String> queryParams = getQueryParams( method, args );
         final String httpMethod = getHttpMethod( method );
         final String type = getType( method );
         final String[] accepts = getAccepts( method );
         final Object payload = getPayload( method, args );
 
-        final WebResource.Builder builder = client.resource( url ).accept( accepts );
+        WebResource resource = client.resource( url );
+
+        if ( queryParams != null && !queryParams.isEmpty() )
+        {
+            resource = resource.queryParams( queryParams );
+        }
+
+        final WebResource.Builder builder = resource.accept( accepts );
 
         if ( type != null )
         {
@@ -107,6 +120,93 @@ public class ClientInvocationHandler
         }
 
         throw new UniformInterfaceException( response );
+    }
+
+    private MultivaluedMap<String, String> getQueryParams( final Method method, final Object[] args )
+    {
+        if ( args != null )
+        {
+            final MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
+
+            final Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+
+            for ( int i = 0; i < args.length; i++ )
+            {
+                if ( args[i] != null )
+                {
+                    final Annotation[] annotations = parameterAnnotations[i];
+                    if ( annotations.length > 0 )
+                    {
+                        for ( final Annotation annotation : annotations )
+                        {
+                            if ( annotation instanceof QueryParam )
+                            {
+                                if ( args[i] instanceof MultivaluedMap )
+                                {
+                                    final MultivaluedMap map = (MultivaluedMap) args[i];
+                                    final Set keySet = map.keySet();
+                                    for ( Object key : keySet )
+                                    {
+                                        for ( Object value : (List) map.get( key ) )
+                                        {
+                                            if ( value != null )
+                                            {
+                                                queryParams.add( key.toString(), value.toString() );
+                                            }
+                                            else
+                                            {
+                                                queryParams.add( key.toString(), null );
+                                            }
+                                        }
+                                    }
+                                }
+                                else if ( args[i].getClass().isArray() )
+                                {
+                                    for ( final Object entry : (Object[]) args[i] )
+                                    {
+                                        if ( entry != null )
+                                        {
+                                            queryParams.add( ( (QueryParam) annotation ).value(), entry.toString() );
+                                        }
+                                    }
+                                }
+                                else if ( args[i] instanceof Iterable )
+                                {
+                                    for ( final Object entry : (Iterable) args[i] )
+                                    {
+                                        if ( entry != null )
+                                        {
+                                            queryParams.add( ( (QueryParam) annotation ).value(), entry.toString() );
+                                        }
+                                    }
+                                }
+                                else if ( args[i] instanceof Iterator )
+                                {
+                                    final Iterator it = (Iterator) args[i];
+                                    while ( it.hasNext() )
+                                    {
+                                        final Object entry = it.next();
+                                        if ( entry != null )
+                                        {
+                                            queryParams.add( ( (QueryParam) annotation ).value(), entry.toString() );
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    queryParams.add( ( (QueryParam) annotation ).value(), args[i].toString() );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if ( !queryParams.isEmpty() )
+            {
+                return queryParams;
+            }
+        }
+        return null;
     }
 
     private Object getPayload( final Method method, final Object[] args )
