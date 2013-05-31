@@ -81,12 +81,15 @@ public class ConstraintViolationExceptionMapper
     {
         for ( final Path.Node node : constraintViolation.getPropertyPath() )
         {
-            final ElementDescriptor.Kind kind = node.getElementDescriptor().getKind();
+            // FIXME: javax.validation.metadata.ElementDescriptor.Kind was removed in final 1.1.0 javax.validation API
+            // FIXME: Sort out what to do here, disable code for now to allow complication
 
-            if ( ElementDescriptor.Kind.RETURN_VALUE.equals( kind ) )
-            {
-                return Response.Status.INTERNAL_SERVER_ERROR;
-            }
+            //final ElementDescriptor.Kind kind = node.getElementDescriptor().getKind();
+            //
+            //if ( ElementDescriptor.Kind.RETURN_VALUE.equals( kind ) )
+            //{
+            //    return Response.Status.INTERNAL_SERVER_ERROR;
+            //}
         }
 
         return Response.Status.BAD_REQUEST;

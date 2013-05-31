@@ -25,7 +25,8 @@
     <groupId>org.sonatype.sisu.siesta</groupId>
     <artifactId>siesta</artifactId>
     <packaging>pom</packaging>
-    <version>1.4.2-SNAPSHOT</version>
+
+    <version>1.5-SNAPSHOT</version>
 
     <url>https://github.com/sonatype/sisu-siesta</url>
 
@@ -50,7 +51,7 @@
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
         <build.number />
         
-        <jerseyVersion>1.15</jerseyVersion>
+        <jerseyVersion>1.17.1</jerseyVersion>
     </properties>
 
     <dependencyManagement>
@@ -58,19 +59,19 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.2</version>
+                <version>1.7.5</version>
             </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
-                <version>1.7.2</version>
+                <version>1.7.5</version>
             </dependency>
 
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>13.0.1</version>
+                <version>14.0.1</version>
             </dependency>
 
             <dependency>
@@ -82,13 +83,19 @@
             <dependency>
                 <groupId>org.sonatype.sisu</groupId>
                 <artifactId>sisu-inject-bean</artifactId>
-                <version>2.3.1</version>
+                <version>2.3.4</version>
             </dependency>
 
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>2.5</version>
+                <groupId>org.eclipse.jetty.orbit</groupId>
+                <artifactId>javax.servlet</artifactId>
+                <version>3.0.0.v201112011016</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>test-jetty-servlet</artifactId>
+                <version>8.1.11.v20130520</version>
             </dependency>
 
             <dependency>
@@ -164,24 +171,23 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            
-            <!-- pull in latest mimepull to fix stream closed exception once you reach end of stream -->
+
             <dependency>
                 <groupId>org.jvnet.mimepull</groupId>
                 <artifactId>mimepull</artifactId>
-                <version>1.8</version>
+                <version>1.9.3</version>
             </dependency>
 
             <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
-                <version>1.1.0.Beta3</version>
+                <version>1.1.0.Final</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.sisu.inject</groupId>
                 <artifactId>guice-servlet</artifactId>
-                <version>3.1.2</version>
+                <version>3.1.4</version>
             </dependency>
 
             <dependency>
@@ -190,36 +196,51 @@
                 <version>1.6</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.sonatype.sisu.jacksbee</groupId>
+                <artifactId>jacksbee-runtime</artifactId>
+                <version>1.1.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>javax.xml.bind</groupId>
+                        <artifactId>jaxb-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.sun.xml.bind</groupId>
+                        <artifactId>jaxb-impl</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
             <!-- INTERNAL -->
 
             <dependency>
                 <groupId>org.sonatype.sisu.siesta</groupId>
                 <artifactId>siesta-common</artifactId>
-                <version>1.4.2-SNAPSHOT</version>
+                <version>1.5-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.sisu.siesta</groupId>
                 <artifactId>siesta-xstream</artifactId>
-                <version>1.4.2-SNAPSHOT</version>
+                <version>1.5-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.sisu.siesta</groupId>
                 <artifactId>siesta-jackson</artifactId>
-                <version>1.4.2-SNAPSHOT</version>
+                <version>1.5-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.sisu.siesta</groupId>
                 <artifactId>siesta-server</artifactId>
-                <version>1.4.2-SNAPSHOT</version>
+                <version>1.5-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>org.sonatype.sisu.siesta</groupId>
                 <artifactId>siesta-client</artifactId>
-                <version>1.4.2-SNAPSHOT</version>
+                <version>1.5-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

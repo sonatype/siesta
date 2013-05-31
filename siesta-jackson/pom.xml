@@ -19,13 +19,13 @@
     <parent>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta</artifactId>
-        <version>1.4.2-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
     </parent>
 
     <artifactId>siesta-jackson</artifactId>
 
     <properties>
-        <jacksonVersion>1.9.10</jacksonVersion>
+        <jacksonVersion>1.9.12</jacksonVersion>
     </properties>
 
     <dependencies>
