@@ -20,6 +20,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ElementKind;
 import javax.validation.Path;
 import javax.validation.metadata.ElementDescriptor;
 import javax.ws.rs.core.Response;
@@ -81,15 +82,12 @@ public class ConstraintViolationExceptionMapper
     {
         for ( final Path.Node node : constraintViolation.getPropertyPath() )
         {
-            // FIXME: javax.validation.metadata.ElementDescriptor.Kind was removed in final 1.1.0 javax.validation API
-            // FIXME: Sort out what to do here, disable code for now to allow complication
+            final ElementKind kind = node.getKind();
 
-            //final ElementDescriptor.Kind kind = node.getElementDescriptor().getKind();
-            //
-            //if ( ElementDescriptor.Kind.RETURN_VALUE.equals( kind ) )
-            //{
-            //    return Response.Status.INTERNAL_SERVER_ERROR;
-            //}
+            if ( ElementKind.RETURN_VALUE.equals( kind ) )
+            {
+                return Response.Status.INTERNAL_SERVER_ERROR;
+            }
         }
 
         return Response.Status.BAD_REQUEST;
