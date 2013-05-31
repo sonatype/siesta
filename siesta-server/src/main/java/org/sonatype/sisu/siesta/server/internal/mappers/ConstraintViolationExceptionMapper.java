@@ -22,7 +22,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ElementKind;
 import javax.validation.Path;
-import javax.validation.metadata.ElementDescriptor;
 import javax.ws.rs.core.Response;
 
 import org.sonatype.sisu.siesta.common.validation.ValidationErrorXO;
