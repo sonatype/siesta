@@ -25,7 +25,9 @@ import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_VALIDATION_ERR
 import java.util.List;
 import javax.ws.rs.core.MediaType;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.sonatype.sisu.siesta.common.validation.ValidationErrorXO;
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 import org.sonatype.sisu.siesta.testsuite.support.SiestaTestSupport;

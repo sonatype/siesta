@@ -16,65 +16,58 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
 import java.util.List;
+import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.inject.Singleton;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.sonatype.sisu.siesta.common.Resource;
-import org.sonatype.sisu.siesta.common.error.ObjectNotFoundException;
-import org.sonatype.sisu.siesta.testsuite.model.UserXO;
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
 /**
- * @since 1.4
+ * @since 1.4.2
  */
 @Named
 @Singleton
-@Path("/user")
-public class UserResource
+@Path( "/echo" )
+public class EchoResource
     implements Resource
 {
 
-    private final Logger log = LoggerFactory.getLogger( getClass() );
-
     @GET
     @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public List<UserXO> get()
+    public List<String> get( @QueryParam( "foo" ) String foo,
+                             @QueryParam( "bar" ) Integer bar )
     {
-        return Lists.newArrayList(
-            new UserXO().withName( "foo" ),
-            new UserXO().withName( "bar" )
-        );
-    }
-
-    @GET
-    @Path( "/{id}" )
-    @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public UserXO get( @PathParam( "id" ) String id )
-    {
-        if ( "foo".equals( id ) )
+        final List<String> result = Lists.newArrayList();
+        if ( foo != null )
         {
-            return new UserXO().withName( "foo" );
+            result.add( "foo=" + foo );
         }
-        throw new ObjectNotFoundException( "User with id '" + id + "' not found" );
+        if ( bar != null )
+        {
+            result.add( "bar=" + bar );
+        }
+        return result;
     }
 
-    @PUT
-    @Consumes( { APPLICATION_XML, APPLICATION_JSON } )
+    @GET
+    @Path( "/multiple" )
     @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public UserXO put( final UserXO user )
+    public List<String> get( @QueryParam( "foo" ) List<String> foo )
     {
-        log.info( "PUT name='{}' description='{}' created='{}'",
-                  user.getName(), user.getDescription(), user.getCreated() );
-
-        return user;
+        return Lists.transform( foo, new Function<String, String>()
+        {
+            @Nullable
+            public String apply( @Nullable final String value )
+            {
+                return "foo=" + value;
+            }
+        } );
     }
 
 }
