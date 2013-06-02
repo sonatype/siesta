@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServlet;
 import org.eclipse.jetty.testing.ServletTester;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.sonatype.inject.BeanScanning;
 import org.sonatype.sisu.litmus.testsupport.inject.InjectedTestSupport;
 import com.google.inject.Injector;
@@ -49,6 +51,9 @@ public class SiestaTestSupport
     private String url;
 
     private Client client;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Override
     public BeanScanning scanning()
@@ -95,6 +100,11 @@ public class SiestaTestSupport
     protected Client client()
     {
         return client;
+    }
+
+    protected String url()
+    {
+        return url;
     }
 
     protected String url( final String path )
