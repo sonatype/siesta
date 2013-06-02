@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.sonatype.sisu.siesta</groupId>
     <artifactId>siesta</artifactId>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.5-SNAPSHOT</version>
   </parent>
 
   <artifactId>siesta-testsuite</artifactId>
@@ -30,44 +30,35 @@
       <artifactId>siesta-server</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.sonatype.sisu.siesta</groupId>
       <artifactId>siesta-jackson</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.sonatype.sisu.siesta</groupId>
       <artifactId>siesta-client</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.sonatype.sisu.litmus</groupId>
       <artifactId>litmus-testsupport</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>test-jetty-servlet</artifactId>
-      <version>7.6.9.v20130131</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.sonatype.sisu.jacksbee</groupId>
       <artifactId>jacksbee-runtime</artifactId>
-      <version>1.1.1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>javax.xml.bind</groupId>
-          <artifactId>jaxb-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.sun.xml.bind</groupId>
-          <artifactId>jaxb-impl</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
-
   </dependencies>
 
   <build>
@@ -75,7 +66,7 @@
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.8.2</version>
+        <version>0.8.3</version>
         <dependencies>
           <dependency>
             <groupId>org.sonatype.sisu.jacksbee</groupId>

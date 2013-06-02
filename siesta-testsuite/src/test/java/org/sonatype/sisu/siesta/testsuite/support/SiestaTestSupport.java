@@ -13,6 +13,7 @@
 package org.sonatype.sisu.siesta.testsuite.support;
 
 import javax.inject.Inject;
+import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServlet;
 
 import org.eclipse.jetty.testing.ServletTester;
@@ -30,6 +31,8 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
+
+import java.util.EnumSet;
 
 /**
  * Support class for Siesta UTs.
@@ -73,7 +76,7 @@ public class SiestaTestSupport
             }
         } );
         url = servletTester.createSocketConnector( true ) + TestModule.MOUNT_POINT;
-        servletTester.addFilter( GuiceFilter.class, "/*", 1 );
+        servletTester.addFilter( GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST) );
         servletTester.addServlet( DummyServlet.class, "/*" );
         servletTester.start();
 

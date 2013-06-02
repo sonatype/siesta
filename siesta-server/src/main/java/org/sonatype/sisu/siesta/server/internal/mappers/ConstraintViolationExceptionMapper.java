@@ -20,8 +20,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ElementKind;
 import javax.validation.Path;
-import javax.validation.metadata.ElementDescriptor;
 import javax.ws.rs.core.Response;
 
 import org.sonatype.sisu.siesta.common.validation.ValidationErrorXO;
@@ -81,9 +81,9 @@ public class ConstraintViolationExceptionMapper
     {
         for ( final Path.Node node : constraintViolation.getPropertyPath() )
         {
-            final ElementDescriptor.Kind kind = node.getElementDescriptor().getKind();
+            final ElementKind kind = node.getKind();
 
-            if ( ElementDescriptor.Kind.RETURN_VALUE.equals( kind ) )
+            if ( ElementKind.RETURN_VALUE.equals( kind ) )
             {
                 return Response.Status.INTERNAL_SERVER_ERROR;
             }
