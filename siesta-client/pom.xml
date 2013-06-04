@@ -13,43 +13,44 @@
     See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.sonatype.sisu.siesta</groupId>
-        <artifactId>siesta</artifactId>
-        <version>1.5-SNAPSHOT</version>
-    </parent>
+  <parent>
+    <groupId>org.sonatype.sisu.siesta</groupId>
+    <artifactId>siesta</artifactId>
+    <version>1.5-SNAPSHOT</version>
+  </parent>
 
-    <artifactId>siesta-client</artifactId>
+  <artifactId>siesta-client</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.sonatype.sisu.siesta</groupId>
-            <artifactId>siesta-common</artifactId>
-        </dependency>
+  <dependencies>
+    <dependency>
+      <groupId>org.sonatype.sisu.siesta</groupId>
+      <artifactId>siesta-common</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-client</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-json</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-apache-client4</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>com.sun.jersey.contribs</groupId>
+      <artifactId>jersey-apache-client4</artifactId>
+    </dependency>
 
-        <!-- HC4 uses JCL, adapt it to Slf4j -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-        </dependency>
-    </dependencies>
+    <!-- HC4 uses JCL, adapt it to Slf4j -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>
