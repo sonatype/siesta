@@ -106,9 +106,15 @@ public class ClientInvocationHandler
             response = builder.method( httpMethod, ClientResponse.class, payload );
         }
 
+        final Class<?> returnType = method.getReturnType();
+
+        if( ClientResponse.class.equals( returnType ) )
+        {
+            return response;
+        }
+
         if ( Response.Status.Family.SUCCESSFUL.equals( response.getClientResponseStatus().getFamily() ) )
         {
-            final Class<?> returnType = method.getReturnType();
             if ( !Void.class.equals( returnType ) )
             {
                 return response.getEntity( new GenericType( method.getGenericReturnType() ) );

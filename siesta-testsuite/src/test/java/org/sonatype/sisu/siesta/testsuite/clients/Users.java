@@ -24,6 +24,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
+import com.sun.jersey.api.client.ClientResponse;
 
 /**
  * TODO
@@ -37,6 +38,10 @@ public interface Users
     @GET
     @Path("/inexistent/path")
     void inexistent();
+
+    @GET
+    @Path("/inexistent/path")
+    ClientResponse inexistentReturnsClientResponse();
 
     @GET
     @Consumes({ APPLICATION_JSON })
@@ -78,5 +83,8 @@ public interface Users
 
     @PUT
     UserXO put( final UserXO user );
+
+    @PUT
+    ClientResponse putReturnsClientResponse( final UserXO user );
 
 }
