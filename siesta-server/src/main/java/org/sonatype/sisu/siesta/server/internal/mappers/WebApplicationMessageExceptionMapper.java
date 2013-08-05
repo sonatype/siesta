@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.server.internal.mappers;
 
 import javax.inject.Named;
@@ -32,16 +33,14 @@ public class WebApplicationMessageExceptionMapper
     extends ErrorExceptionMapperSupport<WebApplicationMessageException>
 {
 
-    @Override
-    protected int getStatusCode( final WebApplicationMessageException exception )
-    {
-        return exception.getResponse().getStatus();
-    }
+  @Override
+  protected int getStatusCode(final WebApplicationMessageException exception) {
+    return exception.getResponse().getStatus();
+  }
 
-    @Override
-    protected String getMessage( final WebApplicationMessageException exception )
-    {
-        return (String) exception.getResponse().getEntity();
-    }
+  @Override
+  protected String getMessage(final WebApplicationMessageException exception) {
+    return (String) exception.getResponse().getEntity();
+  }
 
 }

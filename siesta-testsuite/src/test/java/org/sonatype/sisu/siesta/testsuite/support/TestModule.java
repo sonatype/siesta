@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.testsuite.support;
 
 import javax.inject.Named;
@@ -23,6 +24,7 @@ import org.sonatype.sisu.siesta.server.internal.ComponentDiscoveryReporterImpl;
 import org.sonatype.sisu.siesta.server.internal.SiestaModule;
 import org.sonatype.sisu.siesta.server.internal.SiestaServlet;
 import org.sonatype.sisu.siesta.server.internal.jersey.SiestaJerseyModule;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.servlet.ServletModule;
 
@@ -35,41 +37,37 @@ public class TestModule
     extends AbstractModule
 {
 
-    public static final String MOUNT_POINT = "/siesta";
+  public static final String MOUNT_POINT = "/siesta";
 
-    @Override
-    protected void configure()
+  @Override
+  protected void configure() {
+    install(new SiestaModule());
+    install(new SiestaJerseyModule());
+    install(new SiestaJacksonModule());
+
+    // Dynamically discover JAX-RS components
+    bind(javax.ws.rs.core.Application.class).to(ComponentDiscoveryApplication.class).in(Singleton.class);
+
+    // Customize the report to include the MOUNT_POINT
+    bind(ComponentDiscoveryReporter.class).toInstance(new ComponentDiscoveryReporterImpl()
     {
-        install( new SiestaModule() );
-        install( new SiestaJerseyModule() );
-        install( new SiestaJacksonModule() );
+      @Override
+      protected String pathOf(final Class<Resource> type) {
+        String path = super.pathOf(type);
+        if (!path.startsWith("/")) {
+          path = "/" + path;
+        }
+        return MOUNT_POINT + path;
+      }
+    });
 
-        // Dynamically discover JAX-RS components
-        bind( javax.ws.rs.core.Application.class ).to( ComponentDiscoveryApplication.class ).in( Singleton.class );
-
-        // Customize the report to include the MOUNT_POINT
-        bind( ComponentDiscoveryReporter.class ).toInstance( new ComponentDiscoveryReporterImpl()
-        {
-            @Override
-            protected String pathOf( final Class<Resource> type )
-            {
-                String path = super.pathOf( type );
-                if ( !path.startsWith( "/" ) )
-                {
-                    path = "/" + path;
-                }
-                return MOUNT_POINT + path;
-            }
-        } );
-
-        install( new ServletModule()
-        {
-            @Override
-            protected void configureServlets()
-            {
-                serve( MOUNT_POINT + "/*" ).with( SiestaServlet.class );
-            }
-        } );
-    }
+    install(new ServletModule()
+    {
+      @Override
+      protected void configureServlets() {
+        serve(MOUNT_POINT + "/*").with(SiestaServlet.class);
+      }
+    });
+  }
 
 }

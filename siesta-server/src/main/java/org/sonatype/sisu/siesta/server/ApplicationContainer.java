@@ -10,14 +10,16 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.server;
+
+import java.io.IOException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Application;
-import java.io.IOException;
 
 /**
  * Abstraction of a JAX-RS container.
@@ -26,11 +28,11 @@ import java.io.IOException;
  */
 public interface ApplicationContainer
 {
-    void add(Application application);
+  void add(Application application);
 
-    //void remove(Application application);
+  //void remove(Application application);
 
-    void init(final ServletConfig config) throws ServletException;
+  void init(final ServletConfig config) throws ServletException;
 
-    void service(final HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+  void service(final HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 }

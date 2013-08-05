@@ -10,14 +10,15 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.common.validation;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+package org.sonatype.sisu.siesta.common.validation;
 
 import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Thrown when a resource request is invalid.
@@ -28,68 +29,56 @@ public class ValidationErrorsException
     extends RuntimeException
 {
 
-    private final List<ValidationErrorXO> errors = Lists.newArrayList();
+  private final List<ValidationErrorXO> errors = Lists.newArrayList();
 
-    public ValidationErrorsException()
-    {
-    }
+  public ValidationErrorsException() {
+  }
 
-    public ValidationErrorsException( final String message )
-    {
-        errors.add( new ValidationErrorXO( message ) );
-    }
+  public ValidationErrorsException(final String message) {
+    errors.add(new ValidationErrorXO(message));
+  }
 
-    public ValidationErrorsException( final String id, final String message )
-    {
-        errors.add( new ValidationErrorXO( id, message ) );
-    }
+  public ValidationErrorsException(final String id, final String message) {
+    errors.add(new ValidationErrorXO(id, message));
+  }
 
-    public ValidationErrorsException withError( final String message )
-    {
-        errors.add( new ValidationErrorXO( message ) );
-        return this;
-    }
+  public ValidationErrorsException withError(final String message) {
+    errors.add(new ValidationErrorXO(message));
+    return this;
+  }
 
-    public ValidationErrorsException withError( final String id, final String message )
-    {
-        errors.add( new ValidationErrorXO( id, message ) );
-        return this;
-    }
+  public ValidationErrorsException withError(final String id, final String message) {
+    errors.add(new ValidationErrorXO(id, message));
+    return this;
+  }
 
-    public ValidationErrorsException withErrors( final ValidationErrorXO... validationErrors )
-    {
-        errors.addAll( Arrays.asList( checkNotNull( validationErrors ) ) );
-        return this;
-    }
+  public ValidationErrorsException withErrors(final ValidationErrorXO... validationErrors) {
+    errors.addAll(Arrays.asList(checkNotNull(validationErrors)));
+    return this;
+  }
 
-    public ValidationErrorsException withErrors( final List<ValidationErrorXO> validationErrors )
-    {
-        errors.addAll( checkNotNull( validationErrors ) );
-        return this;
-    }
+  public ValidationErrorsException withErrors(final List<ValidationErrorXO> validationErrors) {
+    errors.addAll(checkNotNull(validationErrors));
+    return this;
+  }
 
-    public List<ValidationErrorXO> getValidationErrors()
-    {
-        return errors;
-    }
+  public List<ValidationErrorXO> getValidationErrors() {
+    return errors;
+  }
 
-    public boolean hasValidationErrors()
-    {
-        return !errors.isEmpty();
-    }
+  public boolean hasValidationErrors() {
+    return !errors.isEmpty();
+  }
 
-    @Override
-    public String getMessage()
-    {
-        final StringBuilder sb = new StringBuilder();
-        for ( final ValidationErrorXO error : errors )
-        {
-            if ( sb.length() > 0 )
-            {
-                sb.append( ", " );
-            }
-            sb.append( error.getMessage() );
-        }
-        return sb.length() == 0 ? "(No validation errors)" : sb.toString();
+  @Override
+  public String getMessage() {
+    final StringBuilder sb = new StringBuilder();
+    for (final ValidationErrorXO error : errors) {
+      if (sb.length() > 0) {
+        sb.append(", ");
+      }
+      sb.append(error.getMessage());
     }
+    return sb.length() == 0 ? "(No validation errors)" : sb.toString();
+  }
 }

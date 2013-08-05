@@ -10,12 +10,14 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.server.internal.mappers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.validation.ConstraintViolation;
@@ -39,65 +41,54 @@ public class ConstraintViolationExceptionMapper
     extends ValidationErrorsExceptionMappersSupport<ConstraintViolationException>
 {
 
-    @Override
-    protected List<ValidationErrorXO> getValidationErrors( final ConstraintViolationException exception )
-    {
-        return getValidationErrors( exception.getConstraintViolations() );
+  @Override
+  protected List<ValidationErrorXO> getValidationErrors(final ConstraintViolationException exception) {
+    return getValidationErrors(exception.getConstraintViolations());
+  }
+
+  @Override
+  protected int getStatusCode(final ConstraintViolationException exception) {
+    return getResponseStatus(exception.getConstraintViolations()).getStatusCode();
+  }
+
+  private List<ValidationErrorXO> getValidationErrors(final Set<ConstraintViolation<?>> violations) {
+    final List<ValidationErrorXO> errors = new ArrayList<ValidationErrorXO>();
+
+    for (final ConstraintViolation violation : violations) {
+      errors.add(new ValidationErrorXO(getPath(violation), violation.getMessage()));
     }
 
-    @Override
-    protected int getStatusCode( final ConstraintViolationException exception )
-    {
-        return getResponseStatus( exception.getConstraintViolations() ).getStatusCode();
+    return errors;
+  }
+
+  private Response.Status getResponseStatus(final Set<ConstraintViolation<?>> constraintViolations) {
+    final Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
+
+    if (iterator.hasNext()) {
+      return getResponseStatus(iterator.next());
+    }
+    else {
+      return Response.Status.BAD_REQUEST;
+    }
+  }
+
+  private Response.Status getResponseStatus(final ConstraintViolation<?> constraintViolation) {
+    for (final Path.Node node : constraintViolation.getPropertyPath()) {
+      final ElementKind kind = node.getKind();
+
+      if (ElementKind.RETURN_VALUE.equals(kind)) {
+        return Response.Status.INTERNAL_SERVER_ERROR;
+      }
     }
 
-    private List<ValidationErrorXO> getValidationErrors( final Set<ConstraintViolation<?>> violations )
-    {
-        final List<ValidationErrorXO> errors = new ArrayList<ValidationErrorXO>();
+    return Response.Status.BAD_REQUEST;
+  }
 
-        for ( final ConstraintViolation violation : violations )
-        {
-            errors.add( new ValidationErrorXO( getPath( violation ), violation.getMessage() ) );
-        }
+  private String getPath(final ConstraintViolation violation) {
+    final String leafBeanName = violation.getLeafBean().getClass().getSimpleName();
+    final String propertyPath = violation.getPropertyPath().toString();
 
-        return errors;
-    }
-
-    private Response.Status getResponseStatus( final Set<ConstraintViolation<?>> constraintViolations )
-    {
-        final Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
-
-        if ( iterator.hasNext() )
-        {
-            return getResponseStatus( iterator.next() );
-        }
-        else
-        {
-            return Response.Status.BAD_REQUEST;
-        }
-    }
-
-    private Response.Status getResponseStatus( final ConstraintViolation<?> constraintViolation )
-    {
-        for ( final Path.Node node : constraintViolation.getPropertyPath() )
-        {
-            final ElementKind kind = node.getKind();
-
-            if ( ElementKind.RETURN_VALUE.equals( kind ) )
-            {
-                return Response.Status.INTERNAL_SERVER_ERROR;
-            }
-        }
-
-        return Response.Status.BAD_REQUEST;
-    }
-
-    private String getPath( final ConstraintViolation violation )
-    {
-        final String leafBeanName = violation.getLeafBean().getClass().getSimpleName();
-        final String propertyPath = violation.getPropertyPath().toString();
-
-        return leafBeanName + ( !"".equals( propertyPath ) ? '.' + propertyPath : "" );
-    }
+    return leafBeanName + (!"".equals(propertyPath) ? '.' + propertyPath : "");
+  }
 
 }

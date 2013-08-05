@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.common.error;
 
 /**
@@ -21,24 +22,20 @@ public class InvalidObjectException
     extends RuntimeException
 {
 
-    public InvalidObjectException()
-    {
-        super();
-    }
+  public InvalidObjectException() {
+    super();
+  }
 
-    public InvalidObjectException( final String message )
-    {
-        super( message );
-    }
+  public InvalidObjectException(final String message) {
+    super(message);
+  }
 
-    public InvalidObjectException( final String message, final Throwable cause )
-    {
-        super( message, cause );
-    }
+  public InvalidObjectException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
 
-    public InvalidObjectException( final Throwable cause )
-    {
-        super( cause );
-    }
+  public InvalidObjectException(final Throwable cause) {
+    super(cause);
+  }
 
 }

@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.common;
 
 import javax.ws.rs.core.MediaType;
@@ -22,20 +23,20 @@ import javax.ws.rs.core.MediaType;
 public interface SiestaMediaType
 {
 
-    String VND_ERROR_V1_XML = "application/vnd.siesta-error-v1+xml";
+  String VND_ERROR_V1_XML = "application/vnd.siesta-error-v1+xml";
 
-    MediaType VND_ERROR_V1_XML_TYPE = new MediaType( "application", "vnd.siesta-error-v1+xml" );
+  MediaType VND_ERROR_V1_XML_TYPE = new MediaType("application", "vnd.siesta-error-v1+xml");
 
-    String VND_ERROR_V1_JSON = "application/vnd.siesta-error-v1+json";
+  String VND_ERROR_V1_JSON = "application/vnd.siesta-error-v1+json";
 
-    MediaType VND_ERROR_V1_JSON_TYPE = new MediaType( "application", "vnd.siesta-error-v1+json" );
+  MediaType VND_ERROR_V1_JSON_TYPE = new MediaType("application", "vnd.siesta-error-v1+json");
 
-    String VND_VALIDATION_ERRORS_V1_XML = "application/vnd.siesta-validation-errors-v1+xml";
+  String VND_VALIDATION_ERRORS_V1_XML = "application/vnd.siesta-validation-errors-v1+xml";
 
-    MediaType VND_VALIDATION_ERRORS_V1_XML_TYPE = new MediaType( "application", "vnd.siesta-validation-errors-v1+xml" );
+  MediaType VND_VALIDATION_ERRORS_V1_XML_TYPE = new MediaType("application", "vnd.siesta-validation-errors-v1+xml");
 
-    String VND_VALIDATION_ERRORS_V1_JSON = "application/vnd.siesta-validation-errors-v1+json";
+  String VND_VALIDATION_ERRORS_V1_JSON = "application/vnd.siesta-validation-errors-v1+json";
 
-    MediaType VND_VALIDATION_ERRORS_V1_JSON_TYPE = new MediaType( "application", "vnd.siesta-validation-errors-v1+json" );
+  MediaType VND_VALIDATION_ERRORS_V1_JSON_TYPE = new MediaType("application", "vnd.siesta-validation-errors-v1+json");
 
 }

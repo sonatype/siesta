@@ -10,19 +10,18 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.testsuite.support;
+
+import java.util.EnumSet;
 
 import javax.inject.Inject;
 import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServlet;
 
-import org.eclipse.jetty.testing.ServletTester;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
 import org.sonatype.inject.BeanScanning;
 import org.sonatype.sisu.litmus.testsupport.inject.InjectedTestSupport;
+
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceFilter;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -31,8 +30,11 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
-
-import java.util.EnumSet;
+import org.eclipse.jetty.testing.ServletTester;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 /**
  * Support class for Siesta UTs.
@@ -43,79 +45,73 @@ public class SiestaTestSupport
     extends InjectedTestSupport
 {
 
-    @Inject
-    private Injector injector;
+  @Inject
+  private Injector injector;
 
-    private ServletTester servletTester;
+  private ServletTester servletTester;
 
-    private String url;
+  private String url;
 
-    private Client client;
+  private Client client;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
 
-    @Override
-    public BeanScanning scanning()
-    {
-        return BeanScanning.ON;
-    }
+  @Override
+  public BeanScanning scanning() {
+    return BeanScanning.ON;
+  }
 
-    @Before
-    public void startJetty()
-        throws Exception
-    {
-        servletTester = new ServletTester();
-        servletTester.addEventListener( new GuiceServletContextListener()
-        {
-
-            @Override
-            protected Injector getInjector()
-            {
-                return injector;
-            }
-        } );
-        url = servletTester.createSocketConnector( true ) + TestModule.MOUNT_POINT;
-        servletTester.addFilter( GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST) );
-        servletTester.addServlet( DummyServlet.class, "/*" );
-        servletTester.start();
-
-        final ClientConfig clientConfig = new DefaultClientConfig();
-        clientConfig.getFeatures().put( JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE );
-        client = Client.create( clientConfig );
-
-        client.addFilter( new LoggingFilter() );
-    }
-
-    @After
-    public void stopJetty()
-        throws Exception
-    {
-        if ( servletTester != null )
-        {
-            servletTester.stop();
-        }
-    }
-
-    protected Client client()
-    {
-        return client;
-    }
-
-    protected String url()
-    {
-        return url;
-    }
-
-    protected String url( final String path )
-    {
-        return url + "/" + path;
-    }
-
-    private static class DummyServlet
-        extends HttpServlet
+  @Before
+  public void startJetty()
+      throws Exception
+  {
+    servletTester = new ServletTester();
+    servletTester.addEventListener(new GuiceServletContextListener()
     {
 
+      @Override
+      protected Injector getInjector() {
+        return injector;
+      }
+    });
+    url = servletTester.createSocketConnector(true) + TestModule.MOUNT_POINT;
+    servletTester.addFilter(GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
+    servletTester.addServlet(DummyServlet.class, "/*");
+    servletTester.start();
+
+    final ClientConfig clientConfig = new DefaultClientConfig();
+    clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+    client = Client.create(clientConfig);
+
+    client.addFilter(new LoggingFilter());
+  }
+
+  @After
+  public void stopJetty()
+      throws Exception
+  {
+    if (servletTester != null) {
+      servletTester.stop();
     }
+  }
+
+  protected Client client() {
+    return client;
+  }
+
+  protected String url() {
+    return url;
+  }
+
+  protected String url(final String path) {
+    return url + "/" + path;
+  }
+
+  private static class DummyServlet
+      extends HttpServlet
+  {
+
+  }
 
 }

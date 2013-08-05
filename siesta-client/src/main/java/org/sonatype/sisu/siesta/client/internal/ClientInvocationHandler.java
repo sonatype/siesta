@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.client.internal;
 
 import java.lang.annotation.Annotation;
@@ -18,6 +19,7 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
@@ -45,294 +47,231 @@ public class ClientInvocationHandler
     implements InvocationHandler
 {
 
-    private final Class<?> serviceInterface;
+  private final Class<?> serviceInterface;
 
-    private final Client client;
+  private final Client client;
 
-    private final String baseUrl;
+  private final String baseUrl;
 
-    public ClientInvocationHandler( final Class<?> serviceInterface, final Client client, final String baseUrl )
-    {
-        this.serviceInterface = serviceInterface;
-        this.client = client;
-        try
-        {
-            if ( baseUrl.endsWith( "/" ) )
-            {
-                this.baseUrl = baseUrl.substring( 0, baseUrl.length() - 1 );
-            }
-            else
-            {
-                this.baseUrl = baseUrl;
-            }
-        }
-        catch ( Exception e )
-        {
-            throw Throwables.propagate( e );
-        }
+  public ClientInvocationHandler(final Class<?> serviceInterface, final Client client, final String baseUrl) {
+    this.serviceInterface = serviceInterface;
+    this.client = client;
+    try {
+      if (baseUrl.endsWith("/")) {
+        this.baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+      }
+      else {
+        this.baseUrl = baseUrl;
+      }
+    }
+    catch (Exception e) {
+      throw Throwables.propagate(e);
+    }
+  }
+
+  public Object invoke(final Object proxy, final Method method, final Object[] args)
+      throws Throwable
+  {
+    final String url = getUrl(method, args);
+    final MultivaluedMap<String, String> queryParams = getQueryParams(method, args);
+    final String httpMethod = getHttpMethod(method);
+    final String type = getType(method);
+    final String[] accepts = getAccepts(method);
+    final Object payload = getPayload(method, args);
+
+    WebResource resource = client.resource(url);
+
+    if (queryParams != null && !queryParams.isEmpty()) {
+      resource = resource.queryParams(queryParams);
     }
 
-    public Object invoke( final Object proxy, final Method method, final Object[] args )
-        throws Throwable
-    {
-        final String url = getUrl( method, args );
-        final MultivaluedMap<String, String> queryParams = getQueryParams( method, args );
-        final String httpMethod = getHttpMethod( method );
-        final String type = getType( method );
-        final String[] accepts = getAccepts( method );
-        final Object payload = getPayload( method, args );
+    final WebResource.Builder builder = resource.accept(accepts);
 
-        WebResource resource = client.resource( url );
-
-        if ( queryParams != null && !queryParams.isEmpty() )
-        {
-            resource = resource.queryParams( queryParams );
-        }
-
-        final WebResource.Builder builder = resource.accept( accepts );
-
-        if ( type != null )
-        {
-            builder.type( type );
-        }
-
-        ClientResponse response;
-        if ( payload == null )
-        {
-            response = builder.method( httpMethod, ClientResponse.class );
-        }
-        else
-        {
-            response = builder.method( httpMethod, ClientResponse.class, payload );
-        }
-
-        final Class<?> returnType = method.getReturnType();
-
-        if( ClientResponse.class.equals( returnType ) )
-        {
-            return response;
-        }
-
-        if ( Response.Status.Family.SUCCESSFUL.equals( response.getClientResponseStatus().getFamily() ) )
-        {
-            if ( !Void.class.equals( returnType ) )
-            {
-                return response.getEntity( new GenericType( method.getGenericReturnType() ) );
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        throw new UniformInterfaceException( response );
+    if (type != null) {
+      builder.type(type);
     }
 
-    private MultivaluedMap<String, String> getQueryParams( final Method method, final Object[] args )
-    {
-        if ( args != null )
-        {
-            final MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
+    ClientResponse response;
+    if (payload == null) {
+      response = builder.method(httpMethod, ClientResponse.class);
+    }
+    else {
+      response = builder.method(httpMethod, ClientResponse.class, payload);
+    }
 
-            final Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+    final Class<?> returnType = method.getReturnType();
 
-            for ( int i = 0; i < args.length; i++ )
-            {
-                if ( args[i] != null )
-                {
-                    final Annotation[] annotations = parameterAnnotations[i];
-                    if ( annotations.length > 0 )
-                    {
-                        for ( final Annotation annotation : annotations )
-                        {
-                            if ( annotation instanceof QueryParam )
-                            {
-                                if ( args[i] instanceof MultivaluedMap )
-                                {
-                                    final MultivaluedMap map = (MultivaluedMap) args[i];
-                                    final Set keySet = map.keySet();
-                                    for ( Object key : keySet )
-                                    {
-                                        for ( Object value : (List) map.get( key ) )
-                                        {
-                                            if ( value != null )
-                                            {
-                                                queryParams.add( key.toString(), value.toString() );
-                                            }
-                                            else
-                                            {
-                                                queryParams.add( key.toString(), null );
-                                            }
-                                        }
-                                    }
-                                }
-                                else if ( args[i].getClass().isArray() )
-                                {
-                                    for ( final Object entry : (Object[]) args[i] )
-                                    {
-                                        if ( entry != null )
-                                        {
-                                            queryParams.add( ( (QueryParam) annotation ).value(), entry.toString() );
-                                        }
-                                    }
-                                }
-                                else if ( args[i] instanceof Iterable )
-                                {
-                                    for ( final Object entry : (Iterable) args[i] )
-                                    {
-                                        if ( entry != null )
-                                        {
-                                            queryParams.add( ( (QueryParam) annotation ).value(), entry.toString() );
-                                        }
-                                    }
-                                }
-                                else if ( args[i] instanceof Iterator )
-                                {
-                                    final Iterator it = (Iterator) args[i];
-                                    while ( it.hasNext() )
-                                    {
-                                        final Object entry = it.next();
-                                        if ( entry != null )
-                                        {
-                                            queryParams.add( ( (QueryParam) annotation ).value(), entry.toString() );
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    queryParams.add( ( (QueryParam) annotation ).value(), args[i].toString() );
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if ( !queryParams.isEmpty() )
-            {
-                return queryParams;
-            }
-        }
+    if (ClientResponse.class.equals(returnType)) {
+      return response;
+    }
+
+    if (Response.Status.Family.SUCCESSFUL.equals(response.getClientResponseStatus().getFamily())) {
+      if (!Void.class.equals(returnType)) {
+        return response.getEntity(new GenericType(method.getGenericReturnType()));
+      }
+      else {
         return null;
+      }
     }
 
-    private Object getPayload( final Method method, final Object[] args )
-    {
-        if ( args != null )
-        {
-            final Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+    throw new UniformInterfaceException(response);
+  }
 
-            for ( int i = 0; i < args.length; i++ )
-            {
-                final Annotation[] annotations = parameterAnnotations[i];
-                if ( annotations.length > 0 )
-                {
-                    for ( final Annotation annotation : annotations )
-                    {
-                        if ( !( annotation instanceof PathParam ) && !( annotation instanceof QueryParam ) )
-                        {
-                            return args[i];
-                        }
+  private MultivaluedMap<String, String> getQueryParams(final Method method, final Object[] args) {
+    if (args != null) {
+      final MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
+
+      final Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+
+      for (int i = 0; i < args.length; i++) {
+        if (args[i] != null) {
+          final Annotation[] annotations = parameterAnnotations[i];
+          if (annotations.length > 0) {
+            for (final Annotation annotation : annotations) {
+              if (annotation instanceof QueryParam) {
+                if (args[i] instanceof MultivaluedMap) {
+                  final MultivaluedMap map = (MultivaluedMap) args[i];
+                  final Set keySet = map.keySet();
+                  for (Object key : keySet) {
+                    for (Object value : (List) map.get(key)) {
+                      if (value != null) {
+                        queryParams.add(key.toString(), value.toString());
+                      }
+                      else {
+                        queryParams.add(key.toString(), null);
+                      }
                     }
+                  }
                 }
-                else
-                {
-                    return args[i];
-                }
-            }
-        }
-        return null;
-    }
-
-    private String[] getAccepts( final Method method )
-    {
-        final Consumes consumes = method.getAnnotation( Consumes.class );
-        if ( consumes != null )
-        {
-            return consumes.value();
-        }
-        return new String[]{ MediaType.APPLICATION_JSON };
-    }
-
-    private String getType( final Method method )
-    {
-        final Produces produces = method.getAnnotation( Produces.class );
-        if ( produces != null )
-        {
-            return produces.value()[0];
-        }
-        return MediaType.APPLICATION_JSON;
-    }
-
-    private String getHttpMethod( final Method method )
-    {
-        final Annotation[] annotations = method.getAnnotations();
-        if ( annotations != null )
-        {
-            for ( final Annotation annotation : annotations )
-            {
-                final HttpMethod httpMethod = annotation.annotationType().getAnnotation( HttpMethod.class );
-                if ( httpMethod != null )
-                {
-                    return httpMethod.value();
-                }
-            }
-        }
-        throw new IllegalStateException( "Method " + method + " is not annotated with any of @GET/..." );
-    }
-
-    private String getUrl( final Method method, final Object[] args )
-    {
-        final StringBuilder rawUrl = new StringBuilder();
-        final Path atClass = serviceInterface.getAnnotation( Path.class );
-        if ( atClass != null )
-        {
-            rawUrl.append( atClass.value() );
-        }
-        else
-        {
-            final Path atDeclaringClass = method.getDeclaringClass().getAnnotation( Path.class );
-            if ( atDeclaringClass != null )
-            {
-                rawUrl.append( atDeclaringClass.value() );
-            }
-        }
-        final Path atMethod = method.getAnnotation( Path.class );
-        if ( atMethod != null )
-        {
-            rawUrl.append( atMethod.value() );
-        }
-        if ( rawUrl.toString().trim().length() == 0 )
-        {
-            throw new IllegalStateException( String.format(
-                "Cannot calculate rest URL for [%s]. Is class and/or method annotated with @Path?",
-                method.getName() )
-            );
-        }
-
-        String url = rawUrl.toString();
-        if ( url.contains( "{" ) && url.contains( "}" ) )
-        {
-            final Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-            for ( int i = 0; i < parameterAnnotations.length; i++ )
-            {
-                if ( args.length >= i )
-                {
-                    final Annotation[] annotations = parameterAnnotations[i];
-                    for ( final Annotation annotation : annotations )
-                    {
-                        if ( annotation instanceof PathParam )
-                        {
-                            final String name = ( (PathParam) annotation ).value();
-                            if ( args[i] != null )
-                            {
-                                url = url.replace( "{" + name + "}", args[i].toString() );
-                            }
-                        }
+                else if (args[i].getClass().isArray()) {
+                  for (final Object entry : (Object[]) args[i]) {
+                    if (entry != null) {
+                      queryParams.add(((QueryParam) annotation).value(), entry.toString());
                     }
+                  }
                 }
+                else if (args[i] instanceof Iterable) {
+                  for (final Object entry : (Iterable) args[i]) {
+                    if (entry != null) {
+                      queryParams.add(((QueryParam) annotation).value(), entry.toString());
+                    }
+                  }
+                }
+                else if (args[i] instanceof Iterator) {
+                  final Iterator it = (Iterator) args[i];
+                  while (it.hasNext()) {
+                    final Object entry = it.next();
+                    if (entry != null) {
+                      queryParams.add(((QueryParam) annotation).value(), entry.toString());
+                    }
+                  }
+                }
+                else {
+                  queryParams.add(((QueryParam) annotation).value(), args[i].toString());
+                }
+              }
             }
+          }
         }
-        return baseUrl + url;
+      }
+      if (!queryParams.isEmpty()) {
+        return queryParams;
+      }
     }
+    return null;
+  }
+
+  private Object getPayload(final Method method, final Object[] args) {
+    if (args != null) {
+      final Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+
+      for (int i = 0; i < args.length; i++) {
+        final Annotation[] annotations = parameterAnnotations[i];
+        if (annotations.length > 0) {
+          for (final Annotation annotation : annotations) {
+            if (!(annotation instanceof PathParam) && !(annotation instanceof QueryParam)) {
+              return args[i];
+            }
+          }
+        }
+        else {
+          return args[i];
+        }
+      }
+    }
+    return null;
+  }
+
+  private String[] getAccepts(final Method method) {
+    final Consumes consumes = method.getAnnotation(Consumes.class);
+    if (consumes != null) {
+      return consumes.value();
+    }
+    return new String[]{MediaType.APPLICATION_JSON};
+  }
+
+  private String getType(final Method method) {
+    final Produces produces = method.getAnnotation(Produces.class);
+    if (produces != null) {
+      return produces.value()[0];
+    }
+    return MediaType.APPLICATION_JSON;
+  }
+
+  private String getHttpMethod(final Method method) {
+    final Annotation[] annotations = method.getAnnotations();
+    if (annotations != null) {
+      for (final Annotation annotation : annotations) {
+        final HttpMethod httpMethod = annotation.annotationType().getAnnotation(HttpMethod.class);
+        if (httpMethod != null) {
+          return httpMethod.value();
+        }
+      }
+    }
+    throw new IllegalStateException("Method " + method + " is not annotated with any of @GET/...");
+  }
+
+  private String getUrl(final Method method, final Object[] args) {
+    final StringBuilder rawUrl = new StringBuilder();
+    final Path atClass = serviceInterface.getAnnotation(Path.class);
+    if (atClass != null) {
+      rawUrl.append(atClass.value());
+    }
+    else {
+      final Path atDeclaringClass = method.getDeclaringClass().getAnnotation(Path.class);
+      if (atDeclaringClass != null) {
+        rawUrl.append(atDeclaringClass.value());
+      }
+    }
+    final Path atMethod = method.getAnnotation(Path.class);
+    if (atMethod != null) {
+      rawUrl.append(atMethod.value());
+    }
+    if (rawUrl.toString().trim().length() == 0) {
+      throw new IllegalStateException(String.format(
+          "Cannot calculate rest URL for [%s]. Is class and/or method annotated with @Path?",
+          method.getName())
+      );
+    }
+
+    String url = rawUrl.toString();
+    if (url.contains("{") && url.contains("}")) {
+      final Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+      for (int i = 0; i < parameterAnnotations.length; i++) {
+        if (args.length >= i) {
+          final Annotation[] annotations = parameterAnnotations[i];
+          for (final Annotation annotation : annotations) {
+            if (annotation instanceof PathParam) {
+              final String name = ((PathParam) annotation).value();
+              if (args[i] != null) {
+                url = url.replace("{" + name + "}", args[i].toString());
+              }
+            }
+          }
+        }
+      }
+    }
+    return baseUrl + url;
+  }
 
 }

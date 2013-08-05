@@ -10,33 +10,34 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.testsuite.clients;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+package org.sonatype.sisu.siesta.testsuite.clients;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+
 /**
  * TODO
  *
  * @since 1.0
  */
-@Path( "/errors" )
+@Path("/errors")
 public interface Errors
 {
 
-    @GET
-    @Path( "/ObjectNotFoundException" )
-    @Consumes( { APPLICATION_XML } )
-    public Object throwObjectNotFoundException();
+  @GET
+  @Path("/ObjectNotFoundException")
+  @Consumes({APPLICATION_XML})
+  public Object throwObjectNotFoundException();
 
-    @GET
-    @Path( "/BadRequestException" )
-    @Produces( { APPLICATION_JSON } )
-    public Object throwBadRequestException();
+  @GET
+  @Path("/BadRequestException")
+  @Produces({APPLICATION_JSON})
+  public Object throwBadRequestException();
 
 }

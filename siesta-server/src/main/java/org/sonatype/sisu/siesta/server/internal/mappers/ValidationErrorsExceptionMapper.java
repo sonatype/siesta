@@ -10,9 +10,11 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.server.internal.mappers;
 
 import java.util.List;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -31,10 +33,9 @@ public class ValidationErrorsExceptionMapper
     extends ValidationErrorsExceptionMappersSupport<ValidationErrorsException>
 {
 
-    @Override
-    protected List<ValidationErrorXO> getValidationErrors( final ValidationErrorsException exception )
-    {
-        return exception.getValidationErrors();
-    }
+  @Override
+  protected List<ValidationErrorXO> getValidationErrors(final ValidationErrorsException exception) {
+    return exception.getValidationErrors();
+  }
 
 }

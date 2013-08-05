@@ -10,12 +10,13 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.server.internal;
+
+import javax.inject.Singleton;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
-
-import javax.inject.Singleton;
 
 /**
  * Siesta Guice module.
@@ -25,7 +26,7 @@ import javax.inject.Singleton;
 public class SiestaModule
     implements Module
 {
-    public void configure(final Binder binder) {
-        binder.bind(SiestaServlet.class).in(Singleton.class);
-    }
+  public void configure(final Binder binder) {
+    binder.bind(SiestaServlet.class).in(Singleton.class);
+  }
 }

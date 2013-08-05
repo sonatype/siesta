@@ -10,9 +10,11 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.client.internal;
 
 import org.sonatype.sisu.siesta.common.error.ErrorXO;
+
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 
@@ -25,21 +27,17 @@ public abstract class ErrorsV1FilterSupport
     extends ErrorResponseFilterSupport
 {
 
-    protected void throwException( final ClientResponse response )
-    {
-        ErrorXO error = null;
-        try
-        {
-            error = response.getEntity( ErrorXO.class );
-        }
-        catch ( Exception e )
-        {
-            log.trace( "Could not unmarshall error", e );
-        }
-        if ( error != null )
-        {
-            throw new UniformInterfaceException( error.getMessage() + " (" + error.getId() + ")", response );
-        }
+  protected void throwException(final ClientResponse response) {
+    ErrorXO error = null;
+    try {
+      error = response.getEntity(ErrorXO.class);
     }
+    catch (Exception e) {
+      log.trace("Could not unmarshall error", e);
+    }
+    if (error != null) {
+      throw new UniformInterfaceException(error.getMessage() + " (" + error.getId() + ")", response);
+    }
+  }
 
 }

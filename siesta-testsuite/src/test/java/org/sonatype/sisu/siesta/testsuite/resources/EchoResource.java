@@ -10,12 +10,11 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.testsuite.resources;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML;
-
 import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -25,49 +24,49 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 import org.sonatype.sisu.siesta.common.Resource;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
 /**
  * @since 1.4.2
  */
 @Named
 @Singleton
-@Path( "/echo" )
+@Path("/echo")
 public class EchoResource
     implements Resource
 {
 
-    @GET
-    @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public List<String> get( @QueryParam( "foo" ) String foo,
-                             @QueryParam( "bar" ) Integer bar )
-    {
-        final List<String> result = Lists.newArrayList();
-        if ( foo != null )
-        {
-            result.add( "foo=" + foo );
-        }
-        if ( bar != null )
-        {
-            result.add( "bar=" + bar );
-        }
-        return result;
+  @GET
+  @Produces({APPLICATION_XML, APPLICATION_JSON})
+  public List<String> get(@QueryParam("foo") String foo,
+                          @QueryParam("bar") Integer bar)
+  {
+    final List<String> result = Lists.newArrayList();
+    if (foo != null) {
+      result.add("foo=" + foo);
     }
+    if (bar != null) {
+      result.add("bar=" + bar);
+    }
+    return result;
+  }
 
-    @GET
-    @Path( "/multiple" )
-    @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public List<String> get( @QueryParam( "foo" ) List<String> foo )
+  @GET
+  @Path("/multiple")
+  @Produces({APPLICATION_XML, APPLICATION_JSON})
+  public List<String> get(@QueryParam("foo") List<String> foo) {
+    return Lists.transform(foo, new Function<String, String>()
     {
-        return Lists.transform( foo, new Function<String, String>()
-        {
-            @Nullable
-            public String apply( @Nullable final String value )
-            {
-                return "foo=" + value;
-            }
-        } );
-    }
+      @Nullable
+      public String apply(@Nullable final String value) {
+        return "foo=" + value;
+      }
+    });
+  }
 
 }

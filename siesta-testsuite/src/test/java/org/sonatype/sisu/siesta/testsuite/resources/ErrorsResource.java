@@ -10,10 +10,8 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.testsuite.resources;
 
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+package org.sonatype.sisu.siesta.testsuite.resources;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -26,41 +24,41 @@ import org.sonatype.sisu.siesta.common.Resource;
 import org.sonatype.sisu.siesta.common.error.BadRequestException;
 import org.sonatype.sisu.siesta.common.error.ObjectNotFoundException;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+
 /**
  * @since 1.4
  */
 @Named
 @Singleton
-@Path( "/errors" )
+@Path("/errors")
 public class ErrorsResource
     implements Resource
 {
 
-    @GET
-    @Path( "/ObjectNotFoundException" )
-    @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public Object throwObjectNotFoundException()
-    {
-        throw new ObjectNotFoundException( "ObjectNotFoundException" );
-    }
+  @GET
+  @Path("/ObjectNotFoundException")
+  @Produces({APPLICATION_XML, APPLICATION_JSON})
+  public Object throwObjectNotFoundException() {
+    throw new ObjectNotFoundException("ObjectNotFoundException");
+  }
 
-    @GET
-    @Path( "/BadRequestException" )
-    @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public Object throwBadRequestException()
-    {
-        throw new BadRequestException( "BadRequestException" );
-    }
+  @GET
+  @Path("/BadRequestException")
+  @Produces({APPLICATION_XML, APPLICATION_JSON})
+  public Object throwBadRequestException() {
+    throw new BadRequestException("BadRequestException");
+  }
 
-    /**
-     * @since 1.4.2
-     */
-    @GET
-    @Path( "/406" )
-    @Produces( { APPLICATION_XML, APPLICATION_JSON } )
-    public Object throw406()
-    {
-        throw new WebApplicationException( 406 );
-    }
+  /**
+   * @since 1.4.2
+   */
+  @GET
+  @Path("/406")
+  @Produces({APPLICATION_XML, APPLICATION_JSON})
+  public Object throw406() {
+    throw new WebApplicationException(406);
+  }
 
 }

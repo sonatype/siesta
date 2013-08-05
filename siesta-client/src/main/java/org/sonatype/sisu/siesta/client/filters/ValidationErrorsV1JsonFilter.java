@@ -10,13 +10,14 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.client.filters;
 
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_VALIDATION_ERRORS_V1_JSON_TYPE;
+package org.sonatype.sisu.siesta.client.filters;
 
 import javax.ws.rs.core.MediaType;
 
 import org.sonatype.sisu.siesta.client.internal.ValidationErrorsV1FilterSupport;
+
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_VALIDATION_ERRORS_V1_JSON_TYPE;
 
 /**
  * TODO
@@ -27,9 +28,8 @@ public class ValidationErrorsV1JsonFilter
     extends ValidationErrorsV1FilterSupport
 {
 
-    protected MediaType getMediaType()
-    {
-        return VND_VALIDATION_ERRORS_V1_JSON_TYPE;
-    }
+  protected MediaType getMediaType() {
+    return VND_VALIDATION_ERRORS_V1_JSON_TYPE;
+  }
 
 }

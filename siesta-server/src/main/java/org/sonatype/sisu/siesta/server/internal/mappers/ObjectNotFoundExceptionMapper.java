@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.server.internal.mappers;
 
 import javax.inject.Named;
@@ -31,10 +32,9 @@ public class ObjectNotFoundExceptionMapper
     extends ErrorExceptionMapperSupport<ObjectNotFoundException>
 {
 
-    @Override
-    protected int getStatusCode( final ObjectNotFoundException exception )
-    {
-        return Response.Status.NOT_FOUND.getStatusCode();
-    }
+  @Override
+  protected int getStatusCode(final ObjectNotFoundException exception) {
+    return Response.Status.NOT_FOUND.getStatusCode();
+  }
 
 }

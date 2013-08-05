@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.common.error;
 
 import javax.ws.rs.WebApplicationException;
@@ -27,7 +28,7 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 public class WebApplicationMessageException
     extends WebApplicationException
 {
-    public WebApplicationMessageException(final Status status, final String message) {
-        super(Response.status(checkNotNull(status)).entity(checkNotNull(message)).type(TEXT_PLAIN).build());
-    }
+  public WebApplicationMessageException(final Status status, final String message) {
+    super(Response.status(checkNotNull(status)).entity(checkNotNull(message)).type(TEXT_PLAIN).build());
+  }
 }

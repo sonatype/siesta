@@ -10,14 +10,16 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.sisu.siesta.client;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+package org.sonatype.sisu.siesta.client;
 
 import java.lang.reflect.Proxy;
 
 import org.sonatype.sisu.siesta.client.internal.ClientInvocationHandler;
+
 import com.sun.jersey.api.client.Client;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * TODO
@@ -27,48 +29,43 @@ import com.sun.jersey.api.client.Client;
 public class ClientBuilder
 {
 
-    public static Target using( final Client client )
-    {
-        return new Target( client );
+  public static Target using(final Client client) {
+    return new Target(client);
+  }
+
+  public static class Target
+  {
+
+    private final Client client;
+
+    public Target(final Client client) {
+      this.client = checkNotNull(client);
     }
 
-    public static class Target
+    public Factory toAccess(final String url) {
+      return new Factory(client, url);
+    }
+
+    public static class Factory
     {
 
-        private final Client client;
+      private final Client client;
 
-        public Target( final Client client )
-        {
-            this.client = checkNotNull( client );
-        }
+      private final String url;
 
-        public Factory toAccess( final String url )
-        {
-            return new Factory( client, url );
-        }
+      public Factory(final Client client, final String url) {
+        this.client = checkNotNull(client);
+        this.url = checkNotNull(url);
+      }
 
-        public static class Factory
-        {
-
-            private final Client client;
-
-            private final String url;
-
-            public Factory( final Client client, final String url )
-            {
-                this.client = checkNotNull( client );
-                this.url = checkNotNull( url );
-            }
-
-            public <T> T build( final Class<T> clientType )
-            {
-                return (T) Proxy.newProxyInstance(
-                    checkNotNull( clientType ).getClassLoader(),
-                    new Class[]{ clientType },
-                    new ClientInvocationHandler( clientType, client, url ) );
-            }
-
-        }
+      public <T> T build(final Class<T> clientType) {
+        return (T) Proxy.newProxyInstance(
+            checkNotNull(clientType).getClassLoader(),
+            new Class[]{clientType},
+            new ClientInvocationHandler(clientType, client, url));
+      }
 
     }
+
+  }
 }

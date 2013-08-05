@@ -10,17 +10,19 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.sisu.siesta.server;
 
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_ERROR_V1_JSON_TYPE;
-import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_ERROR_V1_XML_TYPE;
-
 import java.util.List;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.sonatype.sisu.siesta.common.error.ErrorXO;
+
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_ERROR_V1_JSON_TYPE;
+import static org.sonatype.sisu.siesta.common.SiestaMediaType.VND_ERROR_V1_XML_TYPE;
 
 /**
  * Support for {@link ExceptionMapper} implementations.
@@ -31,38 +33,33 @@ public abstract class ErrorExceptionMapperSupport<E extends Throwable>
     extends ExceptionMapperSupport<E>
 {
 
-    private final List<Variant> variants_v1;
+  private final List<Variant> variants_v1;
 
-    public ErrorExceptionMapperSupport()
-    {
-        variants_v1 = Variant.mediaTypes(
-            VND_ERROR_V1_JSON_TYPE, VND_ERROR_V1_XML_TYPE
-        ).add().build();
+  public ErrorExceptionMapperSupport() {
+    variants_v1 = Variant.mediaTypes(
+        VND_ERROR_V1_JSON_TYPE, VND_ERROR_V1_XML_TYPE
+    ).add().build();
+  }
+
+  protected Response convert(final E exception, final String id) {
+    final Response.ResponseBuilder builder = Response.status(getStatusCode(exception));
+
+    final Variant variant_v1 = getRequest().selectVariant(variants_v1);
+    if (variant_v1 != null) {
+      builder
+          .type(variant_v1.getMediaType())
+          .entity(new ErrorXO().withId(id).withMessage(getMessage(exception)));
     }
 
-    protected Response convert( final E exception, final String id )
-    {
-        final Response.ResponseBuilder builder = Response.status( getStatusCode( exception ) );
+    return builder.build();
+  }
 
-        final Variant variant_v1 = getRequest().selectVariant( variants_v1 );
-        if ( variant_v1 != null )
-        {
-            builder
-                .type( variant_v1.getMediaType() )
-                .entity( new ErrorXO().withId( id ).withMessage( getMessage( exception ) ) );
-        }
+  protected String getMessage(final E exception) {
+    return exception.getMessage();
+  }
 
-        return builder.build();
-    }
-
-    protected String getMessage( final E exception )
-    {
-        return exception.getMessage();
-    }
-
-    protected int getStatusCode( final E exception )
-    {
-        return Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
-    }
+  protected int getStatusCode(final E exception) {
+    return Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
+  }
 
 }

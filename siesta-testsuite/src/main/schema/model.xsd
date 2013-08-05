@@ -25,14 +25,14 @@
             http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd
             http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
 
-    <xsd:complexType name="user">
-        <xsd:sequence>
-            <xsd:element name="name" type="xsd:string"/>
-            <xsd:element name="description" type="xsd:string"/>
-            <xsd:element name="created" type="xsd:dateTime"/>
-        </xsd:sequence>
-    </xsd:complexType>
+  <xsd:complexType name="user">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="created" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
 
-    <xsd:element name="user" type="model:user"/>
+  <xsd:element name="user" type="model:user"/>
 
 </xsd:schema>

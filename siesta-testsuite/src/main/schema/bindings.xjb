@@ -21,26 +21,26 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd"
     version="2.1">
 
-    <globalBindings
-        fixedAttributeAsConstantProperty="true"
-        collectionType="java.util.ArrayList">
+  <globalBindings
+      fixedAttributeAsConstantProperty="true"
+      collectionType="java.util.ArrayList">
 
-        <javaType name="java.util.Date" xmlType="xsd:dateTime"
-            parseMethod="org.sonatype.sisu.jacksbee.runtime.Iso8601DateTimeAdapter.parse"
-            printMethod="org.sonatype.sisu.jacksbee.runtime.Iso8601DateTimeAdapter.print"
+    <javaType name="java.util.Date" xmlType="xsd:dateTime"
+              parseMethod="org.sonatype.sisu.jacksbee.runtime.Iso8601DateTimeAdapter.parse"
+              printMethod="org.sonatype.sisu.jacksbee.runtime.Iso8601DateTimeAdapter.print"
         />
 
-        <xjc:simple/>
-    </globalBindings>
+    <xjc:simple/>
+  </globalBindings>
 
-    <bindings schemaLocation="model.xsd" node="/xsd:schema">
-        <schemaBindings>
-            <package name="org.sonatype.sisu.siesta.testsuite.model"/>
-            <nameXmlTransform>
-                <elementName suffix="XO"/>
-                <typeName suffix="XO"/>
-            </nameXmlTransform>
-        </schemaBindings>
-    </bindings>
+  <bindings schemaLocation="model.xsd" node="/xsd:schema">
+    <schemaBindings>
+      <package name="org.sonatype.sisu.siesta.testsuite.model"/>
+      <nameXmlTransform>
+        <elementName suffix="XO"/>
+        <typeName suffix="XO"/>
+      </nameXmlTransform>
+    </schemaBindings>
+  </bindings>
 
 </bindings>
