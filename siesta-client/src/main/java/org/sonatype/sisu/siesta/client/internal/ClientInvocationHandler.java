@@ -106,7 +106,7 @@ public class ClientInvocationHandler
     }
 
     if (Response.Status.Family.SUCCESSFUL.equals(response.getClientResponseStatus().getFamily())) {
-      if (!Void.class.equals(returnType)) {
+      if (!void.class.equals(returnType)) {
         return response.getEntity(new GenericType(method.getGenericReturnType()));
       }
       else {
