@@ -16,6 +16,7 @@ package org.sonatype.sisu.siesta.testsuite.clients;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -89,5 +90,9 @@ public interface Users
 
   @PUT
   ClientResponse putReturnsClientResponse(final UserXO user);
+
+  @DELETE
+  @Path("/{id}")
+  void delete(@PathParam("id") String id);
 
 }

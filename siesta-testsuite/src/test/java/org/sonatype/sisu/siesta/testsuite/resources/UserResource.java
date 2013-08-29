@@ -18,6 +18,7 @@ import java.util.List;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -74,6 +75,14 @@ public class UserResource
         user.getName(), user.getDescription(), user.getCreated());
 
     return user;
+  }
+
+  @DELETE
+  @Path("/{id}")
+  public void delete(@PathParam("id") String id) {
+    if (!"foo".equals(id)) {
+      throw new ObjectNotFoundException("User with id '" + id + "' not found");
+    }
   }
 
 }

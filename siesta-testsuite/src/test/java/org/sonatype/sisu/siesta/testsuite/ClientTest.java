@@ -303,6 +303,13 @@ public class ClientTest
     assertThat(received, containsInAnyOrder("foo=v1", "bar=142"));
   }
 
+  @Test
+  public void delete()
+      throws Exception
+  {
+    users.delete("foo");
+  }
+
   private static class HttpStatusMatcher
       extends TypeSafeMatcher<UniformInterfaceException>
   {
