@@ -13,10 +13,7 @@
 
 package org.sonatype.sisu.siesta.testsuite.support;
 
-import org.sonatype.sisu.siesta.client.filters.ErrorsV1JsonFilter;
-import org.sonatype.sisu.siesta.client.filters.ErrorsV1XmlFilter;
-import org.sonatype.sisu.siesta.client.filters.ValidationErrorsV1JsonFilter;
-import org.sonatype.sisu.siesta.client.filters.ValidationErrorsV1XmlFilter;
+import org.sonatype.sisu.siesta.client.filters.RequestFilters;
 
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import org.junit.Before;
@@ -35,10 +32,12 @@ public class SiestaClientTestSupport
       throws Exception
   {
     client().addFilter(new LoggingFilter());
-    client().addFilter(new ErrorsV1JsonFilter());
-    client().addFilter(new ErrorsV1XmlFilter());
-    client().addFilter(new ValidationErrorsV1JsonFilter());
-    client().addFilter(new ValidationErrorsV1XmlFilter());
+    client().addFilter(new RequestFilters());
+
+    //client().addFilter(new ErrorsV1JsonFilter());
+    //client().addFilter(new ErrorsV1XmlFilter());
+    //client().addFilter(new ValidationErrorsV1JsonFilter());
+    //client().addFilter(new ValidationErrorsV1XmlFilter());
   }
 
 }

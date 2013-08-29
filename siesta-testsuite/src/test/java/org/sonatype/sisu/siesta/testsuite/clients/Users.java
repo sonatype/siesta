@@ -23,6 +23,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import org.sonatype.sisu.siesta.client.Filters;
+import org.sonatype.sisu.siesta.client.filters.ErrorsV1JsonFilter;
+import org.sonatype.sisu.siesta.client.filters.ErrorsV1XmlFilter;
+import org.sonatype.sisu.siesta.client.filters.ValidationErrorsV1JsonFilter;
+import org.sonatype.sisu.siesta.client.filters.ValidationErrorsV1XmlFilter;
 import org.sonatype.sisu.siesta.testsuite.model.UserXO;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -36,6 +41,12 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
  * @since 1.0
  */
 @Path("/user")
+@Filters({
+    ErrorsV1JsonFilter.class,
+    ErrorsV1XmlFilter.class,
+    ValidationErrorsV1JsonFilter.class,
+    ValidationErrorsV1XmlFilter.class
+})
 public interface Users
 {
 

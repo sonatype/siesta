@@ -30,12 +30,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import org.sonatype.sisu.siesta.client.Filters;
+import org.sonatype.sisu.siesta.client.filters.RequestFilters;
+
 import com.google.common.base.Throwables;
+import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.filter.ClientFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 /**
@@ -80,6 +85,12 @@ public class ClientInvocationHandler
     final Object payload = getPayload(method, args);
 
     WebResource resource = client.resource(url);
+
+    // TODO determine filters from annotations
+    final ClientFilter[] filters = getFilters(method);
+    if (filters != null) {
+      RequestFilters.addRequestFilters(resource.getProperties(), filters);
+    }
 
     if (queryParams != null && !queryParams.isEmpty()) {
       resource = resource.queryParams(queryParams);
@@ -272,6 +283,36 @@ public class ClientInvocationHandler
       }
     }
     return baseUrl + url;
+  }
+
+  private ClientFilter[] getFilters(final Method method) {
+    final List<ClientFilter> filters = Lists.newArrayList();
+    addClientFilters(method.getAnnotation(Filters.class), filters);
+    addClientFilters(method.getDeclaringClass(), filters);
+    if (filters.isEmpty()) {
+      return null;
+    }
+    return filters.toArray(new ClientFilter[filters.size()]);
+  }
+
+  private void addClientFilters(final Class<?> clazz, final List<ClientFilter> filters) {
+    addClientFilters(clazz.getAnnotation(Filters.class), filters);
+    for (Class<?> extended : clazz.getInterfaces()) {
+      addClientFilters(extended, filters);
+    }
+  }
+
+  private void addClientFilters(final Filters annotation, final List<ClientFilter> filters) {
+    if (annotation != null) {
+      for (final Class<? extends ClientFilter> filterClass : annotation.value()) {
+        try {
+          filters.add(filterClass.newInstance());
+        }
+        catch (Exception e) {
+          throw Throwables.propagate(e);
+        }
+      }
+    }
   }
 
 }
