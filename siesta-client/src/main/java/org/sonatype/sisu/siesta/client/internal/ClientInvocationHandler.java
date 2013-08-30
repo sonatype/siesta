@@ -286,23 +286,39 @@ public class ClientInvocationHandler
   }
 
   private ClientFilter[] getFilters(final Method method) {
-    final List<ClientFilter> filters = Lists.newArrayList();
-    addClientFilters(method.getAnnotation(Filters.class), filters);
-    addClientFilters(method.getDeclaringClass(), filters);
-    if (filters.isEmpty()) {
-      return null;
+    {
+      final List<ClientFilter> filters = getClientFilters(method.getAnnotation(Filters.class));
+      if (!filters.isEmpty()) {
+        return filters.toArray(new ClientFilter[filters.size()]);
+      }
     }
-    return filters.toArray(new ClientFilter[filters.size()]);
+    {
+      final List<ClientFilter> filters = getClientFilters(method.getDeclaringClass());
+      if (!filters.isEmpty()) {
+        return filters.toArray(new ClientFilter[filters.size()]);
+      }
+    }
+    return null;
   }
 
-  private void addClientFilters(final Class<?> clazz, final List<ClientFilter> filters) {
-    addClientFilters(clazz.getAnnotation(Filters.class), filters);
+  private List<ClientFilter> getClientFilters(final Class<?> clazz) {
+    {
+      final List<ClientFilter> filters = getClientFilters(clazz.getAnnotation(Filters.class));
+      if (!filters.isEmpty()) {
+        return filters;
+      }
+    }
     for (Class<?> extended : clazz.getInterfaces()) {
-      addClientFilters(extended, filters);
+      final List<ClientFilter> filters = getClientFilters(extended);
+      if (!filters.isEmpty()) {
+        return filters;
+      }
     }
+    return Lists.newArrayList();
   }
 
-  private void addClientFilters(final Filters annotation, final List<ClientFilter> filters) {
+  private List<ClientFilter> getClientFilters(final Filters annotation) {
+    final List<ClientFilter> filters = Lists.newArrayList();
     if (annotation != null) {
       for (final Class<? extends ClientFilter> filterClass : annotation.value()) {
         try {
@@ -313,6 +329,7 @@ public class ClientInvocationHandler
         }
       }
     }
+    return filters;
   }
 
 }
