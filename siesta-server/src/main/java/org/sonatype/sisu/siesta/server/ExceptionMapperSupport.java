@@ -73,7 +73,9 @@ public abstract class ExceptionMapperSupport<E extends Throwable>
 
     final Object entity = response.getEntity();
     log.warn(
-        "(ID {}) Response: [{}] {}", id, response.getStatus(), entity == null ? "(no entity/body)" : entity
+        "(ID {}) Response: [{}] {} mapped from {}/{}",
+        id, response.getStatus(), entity == null ? "(no entity/body)" : entity,
+        exception.getClass().getName(), exception.getMessage(), log.isDebugEnabled() ? exception : null
     );
 
     return response;
