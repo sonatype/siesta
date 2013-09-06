@@ -50,6 +50,7 @@ public abstract class ErrorResponseFilterSupport
     final ClientResponse response = getNext().handle(request);
     if (!Response.Status.Family.SUCCESSFUL.equals(response.getClientResponseStatus().getFamily())
         && mediaType.equals(response.getType())) {
+      response.bufferEntity();
       throwException(response);
     }
     return response;
