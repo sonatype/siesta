@@ -121,6 +121,10 @@ public class ClientInvocationHandler
         return response.getEntity(new GenericType(method.getGenericReturnType()));
       }
       else {
+        // lets consume the entity if present by buffering it (maybe some filter needs it)
+        if (response.hasEntity()) {
+          response.bufferEntity();
+        }
         return null;
       }
     }
