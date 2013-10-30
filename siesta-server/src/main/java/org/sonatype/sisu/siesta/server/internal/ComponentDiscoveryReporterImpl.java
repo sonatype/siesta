@@ -13,6 +13,8 @@
 
 package org.sonatype.sisu.siesta.server.internal;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -22,6 +24,7 @@ import javax.ws.rs.Path;
 
 import org.sonatype.sisu.siesta.common.Resource;
 
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,11 +69,14 @@ public class ComponentDiscoveryReporterImpl
     else {
       log.info("Resources:");
 
-      // TODO: Perhaps show more details about the resource, sub-resources, methods, etc
-      // TODO: Sort the resources by path before rendering so we can get all related paths grouped together
-
+      List<String> paths = Lists.newArrayListWithCapacity(resources.size());
       for (Class<Resource> type : resources) {
         String path = pathOf(type);
+        paths.add(path);
+      }
+
+      Collections.sort(paths);
+      for (String path : paths) {
         log.info("  {}", path);
       }
     }
@@ -84,10 +90,16 @@ public class ComponentDiscoveryReporterImpl
       log.info("Components:");
 
       // TODO: Perhaps show various types of components (providers, mappers, etc)
-      // TODO: Sort the components by full classname before rendering so we can get all related grouped together
 
+      List<String> types = Lists.newArrayListWithCapacity(components.size());
       for (Class<?> type : components) {
-        log.info("  {}", type.getSimpleName());
+        types.add(type.getName());
+      }
+
+      Collections.sort(types);
+
+      for (String type : types) {
+        log.info("  {}", type);
       }
     }
   }
