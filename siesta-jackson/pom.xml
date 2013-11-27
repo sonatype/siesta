@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.sonatype.sisu.siesta</groupId>
     <artifactId>siesta</artifactId>
-    <version>1.5.3-SNAPSHOT</version>
+    <version>1.6-SNAPSHOT</version>
   </parent>
 
   <artifactId>siesta-jackson</artifactId>
@@ -38,7 +38,7 @@
 
     <dependency>
       <groupId>org.sonatype.sisu</groupId>
-      <artifactId>sisu-inject-bean</artifactId>
+      <artifactId>sisu-guice</artifactId>
       <optional>true</optional>
     </dependency>
 

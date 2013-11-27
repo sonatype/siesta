@@ -19,7 +19,6 @@ import javax.inject.Inject;
 import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServlet;
 
-import org.sonatype.inject.BeanScanning;
 import org.sonatype.sisu.litmus.testsupport.inject.InjectedTestSupport;
 
 import com.google.inject.Injector;
@@ -31,6 +30,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
 import org.eclipse.jetty.testing.ServletTester;
+import org.eclipse.sisu.space.BeanScanning;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
