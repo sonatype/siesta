@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.sonatype.buildsupport</groupId>
     <artifactId>public-parent</artifactId>
-    <version>3</version>
+    <version>5</version>
   </parent>
 
   <groupId>org.sonatype.sisu.siesta</groupId>
@@ -49,10 +49,6 @@
   </issueManagement>
 
   <properties>
-    <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
-    <build.timestamp>${maven.build.timestamp}</build.timestamp>
-    <build.number/>
-
     <jerseyVersion>1.17.1</jerseyVersion>
   </properties>
 
