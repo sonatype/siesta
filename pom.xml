@@ -28,7 +28,7 @@
   <name>${project.groupId}:${project.artifactId}</name>
   <packaging>pom</packaging>
 
-  <version>1.5.3-SNAPSHOT</version>
+  <version>1.6-SNAPSHOT</version>
 
   <url>https://github.com/sonatype/sisu-siesta</url>
 
@@ -79,9 +79,9 @@
       </dependency>
 
       <dependency>
-        <groupId>org.sonatype.sisu</groupId>
-        <artifactId>sisu-inject-bean</artifactId>
-        <version>2.3.4</version>
+        <groupId>org.eclipse.sisu</groupId>
+        <artifactId>org.eclipse.sisu.inject</artifactId>
+        <version>0.1.1</version>
       </dependency>
 
       <dependency>
@@ -183,15 +183,20 @@
       </dependency>
 
       <dependency>
+        <groupId>org.sonatype.sisu</groupId>
+        <artifactId>sisu-guice</artifactId>
+        <version>3.1.8</version>
+      </dependency>
+      <dependency>
         <groupId>org.sonatype.sisu.inject</groupId>
         <artifactId>guice-servlet</artifactId>
-        <version>3.1.4</version>
+        <version>3.1.8</version>
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.sisu.litmus</groupId>
         <artifactId>litmus-testsupport</artifactId>
-        <version>1.6</version>
+        <version>1.8-SNAPSHOT</version>
       </dependency>
 
       <dependency>
@@ -214,31 +219,31 @@
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-common</artifactId>
-        <version>1.5.3-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-xstream</artifactId>
-        <version>1.5.3-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-jackson</artifactId>
-        <version>1.5.3-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-server</artifactId>
-        <version>1.5.3-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-client</artifactId>
-        <version>1.5.3-SNAPSHOT</version>
+        <version>1.6-SNAPSHOT</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -313,8 +318,10 @@
                 <bannedDependencies>
                   <searchTransitive>true</searchTransitive>
                   <excludes>
-                    <!-- Keep junit out, use junit-dep instead -->
-                    <exclude>junit:junit</exclude>
+                    <!-- Keep old junits out -->
+                    <exclude>junit:junit:(,4.10]</exclude>
+                    <exclude>junit:junit-dep</exclude>
+
                     <!-- Keep all JCL out, use jcl-over-slf4j instead -->
                     <exclude>commons-logging:commons-logging</exclude>
                     <exclude>commons-logging:commons-logging-api</exclude>

@@ -21,14 +21,14 @@ import javax.inject.Inject;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
 
-import org.sonatype.guice.bean.locators.BeanLocator;
-import org.sonatype.inject.BeanEntry;
 import org.sonatype.sisu.siesta.common.Component;
 import org.sonatype.sisu.siesta.common.Resource;
 import org.sonatype.sisu.siesta.server.ApplicationSupport;
 
 import com.google.common.collect.Sets;
 import com.google.inject.Key;
+import org.eclipse.sisu.BeanEntry;
+import org.eclipse.sisu.inject.BeanLocator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

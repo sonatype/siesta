@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.sonatype.sisu.siesta</groupId>
     <artifactId>siesta</artifactId>
-    <version>1.5.3-SNAPSHOT</version>
+    <version>1.6-SNAPSHOT</version>
   </parent>
 
   <artifactId>siesta-server</artifactId>
@@ -39,8 +39,13 @@
     </dependency>
 
     <dependency>
+      <groupId>org.eclipse.sisu</groupId>
+      <artifactId>org.eclipse.sisu.inject</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.sonatype.sisu</groupId>
-      <artifactId>sisu-inject-bean</artifactId>
+      <artifactId>sisu-guice</artifactId>
     </dependency>
 
     <dependency>
