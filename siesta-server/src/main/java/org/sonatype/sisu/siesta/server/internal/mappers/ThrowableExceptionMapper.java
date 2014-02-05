@@ -15,6 +15,7 @@ package org.sonatype.sisu.siesta.server.internal.mappers;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.ws.rs.core.Response;
 
 import org.sonatype.sisu.siesta.common.error.ErrorXO;
 import org.sonatype.sisu.siesta.server.ErrorExceptionMapperSupport;
@@ -29,5 +30,10 @@ import org.sonatype.sisu.siesta.server.ErrorExceptionMapperSupport;
 public class ThrowableExceptionMapper
     extends ErrorExceptionMapperSupport<Throwable>
 {
-
+  @Override
+  protected Response convert(final Throwable exception, final String id) {
+    // log unexpected exception
+    log.warn(exception.toString(), exception);
+    return super.convert(exception, id);
+  }
 }
