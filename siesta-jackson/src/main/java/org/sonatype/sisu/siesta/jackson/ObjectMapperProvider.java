@@ -55,7 +55,7 @@ public class ObjectMapperProvider
     //mapper.configure(AUTO_DETECT_SETTERS, false);
 
     // Make the output look more readable
-    mapper.configure(SerializationFeature.CLOSE_CLOSEABLE.INDENT_OUTPUT, true);
+    mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 
     this.mapper = mapper;
   }
