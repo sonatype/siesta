@@ -16,18 +16,10 @@ package org.sonatype.sisu.siesta.jackson;
 import javax.inject.Named;
 import javax.inject.Provider;
 
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
-
-import static org.codehaus.jackson.map.SerializationConfig.Feature.INDENT_OUTPUT;
-import static org.codehaus.jackson.map.SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS;
-import static org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion.NON_NULL;
-
-//import static org.codehaus.jackson.map.DeserializationConfig.Feature.AUTO_DETECT_SETTERS;
-//import static org.codehaus.jackson.map.SerializationConfig.Feature.AUTO_DETECT_GETTERS;
-//import static org.codehaus.jackson.map.SerializationConfig.Feature.AUTO_DETECT_IS_GETTERS;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 
 /**
  * <a href="http://jackson.codehaus.org">Jackson</a> {@link ObjectMapper} provider.
@@ -44,16 +36,15 @@ public class ObjectMapperProvider
     final ObjectMapper mapper = new ObjectMapper();
 
     // Configure Jackson annotations only, JAXB annotations can confuse and produce improper content
-    DeserializationConfig dconfig = mapper.getDeserializationConfig();
-    dconfig.withAnnotationIntrospector(new JacksonAnnotationIntrospector());
-    SerializationConfig sconfig = mapper.getSerializationConfig();
-    sconfig.withAnnotationIntrospector(new JacksonAnnotationIntrospector());
-
-    // Do not include null values
-    sconfig.withSerializationInclusion(NON_NULL);
+    mapper.getDeserializationConfig()
+        .with(new JacksonAnnotationIntrospector());
+    // do not write null values
+    mapper.getSerializationConfig()
+        .with(new JacksonAnnotationIntrospector())
+        .withSerializationInclusion(Include.NON_NULL);
 
     // Write dates as ISO-8601
-    mapper.configure(WRITE_DATES_AS_TIMESTAMPS, false);
+    mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
     // FIXME: Disable this, as it requires use of @JsonProperty on fields, only required
     // FIXME: ... if object has something that looks like a getter/setter but isn't one
@@ -64,7 +55,7 @@ public class ObjectMapperProvider
     //mapper.configure(AUTO_DETECT_SETTERS, false);
 
     // Make the output look more readable
-    mapper.configure(INDENT_OUTPUT, true);
+    mapper.configure(SerializationFeature.CLOSE_CLOSEABLE.INDENT_OUTPUT, true);
 
     this.mapper = mapper;
   }
