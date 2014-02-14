@@ -31,8 +31,8 @@ import javax.ws.rs.ext.Provider;
 
 import org.sonatype.sisu.siesta.common.Component;
 
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

@@ -15,9 +15,9 @@ package org.sonatype.sisu.siesta.jackson;
 
 import javax.inject.Singleton;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Binder;
 import com.google.inject.Module;
-import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * Siesta Jackson Guice module.
