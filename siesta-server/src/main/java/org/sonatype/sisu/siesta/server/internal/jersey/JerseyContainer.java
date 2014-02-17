@@ -27,7 +27,6 @@ import org.sonatype.sisu.siesta.server.ApplicationContainer;
 import com.google.common.collect.Lists;
 import com.sun.jersey.api.core.DefaultResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.core.spi.component.ioc.IoCComponentProviderFactory;
 import com.sun.jersey.spi.container.ContainerListener;
 import com.sun.jersey.spi.container.ContainerNotifier;
@@ -110,7 +109,6 @@ public class JerseyContainer
         checkNotNull(props);
         props.put(ResourceConfig.PROPERTY_CONTAINER_NOTIFIER, JerseyContainer.this);
         props.put(ResourceConfig.FEATURE_XMLROOTELEMENT_PROCESSING, Boolean.TRUE.toString());
-        props.put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE.toString());
         return super.getDefaultResourceConfig(props);
       }
     });

@@ -28,7 +28,6 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.LoggingFilter;
-import com.sun.jersey.api.json.JSONConfiguration;
 import org.eclipse.jetty.testing.ServletTester;
 import org.eclipse.sisu.space.BeanScanning;
 import org.junit.After;
@@ -81,7 +80,6 @@ public class SiestaTestSupport
     servletTester.start();
 
     final ClientConfig clientConfig = new DefaultClientConfig();
-    clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
     client = Client.create(clientConfig);
 
     client.addFilter(new LoggingFilter());
