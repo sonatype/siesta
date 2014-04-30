@@ -3,6 +3,7 @@ package org.sonatype.siesta.webapp;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
 /**
@@ -17,6 +18,7 @@ public class LoggingServletContextListener
   public void contextInitialized(final ServletContextEvent event) {
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
+    LoggerFactory.getLogger(getClass()).debug("JUL bridge initialized");
   }
 
   @Override
