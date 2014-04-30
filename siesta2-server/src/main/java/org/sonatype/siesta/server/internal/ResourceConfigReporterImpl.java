@@ -44,10 +44,15 @@ public class ResourceConfigReporterImpl
   public void report(final ResourceConfig config) {
     checkNotNull(config);
 
-    log.debug("Configuration: {}", config);
-    log.debug("Classes: {}", config.getClasses());
-    log.debug("Instances: {}", config.getInstances());
-    log.debug("Singletons: {}", config.getSingletons());
+    if (log.isDebugEnabled()) {
+      log.debug("Configuration: {}", config);
+      log.debug("Runtime type: {}", config.getRuntimeType());
+      log.debug("Classes: {}", config.getClasses());
+      log.debug("Instances: {}", config.getInstances());
+      log.debug("Singletons: {}", config.getSingletons());
+      log.debug("Resources: {}", config.getResources());
+      log.debug("Properties", config.getProperties());
+    }
 
     reportResources(config);
     reportComponents(config);
