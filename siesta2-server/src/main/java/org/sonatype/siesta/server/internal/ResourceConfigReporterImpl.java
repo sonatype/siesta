@@ -39,7 +39,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ResourceConfigReporterImpl
     implements ResourceConfigReporter
 {
-  protected final Logger log = LoggerFactory.getLogger(getClass());
+  private final Logger log = LoggerFactory.getLogger(getClass());
 
   public void report(final ResourceConfig config) {
     checkNotNull(config);
@@ -53,7 +53,7 @@ public class ResourceConfigReporterImpl
     reportComponents(config);
   }
 
-  protected void reportResources(final ResourceConfig config) {
+  private void reportResources(final ResourceConfig config) {
     List<String> paths = Lists.newArrayList();
 
     for (Class<?> type : config.getClasses()) {
@@ -78,7 +78,7 @@ public class ResourceConfigReporterImpl
     }
   }
 
-  protected void reportComponents(final ResourceConfig config) {
+  private void reportComponents(final ResourceConfig config) {
     List<String> names = Lists.newArrayList();
 
     for (Class<?> type : config.getClasses()) {
