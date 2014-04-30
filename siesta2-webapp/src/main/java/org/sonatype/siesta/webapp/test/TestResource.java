@@ -7,6 +7,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import org.sonatype.siesta.Resource;
+
 /**
  * Test resource.
  *
@@ -16,6 +18,7 @@ import javax.ws.rs.QueryParam;
 @Singleton
 @Path("/test")
 public class TestResource
+  implements Resource
 {
   public TestResource() {
     // So we can see if guice or hk2 created the instance

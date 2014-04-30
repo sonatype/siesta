@@ -1,11 +1,16 @@
 package org.sonatype.siesta.webapp;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
+import org.sonatype.siesta.server.ResourceConfigReporter;
 import org.sonatype.siesta.server.SiestaServlet;
+import org.sonatype.siesta.server.DiscoveryResourceConfig;
+import org.sonatype.siesta.server.internal.ResourceConfigReporterImpl;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.servlet.ServletModule;
+import org.glassfish.jersey.server.ResourceConfig;
 
 /**
  * Webapp module.
@@ -18,6 +23,9 @@ public class WebappModule
 {
   @Override
   protected void configure() {
+    bind(ResourceConfig.class).to(DiscoveryResourceConfig.class).in(Singleton.class);
+    bind(ResourceConfigReporter.class).to(ResourceConfigReporterImpl.class).in(Singleton.class);
+
     install(new ServletModule()
     {
       @Override

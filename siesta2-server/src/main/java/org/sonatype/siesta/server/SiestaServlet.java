@@ -2,6 +2,7 @@ package org.sonatype.siesta.server;
 
 import java.io.IOException;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
+import org.glassfish.jersey.servlet.WebConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -29,9 +31,34 @@ public class SiestaServlet
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
+  private final ResourceConfigReporter reporter;
+
   @Inject
-  public SiestaServlet(final ResourceConfig resourceConfig) {
-    super(checkNotNull(resourceConfig));
+  public SiestaServlet(final ResourceConfig config,
+                       final @Nullable ResourceConfigReporter reporter)
+  {
+    super(checkNotNull(config));
+
+    this.reporter = reporter;
+    log.debug("Reporter: {}", reporter);
+  }
+
+  @Override
+  protected void init(final WebConfig webConfig) throws ServletException {
+    super.init(webConfig);
+
+    if (reporter != null) {
+      reporter.report(getConfiguration());
+    }
+  }
+
+  @Override
+  public void reload(final ResourceConfig configuration) {
+    super.reload(configuration);
+
+    if (reporter != null) {
+      reporter.report(configuration);
+    }
   }
 
   @Override
