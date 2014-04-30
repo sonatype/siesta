@@ -32,8 +32,6 @@ import org.slf4j.LoggerFactory;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-// TODO: perhaps this can be replaced by a jersey AutoDiscoverable implementation?
-
 /**
  * JAX-RS {@link Application} which discovers {@link Component} instances and {@link Resource} instances
  * annotated with {@link Path} automatically.
@@ -60,7 +58,7 @@ public class DiscoveryResourceConfig
     int count=0;
 
     for (BeanEntry<Annotation, Component> entry : beanLocator.locate(Key.get(Component.class))) {
-      log.trace("Found: {}", entry);
+      log.trace("Found: {}", entry.getKey());
 
       Class<?> type = entry.getImplementationClass();
       if (Resource.class.isAssignableFrom(type)) {

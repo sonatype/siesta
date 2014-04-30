@@ -1,13 +1,15 @@
 <configuration>
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+
   <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSSZ"} %-5p [%thread] %X{userId} %c - %m%n</pattern>
     </encoder>
   </appender>
 
-  <logger name="org.sonatype.siesta" level="DEBUG"/>
-  <logger name="org.glassfish.jersey" level="DEBUG"/>
-  <logger name="org.glassfish.hk2" level="DEBUG"/>
+  <logger name="org.sonatype.siesta" level="TRACE"/>
+  <logger name="org.glassfish.jersey" level="TRACE"/>
+  <logger name="org.glassfish.hk2" level="TRACE"/>
 
   <root level="INFO">
     <appender-ref ref="console"/>
