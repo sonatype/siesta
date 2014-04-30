@@ -18,7 +18,8 @@ import javax.ws.rs.QueryParam;
 public class TestResource
 {
   public TestResource() {
-    new Throwable().printStackTrace();
+    // So we can see if guice or hk2 created the instance
+    new Throwable("CREATE MARKER").printStackTrace();
   }
 
   @GET

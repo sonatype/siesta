@@ -44,8 +44,13 @@ public class SisuComponentProvider
     Injector injector = (Injector) servletContext.getAttribute(Injector.class.getName());
     log.trace("Injector: {}", injector);
 
+    checkState(injector != null, "Missing Injector");
+    assert injector != null; // for IDEA
+
     this.beanLocator = injector.getInstance(BeanLocator.class);
     log.debug("Bean locator: {}", beanLocator);
+
+    checkState(beanLocator != null, "Missing BeanLocator");
   }
 
   @Override
