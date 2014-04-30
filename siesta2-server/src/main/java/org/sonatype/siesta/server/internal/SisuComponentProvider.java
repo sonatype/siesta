@@ -70,7 +70,7 @@ public class SisuComponentProvider
     }
 
     DynamicConfiguration config = Injections.getConfiguration(serviceLocator);
-    ServiceBindingBuilder binding = Injections.newFactoryBinder(new SisuComponentFactory(entry, serviceLocator));
+    ServiceBindingBuilder<?> binding = Injections.newFactoryBinder(new SisuComponentFactory(entry, serviceLocator));
     binding.to(type);
     Injections.addBinding(binding, config);
     config.commit();
