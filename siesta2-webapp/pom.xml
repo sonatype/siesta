@@ -23,29 +23,30 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>siesta-client</artifactId>
+  <artifactId>siesta2-webapp</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
+  <packaging>war</packaging>
 
   <dependencies>
     <dependency>
+      <groupId>org.eclipse.jetty.orbit</groupId>
+      <artifactId>javax.servlet</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta-common</artifactId>
+      <artifactId>siesta2-server</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-client</artifactId>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-apache-client4</artifactId>
-    </dependency>
-
-    <!-- HC4 uses JCL, adapt it to Slf4j -->
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
+      <artifactId>jul-to-slf4j</artifactId>
     </dependency>
   </dependencies>
 
