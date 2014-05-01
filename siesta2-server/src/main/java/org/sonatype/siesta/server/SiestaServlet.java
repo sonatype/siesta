@@ -10,6 +10,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.ext.RuntimeDelegate;
 
 import org.sonatype.siesta.Component;
 import org.sonatype.siesta.Resource;
@@ -52,8 +53,12 @@ public class SiestaServlet
   public void init(final ServletConfig config) throws ServletException {
     super.init(config);
 
+    log.info("JAX-RS RuntimeDelegate: {}", RuntimeDelegate.getInstance());
+
     // Watch for components
     beanLocator.watch(Key.get(Component.class), new ComponentMediator(), this);
+
+    log.info("Initialized");
   }
 
   /**
