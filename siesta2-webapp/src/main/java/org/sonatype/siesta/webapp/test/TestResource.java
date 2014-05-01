@@ -7,11 +7,15 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 import org.sonatype.siesta.Resource;
 
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 /**
  * Test resource.
@@ -49,5 +53,24 @@ public class TestResource
   @Produces("text/plain")
   public String error(final @QueryParam("text") String text) throws Exception {
     throw new TestException(text);
+  }
+
+  public static class JsonObject
+  {
+    @JsonProperty("foo")
+    String foo;
+
+    @JsonProperty("bar")
+    String bar;
+  }
+
+  @GET
+  @Path("json")
+  @Produces(APPLICATION_JSON)
+  public JsonObject json() {
+    JsonObject result = new JsonObject();
+    result.foo = "hi";
+    result.bar = "there";
+    return result;
   }
 }

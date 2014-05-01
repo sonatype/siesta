@@ -60,6 +60,9 @@ public class SisuComponentProvider
 
   @Override
   public boolean bind(final Class<?> type, final Set<Class<?>> providerContracts) {
+    // HACK: Disable this, fixes jackson and exception mappers... why?!
+    if (true) return false;
+
     log.trace("Bind: {}, contracts: {}", type, providerContracts);
 
     checkState(beanLocator != null);

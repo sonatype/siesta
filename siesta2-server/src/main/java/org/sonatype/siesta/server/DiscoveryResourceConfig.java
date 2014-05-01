@@ -30,8 +30,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * JAX-RS {@link Application} which discovers {@link Component} instances and {@link Resource} instances
  * annotated with {@link Path} automatically.
@@ -44,11 +42,11 @@ public class DiscoveryResourceConfig
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  private final BeanLocator beanLocator;
+  private BeanLocator beanLocator;
 
   @Inject
-  public DiscoveryResourceConfig(final BeanLocator beanLocator) {
-    this.beanLocator = checkNotNull(beanLocator);
+  public void setBeanLocator(final BeanLocator beanLocator) {
+    this.beanLocator = beanLocator;
     findComponents();
   }
 
