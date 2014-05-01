@@ -19,6 +19,7 @@ import com.google.inject.Key;
 import org.eclipse.sisu.BeanEntry;
 import org.eclipse.sisu.Mediator;
 import org.eclipse.sisu.inject.BeanLocator;
+import org.jboss.resteasy.core.Dispatcher;
 import org.jboss.resteasy.logging.Logger.LoggerType;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 import org.slf4j.Logger;
@@ -56,7 +57,7 @@ public class SiestaServlet
     log.info("JAX-RS RuntimeDelegate: {}", RuntimeDelegate.getInstance());
 
     // Watch for components
-    beanLocator.watch(Key.get(Component.class), new ComponentMediator(), this);
+    beanLocator.watch(Key.get(Component.class), new ComponentMediator(), getDispatcher());
 
     log.info("Initialized");
   }
@@ -65,18 +66,18 @@ public class SiestaServlet
    * Handles component [de]registration events.
    */
   private class ComponentMediator
-      implements Mediator<Annotation, Component, SiestaServlet>
+      implements Mediator<Annotation, Component, Dispatcher>
   {
     @Override
-    public void add(final BeanEntry<Annotation, Component> entry, final SiestaServlet watcher) throws Exception {
+    public void add(final BeanEntry<Annotation, Component> entry, final Dispatcher dispatcher) throws Exception {
       log.debug("Adding component: {}={}", entry.getKey(), entry.getImplementationClass());
       try {
         if (Resource.class.isAssignableFrom(entry.getImplementationClass())) {
-          getDispatcher().getRegistry().addResourceFactory(new SisuResourceFactory(entry));
+          dispatcher.getRegistry().addResourceFactory(new SisuResourceFactory(entry));
         }
         else {
           // TODO: Doesn't seem to be a late-biding/factory here so we create the object early
-          getDispatcher().getProviderFactory().register(entry.getValue());
+          dispatcher.getProviderFactory().register(entry.getValue());
         }
       }
       catch (Exception e) {
@@ -85,11 +86,11 @@ public class SiestaServlet
     }
 
     @Override
-    public void remove(final BeanEntry<Annotation, Component> entry, final SiestaServlet watcher) throws Exception {
+    public void remove(final BeanEntry<Annotation, Component> entry, final Dispatcher dispatcher) throws Exception {
       log.debug("Removing component: {}={}", entry.getKey(), entry.getImplementationClass());
       try {
         if (Resource.class.isAssignableFrom(entry.getImplementationClass())) {
-          getDispatcher().getRegistry().removeRegistrations(entry.getImplementationClass());
+          dispatcher.getRegistry().removeRegistrations(entry.getImplementationClass());
         }
         else {
           // TODO: Unsure how to remove a component
