@@ -6,7 +6,7 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
  * ???
- *          [
+ *
  * @since 2.0
  */
 public class TestApplication
