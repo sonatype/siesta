@@ -30,6 +30,7 @@ public class TestApplication
     }
 
     classes.add(TestResource.class);
+    classes.add(TestExceptionMapper.class);
   }
 
   @Override

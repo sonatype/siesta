@@ -1,5 +1,6 @@
 package org.sonatype.siesta.webapp.test;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.DefaultValue;
@@ -30,6 +31,7 @@ public class TestResource
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
+  @Inject
   public TestResource() {
     if (log.isTraceEnabled()) {
       log.trace("Created", new Throwable("MARKER"));
@@ -48,7 +50,14 @@ public class TestResource
   @GET
   @Path("ping")
   @Produces(TEXT_PLAIN)
-  public String get(final @QueryParam("text") @DefaultValue("pong") String text) {
+  public String ping(final @QueryParam("text") @DefaultValue("pong") String text) {
+    if (log.isTraceEnabled()) {
+      log.trace("PING", new Throwable("MARKER"));
+    }
+    else {
+      log.debug("PING");
+    }
+
     return text;
   }
 

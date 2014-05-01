@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jboss.resteasy.logging.Logger.LoggerType;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,8 @@ public class SiestaServlet
 
   @Inject
   public SiestaServlet() {
+    // Configure RESTEasy to use SLF4j
+    org.jboss.resteasy.logging.Logger.setLoggerType(LoggerType.SLF4J);
   }
 
   @Override

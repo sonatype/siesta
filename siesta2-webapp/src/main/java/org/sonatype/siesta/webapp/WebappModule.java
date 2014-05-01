@@ -24,7 +24,6 @@ public class WebappModule
       @Override
       protected void configureServlets() {
         serve("/*").with(SiestaServlet.class, ImmutableMap.of(
-            "resteasy.logger.type", "SLF4J",
             "javax.ws.rs.Application", "org.sonatype.siesta.webapp.test.TestApplication"
         ));
       }

@@ -1,5 +1,6 @@
 package org.sonatype.siesta.webapp.test;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.core.Response;
@@ -25,6 +26,16 @@ public class TestExceptionMapper
   implements ExceptionMapper<TestException>, Component
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
+
+  @Inject
+  public TestExceptionMapper() {
+    if (log.isTraceEnabled()) {
+      log.trace("Created", new Throwable("MARKER"));
+    }
+    else {
+      log.debug("Created");
+    }
+  }
 
   @Override
   public Response toResponse(final TestException exception) {
