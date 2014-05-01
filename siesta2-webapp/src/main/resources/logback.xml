@@ -8,8 +8,7 @@
   </appender>
 
   <logger name="org.sonatype.siesta" level="TRACE"/>
-  <logger name="org.glassfish.jersey" level="TRACE"/>
-  <logger name="org.glassfish.hk2" level="TRACE"/>
+  <logger name="org.jboss.resteasy" level="DEBUG"/>
 
   <root level="INFO">
     <appender-ref ref="console"/>

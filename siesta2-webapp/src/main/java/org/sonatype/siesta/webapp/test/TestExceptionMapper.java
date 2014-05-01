@@ -11,6 +11,8 @@ import org.sonatype.siesta.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
+
 /**
  * Test {@link ExceptionMapper}.
  *
@@ -30,7 +32,7 @@ public class TestExceptionMapper
     return Response
         .serverError()
         .entity("Error: " + exception)
-        .type("text/plain")
+        .type(TEXT_PLAIN)
         .build();
   }
 }

@@ -39,8 +39,7 @@
   </scm>
 
   <properties>
-    <jerseyVersion>2.8</jerseyVersion>
-    <hk2Version>2.2.0</hk2Version>
+    <resteasyVersion>3.0.8.Final</resteasyVersion>
   </properties>
 
   <dependencyManagement>
@@ -124,68 +123,63 @@
       </dependency>
 
       <dependency>
-        <groupId>org.glassfish.jersey.containers</groupId>
-        <artifactId>jersey-container-servlet</artifactId>
-        <version>${jerseyVersion}</version>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-jaxrs</artifactId>
+        <version>${resteasyVersion}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <dependency>
-        <groupId>org.glassfish.jersey.containers</groupId>
-        <artifactId>jersey-container-servlet-core</artifactId>
-        <version>${jerseyVersion}</version>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>jaxrs-api</artifactId>
+        <version>${resteasyVersion}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.glassfish.jersey.containers</groupId>
-        <artifactId>jersey-container-jetty-http</artifactId>
-        <version>${jerseyVersion}</version>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>async-http-servlet-3.0</artifactId>
+        <version>${resteasyVersion}</version>
+      </dependency>
+
+      <!--<dependency>-->
+        <!--<groupId>org.jboss.resteasy</groupId>-->
+        <!--<artifactId>resteasy-servlet-initializer</artifactId>-->
+        <!--<version>${resteasyVersion}</version>-->
+      <!--</dependency>-->
+
+      <dependency>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-multipart-provider</artifactId>
+        <version>${resteasyVersion}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.glassfish.jersey.containers</groupId>
-        <artifactId>jersey-container-jetty-servlet</artifactId>
-        <version>${jerseyVersion}</version>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-jackson2-provider</artifactId>
+        <version>${resteasyVersion}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.glassfish.jersey.core</groupId>
-        <artifactId>jersey-client</artifactId>
-        <version>${jerseyVersion}</version>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-crypto</artifactId>
+        <version>${resteasyVersion}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.glassfish.jersey.connectors</groupId>
-        <artifactId>jersey-apache-connector</artifactId>
-        <version>${jerseyVersion}</version>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-guice</artifactId>
+        <version>${resteasyVersion}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.glassfish.jersey.media</groupId>
-        <artifactId>jersey-media-json-jackson</artifactId>
-        <version>${jerseyVersion}</version>
-      </dependency>
-
-      <!--
-      jersey-media-multipart
-      jersey-bean-validation
-      -->
-
-      <dependency>
-        <groupId>org.glassfish.hk2</groupId>
-        <artifactId>hk2-api</artifactId>
-        <version>${hk2Version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.glassfish.hk2</groupId>
-        <artifactId>hk2-utils</artifactId>
-        <version>${hk2Version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.glassfish.hk2</groupId>
-        <artifactId>hk2-locator</artifactId>
-        <version>${hk2Version}</version>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-client</artifactId>
+        <version>${resteasyVersion}</version>
       </dependency>
 
       <dependency>
