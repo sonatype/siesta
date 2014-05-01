@@ -29,8 +29,8 @@ public class TestApplication
       log.debug("Created");
     }
 
-    classes.add(TestResource.class);
-    classes.add(TestExceptionMapper.class);
+    //classes.add(TestResource.class);
+    //classes.add(TestExceptionMapper.class);
   }
 
   @Override

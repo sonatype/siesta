@@ -4,7 +4,6 @@ import javax.inject.Named;
 
 import org.sonatype.siesta.server.SiestaServlet;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.inject.AbstractModule;
 import com.google.inject.servlet.ServletModule;
 
@@ -23,9 +22,7 @@ public class WebappModule
     {
       @Override
       protected void configureServlets() {
-        serve("/*").with(SiestaServlet.class, ImmutableMap.of(
-            "javax.ws.rs.Application", "org.sonatype.siesta.webapp.test.TestApplication"
-        ));
+        serve("/*").with(SiestaServlet.class);
       }
     });
   }
