@@ -25,14 +25,17 @@ public class SisuResourceFactory
     this.entry = checkNotNull(entry);
   }
 
+  @Override
   public Class<?> getScannableClass() {
     return entry.getImplementationClass();
   }
 
+  @Override
   public void registered(final ResteasyProviderFactory factory) {
     propertyInjector = factory.getInjectorFactory().createPropertyInjector(getScannableClass(), factory);
   }
 
+  @Override
   public Object createResource(final HttpRequest request,
                                final HttpResponse response,
                                final ResteasyProviderFactory factory)
@@ -42,10 +45,12 @@ public class SisuResourceFactory
     return resource;
   }
 
+  @Override
   public void requestFinished(final HttpRequest request, final HttpResponse response, final Object resource) {
     // ignore
   }
 
+  @Override
   public void unregistered() {
     // ignore
   }
