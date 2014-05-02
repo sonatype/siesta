@@ -10,14 +10,16 @@ import org.sonatype.siesta.ExceptionMapperSupport;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
 /**
- * Generic {@link Throwable} exception mapper.
+ * Unexpected generic {@link Throwable} exception mapper.
+ *
+ * This will handle all unexpected exceptions and override the default JAX-RS implementations behavior.
  *
  * @since 2.0
  */
 @Named
 @Singleton
 @Provider
-public class GenericExceptionMapper
+public class UnexpectedExceptionMapper
   extends ExceptionMapperSupport<Throwable>
 {
   @Override
@@ -26,7 +28,7 @@ public class GenericExceptionMapper
     log.warn("(ID {}) Unexpected exception: {}", id, exception.toString(), exception);
 
     return Response.serverError()
-        .entity(exception.toString())
+        .entity(String.format("ERROR: (ID %s) %s", id, exception))
         .type(TEXT_PLAIN)
         .build();
   }

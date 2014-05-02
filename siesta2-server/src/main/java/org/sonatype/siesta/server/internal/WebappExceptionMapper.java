@@ -8,12 +8,10 @@ import javax.ws.rs.ext.Provider;
 
 import org.sonatype.siesta.ExceptionMapperSupport;
 
-import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
-
 /**
  * Standard {@link WebApplicationException} exception mapper.
  *
- * This is needed to restore default response behavior when {@link GenericExceptionMapper} is installed.
+ * This is needed to restore default response behavior when {@link UnexpectedExceptionMapper} is installed.
  *
  * @since 2.0
  */
