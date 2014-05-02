@@ -14,6 +14,8 @@ package org.sonatype.siesta;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Fault exchange object.
  *
@@ -22,8 +24,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "fault")
 public class FaultXO
 {
+  @JsonProperty
   private String id;
 
+  @JsonProperty
   private String message;
 
   public FaultXO() {
