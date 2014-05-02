@@ -13,7 +13,7 @@
 package org.sonatype.siesta;
 
 /**
- * Marker for JAX-RS resources.
+ * Marker for Siesta JAX-RS resources.
  *
  * @since 2.0
  */
