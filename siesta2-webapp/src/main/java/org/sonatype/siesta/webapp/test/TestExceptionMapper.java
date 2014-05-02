@@ -7,10 +7,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import org.sonatype.siesta.Component;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.sonatype.siesta.ExceptionMapperSupport;
 
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
@@ -23,10 +20,8 @@ import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 @Singleton
 @Provider
 public class TestExceptionMapper
-  implements ExceptionMapper<TestException>, Component
+  extends ExceptionMapperSupport<TestException>
 {
-  private final Logger log = LoggerFactory.getLogger(getClass());
-
   @Inject
   public TestExceptionMapper() {
     if (log.isTraceEnabled()) {
@@ -38,8 +33,7 @@ public class TestExceptionMapper
   }
 
   @Override
-  public Response toResponse(final TestException exception) {
-    log.debug("Mapping: " + exception);
+  protected Response convert(final TestException exception, final String id) {
     return Response
         .serverError()
         .entity("Error: " + exception)
