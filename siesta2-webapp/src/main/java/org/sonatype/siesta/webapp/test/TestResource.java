@@ -12,6 +12,7 @@ import javax.ws.rs.QueryParam;
 import org.sonatype.siesta.Resource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jboss.resteasy.core.Dispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +40,11 @@ public class TestResource
     else {
       log.debug("Created");
     }
+  }
+
+  @Inject
+  public void testInjection(final Dispatcher dispatcher) {
+    log.info("Dispatcher: {}", dispatcher);
   }
 
   @GET
