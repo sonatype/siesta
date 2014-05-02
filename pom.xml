@@ -135,17 +135,21 @@
         </exclusions>
       </dependency>
 
+      <!--
+      This is mostly the same as javax.ws.rs-api, except it contains some javax.annotations
+      which are not part of the standard dependency.
+      -->
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>jaxrs-api</artifactId>
         <version>${resteasyVersion}</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.jboss.resteasy</groupId>
-        <artifactId>async-http-servlet-3.0</artifactId>
-        <version>${resteasyVersion}</version>
-      </dependency>
+      <!--<dependency>-->
+        <!--<groupId>org.jboss.resteasy</groupId>-->
+        <!--<artifactId>async-http-servlet-3.0</artifactId>-->
+        <!--<version>${resteasyVersion}</version>-->
+      <!--</dependency>-->
 
       <!--<dependency>-->
         <!--<groupId>org.jboss.resteasy</groupId>-->
