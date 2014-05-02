@@ -3,6 +3,7 @@ package org.sonatype.siesta.webapp;
 import javax.inject.Named;
 
 import org.sonatype.siesta.server.SiestaServlet;
+import org.sonatype.siesta.server.internal.resteasy.ResteasyModule;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.servlet.ServletModule;
@@ -18,6 +19,8 @@ public class WebappModule
 {
   @Override
   protected void configure() {
+    install(new ResteasyModule());
+
     install(new ServletModule()
     {
       @Override

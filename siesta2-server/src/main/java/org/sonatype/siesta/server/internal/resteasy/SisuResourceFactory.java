@@ -1,4 +1,4 @@
-package org.sonatype.siesta.server;
+package org.sonatype.siesta.server.internal.resteasy;
 
 import org.eclipse.sisu.BeanEntry;
 import org.jboss.resteasy.spi.HttpRequest;
