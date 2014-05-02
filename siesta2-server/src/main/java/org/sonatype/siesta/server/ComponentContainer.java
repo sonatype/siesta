@@ -7,10 +7,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.sonatype.siesta.Component;
+import org.sonatype.siesta.Resource;
+
 import org.eclipse.sisu.BeanEntry;
 
 /**
- * Component container.
+ * Siesta {@link Component} (and {@link Resource} container abstraction.
  *
  * @since 2.0
  */
