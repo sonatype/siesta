@@ -1,5 +1,7 @@
 package org.sonatype.siesta.webapp.test;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -81,6 +83,9 @@ public class TestResource
 
     @JsonProperty("bar")
     String bar;
+
+    @JsonProperty("date")
+    Date date = new Date();
   }
 
   @GET
