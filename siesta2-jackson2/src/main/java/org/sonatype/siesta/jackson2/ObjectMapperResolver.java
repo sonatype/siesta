@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Jackson {@link ObjectMapper} resolver.
  *
+ * This will use the mapper bound to the name "siesta".
+ *
  * @since 2.0
  * @see ObjectMapperProvider
  */

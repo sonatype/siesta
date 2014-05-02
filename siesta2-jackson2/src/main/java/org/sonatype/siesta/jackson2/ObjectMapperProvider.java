@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Jackson {@link ObjectMapper} provider for use with Siesta.
+ * Jackson {@link ObjectMapper} (guice) provider for use with Siesta.
  *
  * @since 2.0
  */
