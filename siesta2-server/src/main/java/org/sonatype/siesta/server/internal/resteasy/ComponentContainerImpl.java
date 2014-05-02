@@ -32,9 +32,13 @@ public class ComponentContainerImpl
     super.service(request, response);
   }
 
+  private boolean isResource(final BeanEntry<?, ?> entry) {
+    return Resource.class.isAssignableFrom(entry.getImplementationClass());
+  }
+
   @Override
   public void addComponent(final BeanEntry<?, ?> entry) throws Exception {
-    if (Resource.class.isAssignableFrom(entry.getImplementationClass())) {
+    if (isResource(entry)) {
       getDispatcher().getRegistry().addResourceFactory(new SisuResourceFactory(entry));
     }
     else {
@@ -45,7 +49,7 @@ public class ComponentContainerImpl
 
   @Override
   public void removeComponent(final BeanEntry<?, ?> entry) throws Exception {
-    if (Resource.class.isAssignableFrom(entry.getImplementationClass())) {
+    if (isResource(entry)) {
       getDispatcher().getRegistry().removeRegistrations(entry.getImplementationClass());
     }
     else {
