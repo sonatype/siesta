@@ -23,7 +23,7 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>siesta2-jackson2</artifactId>
+  <artifactId>siesta-jackson2</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
 
   <dependencies>
@@ -39,7 +39,7 @@
 
     <dependency>
       <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta2-api</artifactId>
+      <artifactId>siesta-api</artifactId>
     </dependency>
 
     <dependency>

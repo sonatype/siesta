@@ -23,44 +23,24 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>siesta2-webapp</artifactId>
+  <artifactId>siesta-api</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
-  <packaging>war</packaging>
 
   <dependencies>
     <dependency>
-      <groupId>org.eclipse.jetty.orbit</groupId>
-      <artifactId>javax.servlet</artifactId>
-      <scope>provided</scope>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
     </dependency>
 
-    <!--
-    Prefer RESTEasy jaxrs-api for runtime?  Appears its a super-set which includes javax.annotation.Priority?
-    -->
     <dependency>
       <groupId>javax.ws.rs</groupId>
       <artifactId>javax.ws.rs-api</artifactId>
-      <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta2-server</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta2-jackson2</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jul-to-slf4j</artifactId>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
