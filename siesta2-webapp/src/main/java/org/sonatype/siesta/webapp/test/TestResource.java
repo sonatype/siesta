@@ -22,6 +22,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 
 import org.sonatype.siesta.Resource;
 
@@ -81,12 +82,39 @@ public class TestResource
     return text;
   }
 
+  //
+  // Exception handling
+  //
+
   @GET
   @Path("error")
   @Produces(TEXT_PLAIN)
   public String error(final @QueryParam("text") String text) throws Exception {
     throw new TestException(text);
   }
+
+  @GET
+  @Path("throwable")
+  @Produces(TEXT_PLAIN)
+  public String throwable() throws Throwable {
+    throw new Throwable("test");
+  }
+
+  @GET
+  @Path("webappexception")
+  @Produces(TEXT_PLAIN)
+  public String webappexception(final @QueryParam("status") Integer status) throws Exception {
+    if (status == null) {
+      throw new WebApplicationException("test");
+    }
+    else {
+      throw new WebApplicationException("test", status);
+    }
+  }
+
+  //
+  // Marshalling
+  //
 
   public static class JsonObject
   {
