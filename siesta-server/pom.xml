@@ -54,6 +54,16 @@
     </dependency>
 
     <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxb-provider</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-multipart-provider</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.eclipse.jetty.orbit</groupId>
       <artifactId>javax.servlet</artifactId>
     </dependency>
