@@ -15,3 +15,5 @@
 # Description
 
 Sonatype Siesta; JAX-RS Integration
+
+Based on [JBoss RESTEasy 3.x](http://resteasy.jboss.org/) with [Eclipse Sisu](http://eclipse.org/sisu) IoC support.
