@@ -22,6 +22,9 @@ public class GenericExceptionMapper
 {
   @Override
   protected Response convert(final Throwable exception, final String id) {
+    // always log unexpected exception with stack
+    log.warn("(ID {}) {}", id, exception.toString(), exception);
+
     return Response.serverError()
         .entity(exception.toString())
         .type(TEXT_PLAIN)
