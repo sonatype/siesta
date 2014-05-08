@@ -23,49 +23,33 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>siesta-webapp</artifactId>
+  <artifactId>siesta-validation</artifactId>
   <name>${project.groupId}:${project.artifactId}</name>
-  <packaging>war</packaging>
 
   <dependencies>
     <dependency>
-      <groupId>org.eclipse.jetty.orbit</groupId>
-      <artifactId>javax.servlet</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <!--
-    Prefer RESTEasy jaxrs-api for runtime?  Appears its a super-set which includes javax.annotation.Priority?
-    -->
-    <dependency>
-      <groupId>javax.ws.rs</groupId>
-      <artifactId>javax.ws.rs-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta-server</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta-jackson2</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta-validation</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>jul-to-slf4j</artifactId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.siesta</groupId>
+      <artifactId>siesta-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
     </dependency>
   </dependencies>
 
