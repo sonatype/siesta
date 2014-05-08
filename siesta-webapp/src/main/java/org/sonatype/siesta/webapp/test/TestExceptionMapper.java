@@ -48,7 +48,7 @@ public class TestExceptionMapper
   protected Response convert(final TestException exception, final String id) {
     return Response
         .serverError()
-        .entity("Error: " + exception)
+        .entity("Custom ERROR: " + exception)
         .type(TEXT_PLAIN)
         .build();
   }

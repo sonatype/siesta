@@ -281,12 +281,6 @@
 
       <dependency>
         <groupId>org.sonatype.siesta</groupId>
-        <artifactId>siesta-validation</artifactId>
-        <version>2.0-SNAPSHOT</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.sonatype.siesta</groupId>
         <artifactId>siesta-server</artifactId>
         <version>2.0-SNAPSHOT</version>
       </dependency>
@@ -308,7 +302,6 @@
   <modules>
     <module>siesta-api</module>
     <module>siesta-jackson2</module>
-    <module>siesta-validation</module>
     <module>siesta-server</module>
     <module>siesta-webapp</module>
     <module>siesta-client</module>

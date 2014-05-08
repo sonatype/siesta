@@ -54,11 +54,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta-validation</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
     </dependency>
