@@ -39,6 +39,9 @@
   </scm>
 
   <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+
     <resteasyVersion>3.0.8.Final</resteasyVersion>
     <jackson2Version>2.3.2</jackson2Version>
   </properties>
