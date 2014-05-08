@@ -48,7 +48,7 @@ public class ValidationErrorXO
   private String message;
 
   public ValidationErrorXO() {
-    id = GENERIC;
+    this.id = GENERIC;
   }
 
   /**
