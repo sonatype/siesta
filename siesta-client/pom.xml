@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2007-2013 Sonatype, Inc. All rights reserved.
+    Copyright (c) 2007-2014 Sonatype, Inc. All rights reserved.
 
     This program is licensed to you under the Apache License Version 2.0,
     and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -18,9 +18,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonatype.sisu.siesta</groupId>
+    <groupId>org.sonatype.siesta</groupId>
     <artifactId>siesta</artifactId>
-    <version>1.8-SNAPSHOT</version>
+    <version>2.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>siesta-client</artifactId>
@@ -28,24 +28,13 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.sonatype.sisu.siesta</groupId>
-      <artifactId>siesta-common</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-client</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-apache-client4</artifactId>
-    </dependency>
-
-    <!-- HC4 uses JCL, adapt it to Slf4j -->
-    <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-client</artifactId>
     </dependency>
   </dependencies>
 

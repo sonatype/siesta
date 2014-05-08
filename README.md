@@ -1,6 +1,6 @@
 <!--
 
-    Copyright (c) 2007-2013 Sonatype, Inc. All rights reserved.
+    Copyright (c) 2007-2014 Sonatype, Inc. All rights reserved.
 
     This program is licensed to you under the Apache License Version 2.0,
     and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -14,6 +14,6 @@
 -->
 # Description
 
-Sisu Siesta; JAX-RS Components
+Sonatype Siesta; JAX-RS Integration
 
-[Jersey changlog] (http://java.net/projects/jersey/sources/svn/content/trunk/jersey/changes.txt) for reference.
+Based on [JBoss RESTEasy 3.x](http://resteasy.jboss.org/) with [Eclipse Sisu](http://eclipse.org/sisu) IoC support.
