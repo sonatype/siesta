@@ -10,6 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
+
 package org.sonatype.siesta.server;
 
 import java.io.IOException;
@@ -47,7 +48,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Named
 @Singleton
 public class SiestaServlet
-  extends HttpServlet
+    extends HttpServlet
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -65,24 +66,29 @@ public class SiestaServlet
 
   @Override
   public void init(final ServletConfig config) throws ServletException {
-    ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
     try {
       Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
-
-      super.init(config);
-
-      // Initialize container
-      componentContainer.init(config);
-      log.info("JAX-RS RuntimeDelegate: {}", RuntimeDelegate.getInstance());
-
-      // Watch for components
-      beanLocator.watch(Key.get(Component.class), new ComponentMediator(), componentContainer);
-
-      log.info("Initialized");
-
-    } finally {
-      Thread.currentThread().setContextClassLoader(tccl);
+      doInit(config);
     }
+    finally {
+      Thread.currentThread().setContextClassLoader(cl);
+    }
+  }
+
+  private void doInit(final ServletConfig config) throws ServletException {
+    super.init(config);
+
+    // TODO: Figure out what version of RESTEasy is used and log it
+
+    // Initialize container
+    componentContainer.init(config);
+    log.info("JAX-RS RuntimeDelegate: {}", RuntimeDelegate.getInstance());
+
+    // Watch for components
+    beanLocator.watch(Key.get(Component.class), new ComponentMediator(), componentContainer);
+
+    log.info("Initialized");
   }
 
   /**
@@ -103,7 +109,9 @@ public class SiestaServlet
     }
 
     @Override
-    public void remove(final BeanEntry<Annotation, Component> entry, final ComponentContainer container) throws Exception {
+    public void remove(final BeanEntry<Annotation, Component> entry, final ComponentContainer container)
+        throws Exception
+    {
       log.debug("Removing component: {}", entry.getKey());
       try {
         container.removeComponent(entry);
