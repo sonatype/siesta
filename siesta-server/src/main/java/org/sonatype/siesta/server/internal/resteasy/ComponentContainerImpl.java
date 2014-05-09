@@ -52,6 +52,7 @@ public class ComponentContainerImpl
 
     ResteasyProviderFactory providerFactory = getDispatcher().getProviderFactory();
     log.debug("Dynamic features: {}", providerFactory.getServerDynamicFeatures());
+    // TODO: Add more configuration logging, RESTEasy doesn't do much of this at all :-(
   }
 
   @Override
