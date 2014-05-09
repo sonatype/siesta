@@ -17,6 +17,7 @@ import javax.inject.Named;
 import org.sonatype.siesta.server.SiestaServlet;
 import org.sonatype.siesta.server.internal.resteasy.ResteasyModule;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.inject.AbstractModule;
 import com.google.inject.servlet.ServletModule;
 
@@ -37,7 +38,9 @@ public class WebappModule
     {
       @Override
       protected void configureServlets() {
-        serve("/*").with(SiestaServlet.class);
+        serve("/rest/*").with(SiestaServlet.class, ImmutableMap.of(
+            "resteasy.servlet.mapping.prefix", "/rest"
+        ));
       }
     });
   }

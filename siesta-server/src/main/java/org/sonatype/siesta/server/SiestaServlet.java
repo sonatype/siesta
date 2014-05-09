@@ -113,6 +113,11 @@ public class SiestaServlet
     checkNotNull(request);
     checkNotNull(response);
 
+    if (log.isTraceEnabled()) {
+      log.trace("Context path: {}", request.getContextPath());
+      log.trace("Servlet path: {}", request.getServletPath());
+    }
+
     // Log the request URI+URL muck
     String uri = request.getRequestURI();
     if (request.getQueryString() != null) {
