@@ -150,6 +150,12 @@
 
       <!--<dependency>-->
         <!--<groupId>org.jboss.resteasy</groupId>-->
+        <!--<artifactId>resteasy-cdi</artifactId>-->
+        <!--<version>${resteasyVersion}</version>-->
+      <!--</dependency>-->
+
+      <!--<dependency>-->
+        <!--<groupId>org.jboss.resteasy</groupId>-->
         <!--<artifactId>async-http-servlet-3.0</artifactId>-->
         <!--<version>${resteasyVersion}</version>-->
       <!--</dependency>-->
@@ -231,6 +237,12 @@
         <artifactId>jackson-module-jaxb-annotations</artifactId>
         <version>${jackson2Version}</version>
       </dependency>
+
+      <!--<dependency>-->
+        <!--<groupId>org.jboss.resteasy</groupId>-->
+        <!--<artifactId>resteasy-validator-provider-11</artifactId>-->
+        <!--<version>${resteasyVersion}</version>-->
+      <!--</dependency>-->
 
       <dependency>
         <groupId>javax.validation</groupId>

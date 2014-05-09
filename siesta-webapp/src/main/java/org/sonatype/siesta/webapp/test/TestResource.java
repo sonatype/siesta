@@ -17,6 +17,8 @@ import java.util.Date;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -136,5 +138,16 @@ public class TestResource
     result.foo = "hi";
     result.bar = "there";
     return result;
+  }
+
+  //
+  // Validation
+  //
+
+  @GET
+  @Path("validate")
+  @Produces(TEXT_PLAIN)
+  public String validate(final @QueryParam("value") @NotNull @Size(min=4, max=8) String value) {
+    return value;
   }
 }
