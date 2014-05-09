@@ -14,6 +14,7 @@ package org.sonatype.siesta.server.internal.resteasy;
 
 import java.io.IOException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,11 +26,14 @@ import org.sonatype.siesta.server.ComponentContainer;
 import org.eclipse.sisu.BeanEntry;
 import org.jboss.resteasy.logging.Logger.LoggerType;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
+import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * RESTEasy {@link ComponentContainer}
+ * RESTEasy {@link ComponentContainer}.
+ *
+ * @since 2.0
  */
 public class ComponentContainerImpl
   extends HttpServletDispatcher
@@ -40,6 +44,14 @@ public class ComponentContainerImpl
   public ComponentContainerImpl() {
     // Configure RESTEasy to use SLF4j
     org.jboss.resteasy.logging.Logger.setLoggerType(LoggerType.SLF4J);
+  }
+
+  @Override
+  public void init(final ServletConfig servletConfig) throws ServletException {
+    super.init(servletConfig);
+
+    ResteasyProviderFactory providerFactory = getDispatcher().getProviderFactory();
+    log.debug("Dynamic features: {}", providerFactory.getServerDynamicFeatures());
   }
 
   @Override
