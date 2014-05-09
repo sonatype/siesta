@@ -65,16 +65,24 @@ public class SiestaServlet
 
   @Override
   public void init(final ServletConfig config) throws ServletException {
-    super.init(config);
+    ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+    try {
+      Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
-    // Initialize container
-    componentContainer.init(config);
-    log.info("JAX-RS RuntimeDelegate: {}", RuntimeDelegate.getInstance());
+      super.init(config);
 
-    // Watch for components
-    beanLocator.watch(Key.get(Component.class), new ComponentMediator(), componentContainer);
+      // Initialize container
+      componentContainer.init(config);
+      log.info("JAX-RS RuntimeDelegate: {}", RuntimeDelegate.getInstance());
 
-    log.info("Initialized");
+      // Watch for components
+      beanLocator.watch(Key.get(Component.class), new ComponentMediator(), componentContainer);
+
+      log.info("Initialized");
+
+    } finally {
+      Thread.currentThread().setContextClassLoader(tccl);
+    }
   }
 
   /**
