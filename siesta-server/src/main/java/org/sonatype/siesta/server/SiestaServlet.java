@@ -113,11 +113,6 @@ public class SiestaServlet
     checkNotNull(request);
     checkNotNull(response);
 
-    if (log.isTraceEnabled()) {
-      log.trace("Context path: {}", request.getContextPath());
-      log.trace("Servlet path: {}", request.getServletPath());
-    }
-
     // Log the request URI+URL muck
     String uri = request.getRequestURI();
     if (request.getQueryString() != null) {
@@ -126,6 +121,11 @@ public class SiestaServlet
 
     if (log.isDebugEnabled()) {
       log.debug("Processing: {} {} ({})", request.getMethod(), uri, request.getRequestURL());
+    }
+
+    if (log.isTraceEnabled()) {
+      log.trace("Context path: {}", request.getContextPath());
+      log.trace("Servlet path: {}", request.getServletPath());
     }
 
     MDC.put(getClass().getName(), uri);
