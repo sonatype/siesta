@@ -19,12 +19,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Validation error exchange object.
  *
- * @since 1.4
+ * @since 2.0
  */
 @XmlRootElement(name = "validationError")
 public class ValidationErrorXO
 {
-
   /**
    * Denotes that validation does not applies to a specific value.
    */
@@ -125,5 +124,4 @@ public class ValidationErrorXO
         ", message='" + message + '\'' +
         '}';
   }
-
 }

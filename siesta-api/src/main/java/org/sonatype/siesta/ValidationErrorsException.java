@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Thrown when there are request validation errors.
  *
- * @since 1.4
+ * @since 2.0
  * @see ValidationErrorXO
  */
 public class ValidationErrorsException

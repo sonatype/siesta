@@ -28,7 +28,7 @@ import static org.sonatype.siesta.MediaTypes.VND_ERROR_V1_XML_TYPE;
 /**
  * Support for {@link ExceptionMapper} implementations.
  *
- * @since 1.0
+ * @since 2.0
  */
 public abstract class FaultExceptionMapperSupport<E extends Throwable>
     extends ExceptionMapperSupport<E>

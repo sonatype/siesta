@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * Siesta specific media types.
  *
- * @since 1.4
+ * @since 2.0
  */
 public class MediaTypes
 {
