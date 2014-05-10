@@ -34,12 +34,12 @@ import static org.sonatype.siesta.MediaTypes.VND_VALIDATION_ERRORS_V1_XML_TYPE;
  *
  * @since 2.0
  */
-public abstract class ValidationErrorsExceptionMappersSupport<E extends Throwable>
+public abstract class ValidationExceptionMapperSupport<E extends Throwable>
     extends ExceptionMapperSupport<E>
 {
   private final List<Variant> variants;
 
-  public ValidationErrorsExceptionMappersSupport() {
+  public ValidationExceptionMapperSupport() {
     variants = Variant.mediaTypes(
         VND_VALIDATION_ERRORS_V1_JSON_TYPE, VND_VALIDATION_ERRORS_V1_XML_TYPE
     ).add().build();
@@ -69,8 +69,8 @@ public abstract class ValidationErrorsExceptionMappersSupport<E extends Throwabl
     return builder.build();
   }
 
-  protected int getStatusCode(final E exception) {
-    return Status.BAD_REQUEST.getStatusCode();
+  protected Status getStatusCode(final E exception) {
+    return Status.BAD_REQUEST;
   }
 
   protected abstract List<ValidationErrorXO> getValidationErrors(final E exception);

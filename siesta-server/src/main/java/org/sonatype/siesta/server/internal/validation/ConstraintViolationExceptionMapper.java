@@ -24,6 +24,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.ElementKind;
 import javax.validation.Path;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.ext.Provider;
 
 import org.sonatype.siesta.ValidationErrorXO;
 
@@ -35,8 +36,9 @@ import org.sonatype.siesta.ValidationErrorXO;
  */
 @Named
 @Singleton
+@Provider
 public class ConstraintViolationExceptionMapper
-    extends ValidationErrorsExceptionMappersSupport<ConstraintViolationException>
+    extends ValidationExceptionMapperSupport<ConstraintViolationException>
 {
   @Override
   protected List<ValidationErrorXO> getValidationErrors(final ConstraintViolationException exception) {
@@ -44,8 +46,8 @@ public class ConstraintViolationExceptionMapper
   }
 
   @Override
-  protected int getStatusCode(final ConstraintViolationException exception) {
-    return getResponseStatus(exception.getConstraintViolations()).getStatusCode();
+  protected Status getStatusCode(final ConstraintViolationException exception) {
+    return getResponseStatus(exception.getConstraintViolations());
   }
 
   private List<ValidationErrorXO> getValidationErrors(final Set<ConstraintViolation<?>> violations) {
@@ -58,8 +60,8 @@ public class ConstraintViolationExceptionMapper
     return errors;
   }
 
-  private Status getResponseStatus(final Set<ConstraintViolation<?>> constraintViolations) {
-    final Iterator<ConstraintViolation<?>> iterator = constraintViolations.iterator();
+  private Status getResponseStatus(final Set<ConstraintViolation<?>> violations) {
+    final Iterator<ConstraintViolation<?>> iterator = violations.iterator();
 
     if (iterator.hasNext()) {
       return getResponseStatus(iterator.next());
@@ -69,8 +71,9 @@ public class ConstraintViolationExceptionMapper
     }
   }
 
-  private Status getResponseStatus(final ConstraintViolation<?> constraintViolation) {
-    for (Path.Node node : constraintViolation.getPropertyPath()) {
+  private Status getResponseStatus(final ConstraintViolation<?> violation) {
+    for (Path.Node node : violation.getPropertyPath()) {
+      // FIXME: ElementKind is a 1.1 validation spec API, which isn't valid for
       ElementKind kind = node.getKind();
 
       if (ElementKind.RETURN_VALUE.equals(kind)) {

@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.ws.rs.ext.Provider;
 
 import org.sonatype.siesta.ValidationErrorXO;
 import org.sonatype.siesta.ValidationErrorsException;
@@ -27,8 +28,9 @@ import org.sonatype.siesta.ValidationErrorsException;
  */
 @Named
 @Singleton
+@Provider
 public class ValidationErrorsExceptionMapper
-    extends ValidationErrorsExceptionMappersSupport<ValidationErrorsException>
+    extends ValidationExceptionMapperSupport<ValidationErrorsException>
 {
   @Override
   protected List<ValidationErrorXO> getValidationErrors(final ValidationErrorsException exception) {
