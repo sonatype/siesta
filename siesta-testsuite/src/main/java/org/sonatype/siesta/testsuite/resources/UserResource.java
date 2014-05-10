@@ -12,69 +12,69 @@
  */
 package org.sonatype.siesta.testsuite.resources;
 
+import java.util.List;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.sonatype.siesta.Resource;
-import org.sonatype.siesta.ValidationErrorsException;
+import org.sonatype.siesta.testsuite.model.UserXO;
 
+import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
-/**
- * @since 1.4
- */
 @Named
 @Singleton
-@Path("/validationErrors")
-public class ValidationErrorsResource
+@Path("/user")
+public class UserResource
     implements Resource
 {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  @PUT
-  @Path("/manual/multiple")
-  @Consumes({APPLICATION_XML, APPLICATION_JSON})
+  @GET
   @Produces({APPLICATION_XML, APPLICATION_JSON})
-  public UserXO putWithMultipleManualValidations(final UserXO user) {
-    log.info("PUT user: {}", user);
+  public List<UserXO> get() {
+    return Lists.newArrayList(
+        new UserXO().withName("foo"),
+        new UserXO().withName("bar")
+    );
+  }
 
-    final ValidationErrorsException validationErrors = new ValidationErrorsException();
-    if (user.getName() == null) {
-      validationErrors.withError("name", "Name cannot be null");
+  @GET
+  @Path("/{id}")
+  @Produces({APPLICATION_XML, APPLICATION_JSON})
+  public UserXO get(@PathParam("id") String id) {
+    if ("foo".equals(id)) {
+      return new UserXO().withName("foo");
     }
-    if (user.getDescription() == null) {
-      validationErrors.withError("description", "Description cannot be null");
-    }
-
-    if (validationErrors.hasValidationErrors()) {
-      throw validationErrors;
-    }
-
-    return user;
+    throw new NotFoundException("User with id '" + id + "' not found");
   }
 
   @PUT
-  @Path("/manual/single")
   @Consumes({APPLICATION_XML, APPLICATION_JSON})
   @Produces({APPLICATION_XML, APPLICATION_JSON})
-  public UserXO putWithSingleManualValidation(final UserXO user) {
+  public UserXO put(final UserXO user) {
     log.info("PUT user: {}", user);
-
-    if (user.getName() == null) {
-      throw new ValidationErrorsException("name", "Name cannot be null");
-    }
-    if (user.getDescription() == null) {
-      throw new ValidationErrorsException("description", "Description cannot be null");
-    }
-
     return user;
+  }
+
+  @DELETE
+  @Path("/{id}")
+  public void delete(@PathParam("id") String id) {
+    if (!"foo".equals(id)) {
+      throw new NotFoundException("User with id '" + id + "' not found");
+    }
   }
 }

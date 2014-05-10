@@ -17,7 +17,7 @@
 // Generated on: 2014.02.17 at 05:38:56 PM PST 
 //
 
-package org.sonatype.siesta.testsuite.resources;
+package org.sonatype.siesta.testsuite.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

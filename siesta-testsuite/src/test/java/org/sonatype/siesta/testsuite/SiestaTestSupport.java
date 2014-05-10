@@ -45,11 +45,6 @@ public class SiestaTestSupport
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-  //@Override
-  //public BeanScanning scanning() {
-  //  return BeanScanning.ON;
-  //}
-
   @Override
   public void configure(final Binder binder) {
     binder.install(new TestModule());

@@ -28,6 +28,27 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.sonatype.siesta</groupId>
+      <artifactId>siesta-server</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.siesta</groupId>
+      <artifactId>siesta-jackson2</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.siesta</groupId>
+      <artifactId>siesta-client</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
       <groupId>org.sonatype.sisu.goodies</groupId>
       <artifactId>goodies-testsupport</artifactId>
       <scope>test</scope>
@@ -36,24 +57,6 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>test-jetty-servlet</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta-server</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta-jackson2</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.sonatype.siesta</groupId>
-      <artifactId>siesta-client</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

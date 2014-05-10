@@ -14,7 +14,6 @@ package org.sonatype.siesta.testsuite.resources;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.GET;
@@ -58,8 +57,7 @@ public class EchoResource
   public List<String> get(@QueryParam("foo") List<String> foo) {
     return Lists.transform(foo, new Function<String, String>()
     {
-      @Nullable
-      public String apply(@Nullable final String value) {
+      public String apply(final String value) {
         return "foo=" + value;
       }
     });
