@@ -34,6 +34,24 @@
     </dependency>
 
     <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>test-jetty-servlet</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.siesta</groupId>
+      <artifactId>siesta-server</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.siesta</groupId>
+      <artifactId>siesta-jackson2</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.sonatype.siesta</groupId>
       <artifactId>siesta-client</artifactId>
       <scope>test</scope>

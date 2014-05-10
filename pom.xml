@@ -114,11 +114,11 @@
         <version>3.0.0.v201112011016</version>
       </dependency>
 
-      <!--<dependency>-->
-      <!--<groupId>org.eclipse.jetty</groupId>-->
-      <!--<artifactId>test-jetty-servlet</artifactId>-->
-      <!--<version>8.1.11.v20130520</version>-->
-      <!--</dependency>-->
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>test-jetty-servlet</artifactId>
+        <version>8.1.15.v20140411</version>
+      </dependency>
 
       <dependency>
         <groupId>javax.ws.rs</groupId>
