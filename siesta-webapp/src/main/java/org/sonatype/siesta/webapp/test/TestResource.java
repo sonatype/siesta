@@ -29,6 +29,7 @@ import javax.ws.rs.WebApplicationException;
 import org.sonatype.siesta.Resource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.bval.guice.Validate;
 import org.jboss.resteasy.core.Dispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,6 +148,7 @@ public class TestResource
   @GET
   @Path("validate")
   @Produces(TEXT_PLAIN)
+  @Validate
   public String validate(final @QueryParam("value") @NotNull @Size(min=4, max=8) String value) {
     return value;
   }

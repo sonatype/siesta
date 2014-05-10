@@ -15,6 +15,7 @@ package org.sonatype.siesta.webapp;
 import javax.inject.Named;
 
 import org.sonatype.siesta.server.SiestaServlet;
+import org.sonatype.siesta.server.internal.bval.BvalModule;
 import org.sonatype.siesta.server.internal.resteasy.ResteasyModule;
 
 import com.google.common.collect.ImmutableMap;
@@ -33,6 +34,7 @@ public class WebappModule
   @Override
   protected void configure() {
     install(new ResteasyModule());
+    install(new BvalModule());
 
     install(new ServletModule()
     {

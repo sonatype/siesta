@@ -53,15 +53,34 @@
       <artifactId>resteasy-jaxrs</artifactId>
     </dependency>
 
+    <!--
+    TODO: Sort out use of RESTEasy integration for javax.validation 1.1 support.
+    -->
+
     <!--<dependency>-->
-      <!--<groupId>org.jboss.resteasy</groupId>-->
-      <!--<artifactId>resteasy-cdi</artifactId>-->
+    <!--<groupId>org.jboss.resteasy</groupId>-->
+    <!--<artifactId>resteasy-cdi</artifactId>-->
     <!--</dependency>-->
 
     <!--<dependency>-->
-      <!--<groupId>org.jboss.resteasy</groupId>-->
-      <!--<artifactId>resteasy-validator-provider-11</artifactId>-->
+    <!--<groupId>org.jboss.resteasy</groupId>-->
+    <!--<artifactId>resteasy-validator-provider-11</artifactId>-->
     <!--</dependency>-->
+
+    <!--<dependency>-->
+    <!--<groupId>org.hibernate</groupId>-->
+    <!--<artifactId>hibernate-validator</artifactId>-->
+    <!--</dependency>-->
+
+    <dependency>
+      <groupId>org.apache.bval</groupId>
+      <artifactId>bval-jsr303</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.bval</groupId>
+      <artifactId>bval-guice</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
@@ -106,11 +125,6 @@
     <dependency>
       <groupId>org.sonatype.sisu.inject</groupId>
       <artifactId>guice-servlet</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
     </dependency>
   </dependencies>
 
