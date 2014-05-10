@@ -43,7 +43,7 @@
     <maven.compiler.target>1.7</maven.compiler.target>
 
     <resteasy.version>3.0.8.Final</resteasy.version>
-    <jackson2.version>2.3.2</jackson2.version>
+    <jackson2.version>2.3.3</jackson2.version>
   </properties>
 
   <dependencyManagement>
