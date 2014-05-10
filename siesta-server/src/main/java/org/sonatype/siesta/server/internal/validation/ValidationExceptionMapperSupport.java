@@ -15,8 +15,7 @@ package org.sonatype.siesta.server.internal.validation;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
@@ -40,22 +39,22 @@ public abstract class ValidationExceptionMapperSupport<E extends Throwable>
   private final List<Variant> variants;
 
   public ValidationExceptionMapperSupport() {
-    variants = Variant.mediaTypes(
+    this.variants = Variant.mediaTypes(
         VND_VALIDATION_ERRORS_V1_JSON_TYPE, VND_VALIDATION_ERRORS_V1_XML_TYPE
     ).add().build();
   }
 
   @Override
   protected Response convert(final E exception, final String id) {
-    final Response.ResponseBuilder builder = Response.status(getStatusCode(exception));
+    final Response.ResponseBuilder builder = Response.status(getStatus(exception));
 
-    final List<ValidationErrorXO> validationErrors = getValidationErrors(exception);
-    if (validationErrors != null && !validationErrors.isEmpty()) {
+    final List<ValidationErrorXO> errors = getValidationErrors(exception);
+    if (errors != null && !errors.isEmpty()) {
       final Variant variant = getRequest().selectVariant(variants);
       if (variant != null) {
         builder.type(variant.getMediaType())
             .entity(
-                new GenericEntity<List<ValidationErrorXO>>(validationErrors)
+                new GenericEntity<List<ValidationErrorXO>>(errors)
                 {
                   @Override
                   public String toString() {
@@ -69,7 +68,7 @@ public abstract class ValidationExceptionMapperSupport<E extends Throwable>
     return builder.build();
   }
 
-  protected Status getStatusCode(final E exception) {
+  protected Status getStatus(final E exception) {
     return Status.BAD_REQUEST;
   }
 
@@ -79,20 +78,20 @@ public abstract class ValidationExceptionMapperSupport<E extends Throwable>
   // Helpers
   //
 
-  private Provider<Request> requestProvider;
+  private Request request;
 
-  @Inject
-  public void setRequestProvider(final Provider<Request> requestProvider) {
-    if (requestProvider == null) {
+  @Context
+  public void setRequest(final Request request) {
+    if (request == null) {
       throw new NullPointerException();
     }
-    this.requestProvider = requestProvider;
+    this.request = request;
   }
 
   protected Request getRequest() {
-    if (requestProvider == null) {
+    if (request == null) {
       throw new IllegalStateException();
     }
-    return requestProvider.get();
+    return request;
   }
 }

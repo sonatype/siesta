@@ -14,8 +14,7 @@ package org.sonatype.siesta;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -42,6 +41,7 @@ public abstract class FaultExceptionMapperSupport<E extends Throwable>
     ).add().build();
   }
 
+  @Override
   protected Response convert(final E exception, final String id) {
     Response.ResponseBuilder builder = Response.status(getStatus(exception));
 
@@ -53,10 +53,12 @@ public abstract class FaultExceptionMapperSupport<E extends Throwable>
     return builder.build();
   }
 
+  @Override
   protected String getMessage(final E exception) {
     return exception.getMessage();
   }
 
+  @Override
   protected Status getStatus(final E exception) {
     return Status.INTERNAL_SERVER_ERROR;
   }
@@ -65,20 +67,20 @@ public abstract class FaultExceptionMapperSupport<E extends Throwable>
   // Helpers
   //
 
-  private Provider<Request> requestProvider;
+  private Request request;
 
-  @Inject
-  public void setRequestProvider(final Provider<Request> requestProvider) {
-    if (requestProvider == null) {
+  @Context
+  public void setRequest(final Request request) {
+    if (request == null) {
       throw new NullPointerException();
     }
-    this.requestProvider = requestProvider;
+    this.request = request;
   }
 
   protected Request getRequest() {
-    if (requestProvider == null) {
+    if (request == null) {
       throw new IllegalStateException();
     }
-    return requestProvider.get();
+    return request;
   }
 }
