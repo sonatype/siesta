@@ -14,6 +14,7 @@ package org.sonatype.siesta.server.internal.resteasy;
 
 import java.io.IOException;
 
+import javax.annotation.Nullable;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -50,9 +51,22 @@ public class ComponentContainerImpl
   public void init(final ServletConfig servletConfig) throws ServletException {
     super.init(servletConfig);
 
-    ResteasyProviderFactory providerFactory = getDispatcher().getProviderFactory();
-    log.debug("Dynamic features: {}", providerFactory.getServerDynamicFeatures());
-    // TODO: Add more configuration logging, RESTEasy doesn't do much of this at all :-(
+    if (log.isDebugEnabled()) {
+      ResteasyProviderFactory providerFactory = getDispatcher().getProviderFactory();
+      log.debug("Provider factory: {}", providerFactory);
+      log.debug("Configuration: {}", providerFactory.getConfiguration());
+      log.debug("Runtime type: {}", providerFactory.getRuntimeType());
+      log.debug("Built-ins registered: {}", providerFactory.isBuiltinsRegistered());
+      log.debug("Properties: {}", providerFactory.getProperties());
+      log.debug("Dynamic features: {}", providerFactory.getServerDynamicFeatures());
+      log.debug("Enabled features: {}", providerFactory.getEnabledFeatures());
+      log.debug("Class contracts: {}", providerFactory.getClassContracts());
+      log.debug("Reader interceptor registry: {}", providerFactory.getServerReaderInterceptorRegistry());
+      log.debug("Writer interceptor registry: {}", providerFactory.getServerWriterInterceptorRegistry());
+      log.debug("Injector factory: {}", providerFactory.getInjectorFactory());
+      log.debug("Instances: {}", providerFactory.getInstances());
+      log.debug("Exception mappers: {}", providerFactory.getExceptionMappers());
+    }
   }
 
   @Override
@@ -62,39 +76,50 @@ public class ComponentContainerImpl
     super.service(request, response);
   }
 
-  private boolean isResource(final BeanEntry<?, ?> entry) {
-    return Resource.class.isAssignableFrom(entry.getImplementationClass());
+  private static boolean isResource(final Class<?> type) {
+    return Resource.class.isAssignableFrom(type);
+  }
+
+  @Nullable
+  private static String resourcePath(final Class<?> type) {
+    Path path = type.getAnnotation(Path.class);
+    if (path != null) {
+      return path.value();
+    }
+    return null;
   }
 
   @Override
   public void addComponent(final BeanEntry<?, ?> entry) throws Exception {
-    if (isResource(entry)) {
+    Class<?> type = entry.getImplementationClass();
+    if (isResource(type)) {
       getDispatcher().getRegistry().addResourceFactory(new SisuResourceFactory(entry));
-      Class<?> type = entry.getImplementationClass();
-      Path path = type.getAnnotation(Path.class);
+      String path = resourcePath(type);
       if (path == null) {
-        log.warn("Found resource w/o @Path: {}", type.getName());
+        log.warn("Found resource implementation missing @Path: {}", type.getName());
       }
       else {
-        log.debug("Added resource: {} with path: {}", type.getName(), path.value());
+        log.debug("Added resource: {} with path: {}", type.getName(), path);
       }
     }
     else {
       // TODO: Doesn't seem to be a late-biding/factory here so we create the object early
       getDispatcher().getProviderFactory().register(entry.getValue());
-      log.debug("Added component: {}", entry.getImplementationClass());
+      log.debug("Added component: {}", type.getName());
     }
   }
 
   @Override
   public void removeComponent(final BeanEntry<?, ?> entry) throws Exception {
-    if (isResource(entry)) {
-      getDispatcher().getRegistry().removeRegistrations(entry.getImplementationClass());
-      log.debug("Added component: {}", entry.getImplementationClass());
+    Class<?> type = entry.getImplementationClass();
+    if (isResource(type)) {
+      getDispatcher().getRegistry().removeRegistrations(type);
+      String path = resourcePath(type);
+      log.debug("Removed resource: {} with path: {}", type.getName(), path);
     }
     else {
       // TODO: Unsure how to remove a component
-      log.warn("Unable to remove component: {}", entry.getImplementationClass());
+      log.warn("Component removal not supported; Unable to remove component: {}", type.getName());
     }
   }
 }
