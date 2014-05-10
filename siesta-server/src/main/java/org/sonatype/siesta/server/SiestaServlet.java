@@ -99,7 +99,7 @@ public class SiestaServlet
   {
     @Override
     public void add(final BeanEntry<Annotation, Component> entry, final ComponentContainer container) throws Exception {
-      log.debug("Adding component: {}", entry.getKey());
+      log.trace("Adding component: {}", entry.getKey());
       try {
         container.addComponent(entry);
       }
@@ -112,7 +112,7 @@ public class SiestaServlet
     public void remove(final BeanEntry<Annotation, Component> entry, final ComponentContainer container)
         throws Exception
     {
-      log.debug("Removing component: {}", entry.getKey());
+      log.trace("Removing component: {}", entry.getKey());
       try {
         container.removeComponent(entry);
       }
