@@ -53,12 +53,10 @@ public abstract class FaultExceptionMapperSupport<E extends Throwable>
     return builder.build();
   }
 
-  @Override
   protected String getMessage(final E exception) {
     return exception.getMessage();
   }
 
-  @Override
   protected Status getStatus(final E exception) {
     return Status.INTERNAL_SERVER_ERROR;
   }
