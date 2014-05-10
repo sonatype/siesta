@@ -42,8 +42,8 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
 
-    <resteasyVersion>3.0.8.Final</resteasyVersion>
-    <jackson2Version>2.3.2</jackson2Version>
+    <resteasy.version>3.0.8.Final</resteasy.version>
+    <jackson2.version>2.3.2</jackson2.version>
   </properties>
 
   <dependencyManagement>
@@ -129,7 +129,7 @@
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-jaxrs</artifactId>
-        <version>${resteasyVersion}</version>
+        <version>${resteasy.version}</version>
         <exclusions>
           <exclusion>
             <groupId>commons-logging</groupId>
@@ -145,7 +145,7 @@
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>jaxrs-api</artifactId>
-        <version>${resteasyVersion}</version>
+        <version>${resteasy.version}</version>
       </dependency>
 
       <!--<dependency>-->
@@ -157,13 +157,13 @@
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-jaxb-provider</artifactId>
-        <version>${resteasyVersion}</version>
+        <version>${resteasy.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-multipart-provider</artifactId>
-        <version>${resteasyVersion}</version>
+        <version>${resteasy.version}</version>
         <exclusions>
           <exclusion>
             <groupId>commons-logging</groupId>
@@ -175,7 +175,7 @@
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-atom-provider</artifactId>
-        <version>${resteasyVersion}</version>
+        <version>${resteasy.version}</version>
       </dependency>
 
       <!--<dependency>-->
@@ -187,49 +187,49 @@
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-client</artifactId>
-        <version>${resteasyVersion}</version>
+        <version>${resteasy.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-jackson2-provider</artifactId>
-        <version>${resteasyVersion}</version>
+        <version>${resteasy.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
-        <version>${jackson2Version}</version>
+        <version>${jackson2.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
-        <version>${jackson2Version}</version>
+        <version>${jackson2.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>
-        <version>${jackson2Version}</version>
+        <version>${jackson2.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.jaxrs</groupId>
         <artifactId>jackson-jaxrs-base</artifactId>
-        <version>${jackson2Version}</version>
+        <version>${jackson2.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.jaxrs</groupId>
         <artifactId>jackson-jaxrs-json-provider</artifactId>
-        <version>${jackson2Version}</version>
+        <version>${jackson2.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.fasterxml.jackson.module</groupId>
         <artifactId>jackson-module-jaxb-annotations</artifactId>
-        <version>${jackson2Version}</version>
+        <version>${jackson2.version}</version>
       </dependency>
 
       <!--
@@ -330,6 +330,7 @@
     <module>siesta-server</module>
     <module>siesta-webapp</module>
     <module>siesta-client</module>
+    <module>siesta-testsuite</module>
   </modules>
 
   <build>
