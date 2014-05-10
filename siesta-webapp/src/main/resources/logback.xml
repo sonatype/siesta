@@ -12,13 +12,19 @@
     See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 
 -->
-# Description
+<configuration>
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
 
-Sonatype Siesta; JAX-RS Integration
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSSZ"} %-5p [%thread] %X{userId} %c - %m%n</pattern>
+    </encoder>
+  </appender>
 
-Based on [JBoss RESTEasy 3.x](http://resteasy.jboss.org/) with [Eclipse Sisu](http://eclipse.org/sisu) IoC support.
+  <logger name="org.sonatype.siesta" level="DEBUG"/>
+  <logger name="org.jboss.resteasy" level="DEBUG"/>
 
-ATM only javax.validation 1.0 is supported via Apache BVal (with Guice integration).
-
-Some issues with RESTEasy integration requiring CDI which prevents usage atm of the
-RESTEasy javax.validation 1.1 features w/o further integration or modification to work around.
+  <root level="INFO">
+    <appender-ref ref="console"/>
+  </root>
+</configuration>

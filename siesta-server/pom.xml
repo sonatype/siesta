@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2007-2013 Sonatype, Inc. All rights reserved.
+    Copyright (c) 2007-2014 Sonatype, Inc. All rights reserved.
 
     This program is licensed to you under the Apache License Version 2.0,
     and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -18,9 +18,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.sonatype.sisu.siesta</groupId>
+    <groupId>org.sonatype.siesta</groupId>
     <artifactId>siesta</artifactId>
-    <version>1.8-SNAPSHOT</version>
+    <version>2.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>siesta-server</artifactId>
@@ -28,14 +28,88 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.sonatype.sisu.siesta</groupId>
-      <artifactId>siesta-common</artifactId>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.siesta</groupId>
+      <artifactId>siesta-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+    </dependency>
+
+    <!--
+    TODO: Sort out use of RESTEasy integration for javax.validation 1.1 support.
+    -->
+
+    <!--<dependency>-->
+    <!--<groupId>org.jboss.resteasy</groupId>-->
+    <!--<artifactId>resteasy-cdi</artifactId>-->
+    <!--</dependency>-->
+
+    <!--<dependency>-->
+    <!--<groupId>org.jboss.resteasy</groupId>-->
+    <!--<artifactId>resteasy-validator-provider-11</artifactId>-->
+    <!--</dependency>-->
+
+    <!--<dependency>-->
+    <!--<groupId>org.hibernate</groupId>-->
+    <!--<artifactId>hibernate-validator</artifactId>-->
+    <!--</dependency>-->
+
+    <dependency>
+      <groupId>org.apache.bval</groupId>
+      <artifactId>bval-jsr303</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.bval</groupId>
+      <artifactId>bval-guice</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxb-provider</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-multipart-provider</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-atom-provider</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.eclipse.jetty.orbit</groupId>
       <artifactId>javax.servlet</artifactId>
-      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
     </dependency>
 
     <dependency>
@@ -46,21 +120,6 @@
     <dependency>
       <groupId>org.sonatype.sisu</groupId>
       <artifactId>sisu-guice</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-guice</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-multipart</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jvnet.mimepull</groupId>
-      <artifactId>mimepull</artifactId>
     </dependency>
 
     <dependency>

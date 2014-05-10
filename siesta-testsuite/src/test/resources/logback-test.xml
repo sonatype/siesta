@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2007-2013 Sonatype, Inc. All rights reserved.
+    Copyright (c) 2007-2014 Sonatype, Inc. All rights reserved.
 
     This program is licensed to you under the Apache License Version 2.0,
     and you may not use this file except in compliance with the Apache License Version 2.0.
@@ -13,23 +13,20 @@
     See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
 
 -->
-<configuration debug="false">
-
+<configuration>
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    <target>System.out</target>
-    <encoder>
-      <pattern>%level [%thread%X{DC}] %logger - %msg%n</pattern>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
     </encoder>
   </appender>
 
-  <logger name="Sisu" level="${test.log.level.Sisu:-INFO}"/>
-  <logger name="org.apache.commons.httpclient" level="ERROR"/>
-  <logger name="org.apache.http" level="${test.log.level.org.apache.http:-INFO}"/>
+  <logger name="org.sonatype.siesta" level="DEBUG"/>
+  <logger name="org.jboss.resteasy" level="DEBUG"/>
 
-  <logger name="org.sonatype.sisu.siesta" level="DEBUG"/>
+  <logger name="org.apache.http" level="INFO"/>
+  <logger name="org.apache.http.wire" level="DEBUG"/>
 
-  <root level="${test.log.level:-INFO}">
+  <root level="INFO">
     <appender-ref ref="CONSOLE"/>
   </root>
-
 </configuration>
