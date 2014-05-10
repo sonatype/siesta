@@ -29,8 +29,8 @@ import javax.ws.rs.ext.Provider;
 import org.sonatype.siesta.ValidationErrorXO;
 
 /**
- * Maps {@link ConstraintViolationException} to {@link Status#BAD_REQUEST} (or {@link Status#INTERNAL_SERVER_ERROR}
- * in case of a violation on a methods return value) with a list of {@link ValidationErrorXO} as body.
+ * Maps {@link ConstraintViolationException} to {@link Status#BAD_REQUEST} or {@link Status#INTERNAL_SERVER_ERROR}
+ * in case of a violation on a methods return value, with a list of {@link ValidationErrorXO} as body.
  *
  * @since 2.0
  */
@@ -73,7 +73,7 @@ public class ConstraintViolationExceptionMapper
 
   private Status getResponseStatus(final ConstraintViolation<?> violation) {
     for (Path.Node node : violation.getPropertyPath()) {
-      // FIXME: ElementKind is a 1.1 validation spec API, which isn't valid for
+      // FIXME: ElementKind is a 1.1 validation spec API, which isn't valid for 1.0 (which is the spec version BVal currently supports)
       ElementKind kind = node.getKind();
 
       if (ElementKind.RETURN_VALUE.equals(kind)) {
