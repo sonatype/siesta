@@ -16,6 +16,8 @@ import java.util.EnumSet;
 
 import javax.inject.Inject;
 import javax.servlet.DispatcherType;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 
 import org.sonatype.sisu.litmus.testsupport.inject.InjectedTestSupport;
 
@@ -42,6 +44,8 @@ public class SiestaTestSupport
 
   private String url;
 
+  private Client client;
+
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
@@ -65,6 +69,8 @@ public class SiestaTestSupport
     servletTester.addFilter(GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
     servletTester.addServlet(DummyServlet.class, "/*");
     servletTester.start();
+
+    client = ClientBuilder.newClient();
   }
 
   @After
@@ -73,6 +79,8 @@ public class SiestaTestSupport
       servletTester.stop();
     }
   }
+
+  protected Client client() { return client; }
 
   protected String url() {
     return url;

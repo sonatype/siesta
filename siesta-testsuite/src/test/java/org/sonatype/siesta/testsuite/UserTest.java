@@ -14,8 +14,6 @@ package org.sonatype.siesta.testsuite;
 
 import java.util.UUID;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -42,19 +40,10 @@ public class UserTest
   private void put_happyPath(final MediaType mediaType) throws Exception {
     UserXO sent = new UserXO().withName(UUID.randomUUID().toString());
 
-    Client client = ClientBuilder.newClient();
-    log("Client: {}", client);
-
-    String url = url("user");
-    log("URL: {}", url);
-
-    WebTarget target = client.target(url);
-    log("Target: {}", target);
-
+    WebTarget target = client().target(url("user"));
     Response response = target.request()
         .accept(mediaType)
         .put(Entity.entity(sent, mediaType), Response.class);
-    log("Response: {}", response);
     log("Status: {}", response.getStatusInfo());
 
     assertThat(response.getStatusInfo().getFamily(), equalTo(Family.SUCCESSFUL));
