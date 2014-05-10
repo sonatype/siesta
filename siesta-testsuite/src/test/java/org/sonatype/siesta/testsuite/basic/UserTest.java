@@ -10,7 +10,7 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.siesta.testsuite;
+package org.sonatype.siesta.testsuite.basic;
 
 import java.util.UUID;
 
@@ -19,6 +19,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.sonatype.siesta.testsuite.SiestaTestSupport;
 import org.sonatype.siesta.testsuite.model.UserXO;
 
 import org.junit.Test;
