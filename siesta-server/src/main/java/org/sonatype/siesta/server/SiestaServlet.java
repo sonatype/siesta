@@ -66,17 +66,6 @@ public class SiestaServlet
 
   @Override
   public void init(final ServletConfig config) throws ServletException {
-    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
-    try {
-      Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
-      doInit(config);
-    }
-    finally {
-      Thread.currentThread().setContextClassLoader(cl);
-    }
-  }
-
-  private void doInit(final ServletConfig config) throws ServletException {
     super.init(config);
 
     // TODO: Figure out what version of RESTEasy is used and log it

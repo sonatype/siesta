@@ -49,6 +49,17 @@ public class ComponentContainerImpl
 
   @Override
   public void init(final ServletConfig servletConfig) throws ServletException {
+    final ClassLoader cl = Thread.currentThread().getContextClassLoader();
+    try {
+      Thread.currentThread().setContextClassLoader(ResteasyProviderFactory.class.getClassLoader());
+      doInit(servletConfig);
+    }
+    finally {
+      Thread.currentThread().setContextClassLoader(cl);
+    }
+  }
+
+  private void doInit(final ServletConfig servletConfig) throws ServletException {
     super.init(servletConfig);
 
     if (log.isDebugEnabled()) {
