@@ -14,6 +14,8 @@
 -->
 # Description
 
-Sisu Siesta; JAX-RS Components
+Sisu Siesta 1.x; JAX-RS Integration
+
+Based on Jersey 1.x.
 
 [Jersey changlog] (http://java.net/projects/jersey/sources/svn/content/trunk/jersey/changes.txt) for reference.
