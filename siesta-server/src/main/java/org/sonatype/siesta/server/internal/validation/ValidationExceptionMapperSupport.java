@@ -40,7 +40,8 @@ public abstract class ValidationExceptionMapperSupport<E extends Throwable>
 
   public ValidationExceptionMapperSupport() {
     this.variants = Variant.mediaTypes(
-        VND_VALIDATION_ERRORS_V1_JSON_TYPE, VND_VALIDATION_ERRORS_V1_XML_TYPE
+        VND_VALIDATION_ERRORS_V1_JSON_TYPE,
+        VND_VALIDATION_ERRORS_V1_XML_TYPE
     ).add().build();
   }
 

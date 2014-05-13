@@ -24,8 +24,16 @@ import javax.ws.rs.ext.ExceptionMapper;
 import static org.sonatype.siesta.MediaTypes.VND_ERROR_V1_JSON_TYPE;
 import static org.sonatype.siesta.MediaTypes.VND_ERROR_V1_XML_TYPE;
 
+// TODO: Consider making this part of ExceptionMapperSupport and avoiding a sub-class variant here for this functionality?
+
 /**
- * Support for {@link ExceptionMapper} implementations.
+ * Support for {@link ExceptionMapper} implementations which support sending back {@link FaultXO}
+ * if request accept type includes one of:
+ *
+ * <ul>
+ * <li>{@link MediaTypes#VND_ERROR_V1_JSON_TYPE}</li>
+ * <li>{@link MediaTypes#VND_ERROR_V1_XML_TYPE}</li>
+ * </ul>
  *
  * @since 2.0
  */
@@ -47,7 +55,8 @@ public abstract class FaultExceptionMapperSupport<E extends Throwable>
 
     Variant variant = getRequest().selectVariant(variants);
     if (variant != null) {
-      builder.type(variant.getMediaType()).entity(new FaultXO(id, getMessage(exception)));
+      builder.type(variant.getMediaType())
+          .entity(new FaultXO(id, getMessage(exception)));
     }
 
     return builder.build();
