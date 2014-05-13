@@ -26,6 +26,8 @@ import org.slf4j.LoggerFactory;
 public abstract class ExceptionMapperSupport<E extends Throwable>
     implements ExceptionMapper<E>, Component
 {
+  public static final String X_SIESTA_FAULT_ID = "X-Siesta-FaultId";
+
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   public Response toResponse(final E exception) {
@@ -53,6 +55,9 @@ public abstract class ExceptionMapperSupport<E extends Throwable>
       log.warn("(ID {}) Failed to map exception", id, e);
       response = Response.serverError().entity(new FaultXO(id, e)).build();
     }
+
+    // Add fault-id to the response as header
+    response.getHeaders().putSingle(X_SIESTA_FAULT_ID, id);
 
     // Log terse (unless debug enabled) warning with fault details
     final Object entity = response.getEntity();
