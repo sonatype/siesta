@@ -20,6 +20,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.sonatype.siesta.ValidationErrorXO;
 import org.sonatype.siesta.ValidationErrorsException;
+import org.sonatype.siesta.server.validation.ValidationExceptionMapperSupport;
 
 /**
  * Maps {@link ValidationErrorsException} to 400 with a list of {@link ValidationErrorXO} as body.

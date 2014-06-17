@@ -10,11 +10,12 @@
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the Apache License Version 2.0 for the specific language governing permissions and limitations there under.
  */
-package org.sonatype.siesta.server.internal.resteasy;
+package org.sonatype.siesta.server.resteasy;
 
 import javax.inject.Singleton;
 
 import org.sonatype.siesta.server.ComponentContainer;
+import org.sonatype.siesta.server.internal.resteasy.ComponentContainerImpl;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;

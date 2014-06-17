@@ -15,8 +15,8 @@ package org.sonatype.siesta.webapp;
 import javax.inject.Named;
 
 import org.sonatype.siesta.server.SiestaServlet;
-import org.sonatype.siesta.server.internal.bval.BvalModule;
-import org.sonatype.siesta.server.internal.resteasy.ResteasyModule;
+import org.sonatype.siesta.server.bval.BvalModule;
+import org.sonatype.siesta.server.resteasy.ResteasyModule;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.AbstractModule;

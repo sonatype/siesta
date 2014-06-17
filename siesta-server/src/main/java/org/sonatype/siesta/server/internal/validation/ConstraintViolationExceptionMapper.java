@@ -25,6 +25,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
 import org.sonatype.siesta.ValidationErrorXO;
+import org.sonatype.siesta.server.validation.ValidationExceptionMapperSupport;
 
 /**
  * Maps {@link ConstraintViolationException} to {@link Status#BAD_REQUEST} or {@link Status#INTERNAL_SERVER_ERROR}
