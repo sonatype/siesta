@@ -13,8 +13,8 @@
 package org.sonatype.siesta.testsuite;
 
 import org.sonatype.siesta.server.SiestaServlet;
-import org.sonatype.siesta.server.bval.BvalModule;
 import org.sonatype.siesta.server.resteasy.ResteasyModule;
+import org.sonatype.siesta.server.validation.ValidationModule;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.AbstractModule;
@@ -37,7 +37,7 @@ public class TestModule
     log.info("Mount point: {}", MOUNT_POINT);
 
     install(new ResteasyModule());
-    install(new BvalModule());
+    install(new ValidationModule());
 
     install(new ServletModule()
     {

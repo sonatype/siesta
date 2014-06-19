@@ -21,6 +21,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ElementKind;
+import javax.validation.Path;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
 
@@ -71,15 +73,14 @@ public class ConstraintViolationExceptionMapper
   }
 
   private Status getResponseStatus(final ConstraintViolation<?> violation) {
-    // FIXME: ElementKind is a 1.1 validation spec API, which isn't valid for 1.0 (which is the spec version BVal currently supports)
 
-    //for (Path.Node node : violation.getPropertyPath()) {
-    //  ElementKind kind = node.getKind();
-    //
-    //  if (ElementKind.RETURN_VALUE.equals(kind)) {
-    //    return Status.INTERNAL_SERVER_ERROR;
-    //  }
-    //}
+    for (Path.Node node : violation.getPropertyPath()) {
+      ElementKind kind = node.getKind();
+
+      if (ElementKind.RETURN_VALUE.equals(kind)) {
+        return Status.INTERNAL_SERVER_ERROR;
+      }
+    }
 
     return Status.BAD_REQUEST;
   }

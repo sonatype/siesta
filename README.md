@@ -18,6 +18,6 @@ Sonatype Siesta 2; JAX-RS Integration
 
 Based on [JBoss RESTEasy 3.x](http://resteasy.jboss.org/) with [Eclipse Sisu](http://eclipse.org/sisu) IoC support.
 
-ATM only javax.validation 1.0 is supported via Apache BVal (with Guice integration).  Some issues with RESTEasy integration requiring CDI which prevents usage atm of the RESTEasy javax.validation 1.1 features w/o further integration or modification to work around.
+javax.validation 1.1 is supported via Hibernate Validator (with Guice integration).  Some issues with RESTEasy integration requiring CDI which prevents usage atm of the RESTEasy javax.validation 1.1 features w/o further integration or modification to work around.
 
 For older Siesta 1 (based on Jersey 1.x) see the [siesta-1.x branch](https://github.com/sonatype/sisu-siesta/tree/siesta-1.x).
