@@ -86,7 +86,12 @@ public class ConstraintViolationExceptionMapper
   }
 
   private String getPath(final ConstraintViolation violation) {
-    final String leafBeanName = violation.getLeafBean().getClass().getSimpleName();
+    String leafBeanName = violation.getLeafBean().getClass().getSimpleName();
+    final int proxySuffix = leafBeanName.indexOf("$$EnhancerByGuice");
+    if (proxySuffix > 0) {
+      leafBeanName = leafBeanName.substring(0, proxySuffix);
+    }
+
     final String propertyPath = violation.getPropertyPath().toString();
 
     return leafBeanName + (!"".equals(propertyPath) ? '.' + propertyPath : "");
