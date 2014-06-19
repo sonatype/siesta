@@ -54,15 +54,10 @@
       <artifactId>resteasy-jaxrs</artifactId>
     </dependency>
 
-    <!--<dependency>-->
-    <!--<groupId>org.jboss.resteasy</groupId>-->
-    <!--<artifactId>resteasy-cdi</artifactId>-->
-    <!--</dependency>-->
-
-    <!--<dependency>-->
-    <!--<groupId>org.jboss.resteasy</groupId>-->
-    <!--<artifactId>resteasy-validator-provider-11</artifactId>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-validator-provider-11</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.glassfish.web</groupId>
@@ -119,5 +114,20 @@
       <artifactId>guice-servlet</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <configuration>
+          <instructions>
+            <!-- don't export our dummy package as it's purely internal -->
+            <_exportcontents>!org.jboss.*|*.internal.*,*</_exportcontents>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

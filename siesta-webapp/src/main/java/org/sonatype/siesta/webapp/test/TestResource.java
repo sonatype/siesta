@@ -148,7 +148,7 @@ public class TestResource
   @GET
   @Path("validate")
   @Produces(TEXT_PLAIN)
-  @Validate
+  //@Validate ...not required for JAX-RS resources, but still useful for internal validation
   public String validate(final @QueryParam("value") @NotNull @Size(min=4, max=8) String value) {
     return value;
   }
