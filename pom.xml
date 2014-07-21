@@ -164,6 +164,15 @@
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-jaxb-provider</artifactId>
         <version>${resteasy.version}</version>
+        <exclusions>
+          <!--
+          Kepp out ancient stax spec apis.
+          -->
+          <exclusion>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jsr173_api</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <dependency>
