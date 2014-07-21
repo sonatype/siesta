@@ -166,7 +166,7 @@
         <version>${resteasy.version}</version>
         <exclusions>
           <!--
-          Kepp out ancient stax spec apis.
+          Keep out ancient stax spec apis.
           -->
           <exclusion>
             <groupId>javax.xml.bind</groupId>
