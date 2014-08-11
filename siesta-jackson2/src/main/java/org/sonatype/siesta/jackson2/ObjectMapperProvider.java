@@ -16,6 +16,7 @@ import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.slf4j.Logger;
@@ -43,6 +44,9 @@ public class ObjectMapperProvider
 
     // Write dates as ISO-8601
     mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+    // Ignore unknown properties
+    mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
     return mapper;
   }
