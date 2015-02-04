@@ -25,7 +25,7 @@ import com.google.inject.Binder;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceFilter;
 import com.google.inject.servlet.GuiceServletContextListener;
-import org.eclipse.jetty.testing.ServletTester;
+import org.eclipse.jetty.servlet.ServletTester;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -57,7 +57,7 @@ public class SiestaTestSupport
   @Before
   public void startJetty() throws Exception {
     servletTester = new ServletTester();
-    servletTester.addEventListener(new GuiceServletContextListener()
+    servletTester.getContext().addEventListener(new GuiceServletContextListener()
     {
       @Override
       protected Injector getInjector() {
@@ -65,7 +65,7 @@ public class SiestaTestSupport
       }
     });
 
-    url = servletTester.createSocketConnector(true) + TestModule.MOUNT_POINT;
+    url = servletTester.createConnector(true) + TestModule.MOUNT_POINT;
     servletTester.addFilter(GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
     servletTester.addServlet(DummyServlet.class, "/*");
     servletTester.start();

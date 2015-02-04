@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.sonatype.buildsupport</groupId>
     <artifactId>public-parent</artifactId>
-    <version>6</version>
+    <version>7</version>
   </parent>
 
   <groupId>org.sonatype.siesta</groupId>
@@ -43,7 +43,7 @@
     <maven.compiler.target>1.7</maven.compiler.target>
 
     <resteasy.version>3.0.9.Final</resteasy.version>
-    <jackson2.version>2.3.3</jackson2.version>
+    <jackson2.version>2.3.5</jackson2.version>
   </properties>
 
   <dependencyManagement>
@@ -75,7 +75,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>16.0.1</version>
+        <version>18.0</version>
       </dependency>
 
       <dependency>
@@ -109,15 +109,15 @@
       </dependency>
 
       <dependency>
-        <groupId>org.eclipse.jetty.orbit</groupId>
-        <artifactId>javax.servlet</artifactId>
-        <version>3.0.0.v201112011016</version>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>3.1.0</version>
       </dependency>
 
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
-        <artifactId>test-jetty-servlet</artifactId>
-        <version>8.1.15.v20140411</version>
+        <artifactId>jetty-servlet</artifactId>
+        <version>9.2.7.v20150116</version>
       </dependency>
 
       <dependency>
@@ -334,7 +334,7 @@
         <plugin>
           <groupId>org.eclipse.jetty</groupId>
           <artifactId>jetty-maven-plugin</artifactId>
-          <version>9.1.4.v20140401</version>
+          <version>9.2.7.v20150116</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -379,7 +379,7 @@
       <plugin>
         <groupId>org.eclipse.sisu</groupId>
         <artifactId>sisu-maven-plugin</artifactId>
-        <version>0.2.0</version>
+        <version>0.3.0.M1</version>
         <executions>
           <execution>
             <goals>
