@@ -27,6 +27,7 @@ import org.sonatype.siesta.server.ComponentContainer;
 import org.eclipse.sisu.BeanEntry;
 import org.jboss.resteasy.logging.Logger.LoggerType;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
+import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +61,8 @@ public class ComponentContainerImpl
   }
 
   private void doInit(final ServletConfig servletConfig) throws ServletException {
+    servletConfig.getServletContext().setAttribute(ResteasyDeployment.class.getName(), new SisuResteasyDeployment());
+
     super.init(servletConfig);
 
     if (log.isDebugEnabled()) {
@@ -129,8 +132,14 @@ public class ComponentContainerImpl
       log.debug("Removed resource: {} with path: {}", type.getName(), path);
     }
     else {
-      // TODO: Unsure how to remove a component
-      log.warn("Component removal not supported; Unable to remove component: {}", type.getName());
+      ResteasyProviderFactory providerFactory = getDispatcher().getProviderFactory();
+      if (providerFactory instanceof SisuResteasyProviderFactory) {
+        ((SisuResteasyProviderFactory) providerFactory).removeRegistrations(type);
+        log.debug("Removed component: {}", type.getName());
+      }
+      else {
+        log.warn("Component removal not supported; Unable to remove component: {}", type.getName());
+      }
     }
   }
 }
