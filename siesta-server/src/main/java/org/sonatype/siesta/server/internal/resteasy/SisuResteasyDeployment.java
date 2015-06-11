@@ -17,7 +17,7 @@ import org.jboss.resteasy.spi.ResteasyDeployment;
 /**
  * Sisu {@link ResteasyDeployment}.
  *
- * @since 2.0
+ * @since 2.2
  */
 public class SisuResteasyDeployment
     extends ResteasyDeployment

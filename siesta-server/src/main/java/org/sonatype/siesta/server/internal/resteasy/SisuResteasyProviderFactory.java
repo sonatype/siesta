@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Sisu {@link ResteasyProviderFactory} that supports removal of providers.
  *
- * @since 2.0
+ * @since 2.2
  */
 public class SisuResteasyProviderFactory
     extends ResteasyProviderFactory
@@ -51,8 +51,6 @@ public class SisuResteasyProviderFactory
    * Unregisters a @Provider type from this factory.
    *
    * @param provider type
-   * 
-   * @since 2.1.1
    */
   public void removeRegistrations(Class<?> type) {
     log.debug("Removing registrations for: {}", type.getName());
@@ -116,7 +114,7 @@ public class SisuResteasyProviderFactory
 
   /**
    * Clear any instances of the given type from the {@link MediaTypeMap} by replacing them with the placeholder.
-   * 
+   *
    * Unfortunately removing the entries is tricky as they're scattered across multiple read-only nested maps.
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
