@@ -16,7 +16,6 @@ package org.sonatype.sisu.siesta.jackson;
 import javax.inject.Named;
 import javax.inject.Provider;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
@@ -38,10 +37,6 @@ public class ObjectMapperProvider
     // Configure Jackson annotations only, JAXB annotations can confuse and produce improper content
     mapper.getDeserializationConfig()
         .with(new JacksonAnnotationIntrospector());
-    // do not write null values
-    mapper.getSerializationConfig()
-        .with(new JacksonAnnotationIntrospector())
-        .withSerializationInclusion(Include.NON_NULL);
 
     // Write dates as ISO-8601
     mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
