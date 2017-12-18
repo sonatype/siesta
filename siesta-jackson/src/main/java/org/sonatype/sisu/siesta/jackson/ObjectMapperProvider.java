@@ -37,6 +37,9 @@ public class ObjectMapperProvider
     // Configure Jackson annotations only, JAXB annotations can confuse and produce improper content
     mapper.getDeserializationConfig()
         .with(new JacksonAnnotationIntrospector());
+    // do not write null values
+    mapper.getSerializationConfig()
+        .with(new JacksonAnnotationIntrospector());
 
     // Write dates as ISO-8601
     mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
