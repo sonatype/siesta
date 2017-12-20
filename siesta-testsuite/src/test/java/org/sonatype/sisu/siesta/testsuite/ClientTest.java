@@ -29,6 +29,7 @@ import org.sonatype.sisu.siesta.testsuite.support.SiestaClientTestSupport;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 import org.hamcrest.Description;
@@ -39,8 +40,10 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.sonatype.sisu.siesta.client.ClientBuilder.Target.Factory;
 
@@ -134,6 +137,21 @@ public class ClientTest
     assertThat(received, is(notNullValue()));
     assertThat(received.getName(), is(equalTo(sent.getName())));
     assertThat(received.getCreated(), is(equalTo(sent.getCreated())));
+  }
+
+  @Test
+  public void putReturnsClientResponse()
+  {
+    final UserXO sent = new UserXO().withName(UUID.randomUUID().toString()).withCreated(new Date());
+    final ClientResponse received = users.putReturnsClientResponse(sent);
+
+    assertThat(received, is(notNullValue()));
+
+    // assert that the json contains the expected non-null attributes
+    final String jsonString = received.getEntity(String.class);
+    assertThat(jsonString, containsString("\"name\""));
+    assertThat(jsonString, containsString("\"created\""));
+    assertThat(jsonString, not(containsString("\"description\"")));
   }
 
   @Test
