@@ -28,7 +28,7 @@
   <name>${project.groupId}:${project.artifactId}</name>
   <packaging>pom</packaging>
 
-  <version>1.8-SNAPSHOT</version>
+  <version>1.8</version>
 
   <url>https://github.com/sonatype/sisu-siesta</url>
 
@@ -208,31 +208,31 @@
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-common</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8</version>
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-xstream</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8</version>
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-jackson</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8</version>
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-server</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8</version>
       </dependency>
 
       <dependency>
         <groupId>org.sonatype.sisu.siesta</groupId>
         <artifactId>siesta-client</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
