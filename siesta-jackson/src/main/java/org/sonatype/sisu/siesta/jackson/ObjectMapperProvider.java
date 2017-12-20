@@ -37,7 +37,6 @@ public class ObjectMapperProvider
     // Configure Jackson annotations only, JAXB annotations can confuse and produce improper content
     mapper.getDeserializationConfig()
         .with(new JacksonAnnotationIntrospector());
-    // do not write null values
     mapper.getSerializationConfig()
         .with(new JacksonAnnotationIntrospector());
 
